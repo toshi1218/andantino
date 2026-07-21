@@ -277,7 +277,7 @@ if (!homeHtml.includes("足に合うことも、") || !homeHtml.includes("履い
   fail("index.html", "home must express both fit and the joy of wearing shoes");
 }
 const mobileActions = homeHtml.match(/<nav\b[^>]*class=["'][^"']*mobile-actions[^"']*["'][\s\S]*?<\/nav>/i)?.[0] || "";
-if ((mobileActions.match(/<a\b/gi) || []).length !== 2) fail("index.html", "mobile action bar must contain exactly phone and LINE actions");
+if ((mobileActions.match(/<a\b/gi) || []).length !== 3) fail("index.html", "mobile action bar must contain exactly phone, email and LINE actions");
 const globalMenu = homeHtml.match(/<nav\b[^>]*id=["']global-nav["'][\s\S]*?<\/nav>/i)?.[0] || "";
 if ((globalMenu.match(/class=["'][^"']*nav__group(?:\s|["'])/gi) || []).length !== 4) {
   fail("index.html", "global menu must use four scannable groups");
