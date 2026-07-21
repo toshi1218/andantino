@@ -5,6 +5,9 @@
   --peach: #e9dff3;
   --coral: #6d4aa3;
   --coral-dark: #55357f;
+  --line-green: #06c755;
+  --line-green-dark: #05b94e;
+  --line-green-ink: #073b1e;
   --blue: #dceef2;
   --blue-strong: #3c7b86;
   --teal: #264e52;
@@ -707,6 +710,27 @@ a {
   color: var(--teal);
 }
 
+/* LINE links keep the familiar service color, independent of the site accent. */
+a.button[href^="https://line.me/"],
+a.button--light[href^="https://line.me/"] {
+  background: var(--line-green);
+  box-shadow: 0 10px 24px rgba(6, 199, 85, 0.24);
+  color: var(--line-green-ink);
+}
+
+a.button[href^="https://line.me/"]:hover,
+a.button[href^="https://line.me/"]:focus-visible,
+a.button--light[href^="https://line.me/"]:hover,
+a.button--light[href^="https://line.me/"]:focus-visible {
+  background: var(--line-green-dark);
+  box-shadow: 0 14px 30px rgba(6, 155, 68, 0.3);
+  color: var(--line-green-ink);
+}
+
+a.button[href^="https://line.me/"] .button__icon {
+  color: #087536;
+}
+
 .consult__phone {
   display: flex;
   flex-direction: column;
@@ -1129,6 +1153,11 @@ a {
     background: var(--coral);
     color: #fff !important;
   }
+
+  .mobile-actions__primary[href^="https://line.me/"] {
+    background: var(--line-green);
+    color: var(--line-green-ink) !important;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1444,6 +1473,23 @@ a {
 .official-links a:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
+}
+
+.official-links a[href^="https://line.me/"] {
+  border-color: #72d999;
+  background: #eafff1;
+  box-shadow: inset 5px 0 0 var(--line-green);
+}
+
+.official-links a[href^="https://line.me/"]:hover,
+.official-links a[href^="https://line.me/"]:focus-visible {
+  border-color: var(--line-green);
+  box-shadow: inset 5px 0 0 var(--line-green), 0 12px 28px rgba(6, 155, 68, 0.18);
+}
+
+.official-links a[href^="https://line.me/"] strong,
+.faq-list a[href^="https://line.me/"] {
+  color: #087536;
 }
 
 .official-links strong {
