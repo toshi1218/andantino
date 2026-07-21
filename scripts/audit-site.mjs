@@ -273,7 +273,7 @@ const faqHtml = await readFile(new URL("faq.html", root), "utf8");
 if ((faqHtml.match(/<details\b/gi) || []).length !== 10) fail("faq.html", "expected ten independent FAQ disclosure cards");
 
 const homeHtml = await readFile(new URL("index.html", root), "utf8");
-if (!homeHtml.includes("足に合うことも、<br>履いて出かける楽しさも。")) {
+if (!homeHtml.includes("足に合うことも、") || !homeHtml.includes("履いて出かける") || !homeHtml.includes("楽しさも。")) {
   fail("index.html", "home must express both fit and the joy of wearing shoes");
 }
 const mobileActions = homeHtml.match(/<nav\b[^>]*class=["'][^"']*mobile-actions[^"']*["'][\s\S]*?<\/nav>/i)?.[0] || "";

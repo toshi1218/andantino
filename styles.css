@@ -337,6 +337,7 @@ a {
 
 .menu-button {
   min-height: 44px;
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -348,6 +349,7 @@ a {
   font: inherit;
   font-size: 12px;
   font-weight: 700;
+  white-space: nowrap;
   cursor: pointer;
   margin-left: auto;
 }
@@ -757,6 +759,10 @@ a {
   font-size: clamp(31px, 4vw, 50px);
   font-weight: 600;
   line-height: 1.5;
+}
+
+.shoe-joy__content h2 span {
+  display: block;
 }
 
 .shoe-joy__content > p {
