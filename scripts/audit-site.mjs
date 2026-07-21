@@ -166,6 +166,21 @@ for (const page of pages) {
   if (/hreflang=/i.test(html)) fail(page.file, "hreflang found on Japanese-only site");
   if (/\\n/.test(html)) fail(page.file, "contains a literal backslash-n sequence");
 
+  const discouragedCustomerPhrases = [
+    ">相談・予約<",
+    "LINEで相談・予約",
+    "お問い合わせ・相談予約",
+    "<h2>4. 予約・相談</h2>",
+    "遅刻・変更・キャンセルが分かった時点",
+    "今の靴を見せてください",
+    "相談には何を持って行けばよいですか",
+    "毎回してほしい、靴の履き方",
+    "保護者がフィットを確認してください"
+  ];
+  for (const phrase of discouragedCustomerPhrases) {
+    if (html.includes(phrase)) fail(page.file, `customer-facing copy must use polite Japanese: ${phrase}`);
+  }
+
   if (page.path !== "/") {
     if (!/class=["'][^"']*info-header/i.test(html)) fail(page.file, "missing shared information-page header");
     if (!/class=["'][^"']*info-footer/i.test(html)) fail(page.file, "missing shared information-page footer");
@@ -220,6 +235,24 @@ for (const file of conversionPages) {
   if (!/class=["']button["'][^>]+href=["']https:\/\/line\.me\/R\/ti\/p\/@680mdoos["']/i.test(html)) {
     fail(file, "end-of-page CTA must link directly to the official LINE account");
   }
+  if (file !== "seminars.html" && !html.includes("LINEでご予約・ご相談")) {
+    fail(file, "end-of-page LINE CTA must use the polite label: LINEでご予約・ご相談");
+  }
+}
+
+const termsHtml = await readFile(new URL("terms.html", root), "utf8");
+if (!termsHtml.includes("<h2>4. ご予約・ご相談</h2>")) {
+  fail("terms.html", "reservation section heading must use ご予約・ご相談");
+}
+
+const contactHtml = await readFile(new URL("contact.html", root), "utf8");
+if (!contactHtml.includes("<h1>ご予約・ご相談・お問い合わせ</h1>")) {
+  fail("contact.html", "contact H1 must use polite customer-facing terminology");
+}
+
+const sharedScript = await readFile(new URL("script.js", root), "utf8");
+for (const label of ["ご予約・ご相談・お問い合わせ", "LINEでご予約・ご相談", "お電話でご相談"]) {
+  if (!sharedScript.includes(label)) fail("script.js", `shared navigation is missing polite label: ${label}`);
 }
 
 const faqHtml = await readFile(new URL("faq.html", root), "utf8");

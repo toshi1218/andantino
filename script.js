@@ -6,7 +6,7 @@ const fullMenuMarkup = `
       <a href="./childrens-shoes.html">子どもの足育・靴</a>
       <a href="./insoles.html">インソール</a>
       <a href="./pricing.html">料金</a>
-      <a href="./contact.html">お問い合わせ・相談予約</a>
+      <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
     </div>
     <div class="nav__group">
       <strong>悩み・知識から探す</strong>
@@ -61,7 +61,7 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
 if (infoHeader && !document.querySelector(".mobile-actions")) {
   document.body.insertAdjacentHTML(
     "beforeend",
-    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">電話で相談</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEで相談・予約</a></nav>'
+    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">お電話でご相談</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a></nav>'
   );
 }
 
