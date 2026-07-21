@@ -1902,6 +1902,20 @@ a.button[href^="https://line.me/"] .button__icon {
   align-items: start;
 }
 
+.article-byline {
+  margin: 0 0 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-byline a {
+  color: var(--blue-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .article-toc {
   position: sticky;
   top: 30px;

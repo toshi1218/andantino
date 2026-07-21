@@ -14,6 +14,22 @@ URL、canonical、robots、sitemap、redirects、JSON-LD、ページ定義、グ
 6. 意図しないファイルや秘密情報が混入していないか確認する。
 7. 即時公開、単独公開＋観察、分割・延期のいずれかを判定する。
 
+## 制作中の検索除外
+
+- 制作中は `npm run indexing:staging` を実行し、全20ページの robots meta と Cloudflare Pages の `X-Robots-Tag` を `noindex,nofollow,nosnippet` にそろえる。
+- `robots.txt` のクロール許可は維持する。クロールを拒否すると、検索エンジンがページ側の `noindex` を確認できない。
+- `noindex` は検索結果からの除外指示であり、閲覧制限や機密情報の保護ではない。非公開情報はサイトへ配置しない。
+- 制作中はサイトマップをSearch Consoleへ送信しない。
+
+## 本公開時の解除手順
+
+1. 内容、料金、営業時間、資格・所属、外部リンクを運営者本人が最終確認する。
+2. `npm run indexing:live` を実行する。全20ページを `index,follow` にし、`X-Robots-Tag` を削除する。
+3. `npm run build` とHTML検証を実行し、meta robotsとHTTPヘッダーの解除を実環境でも確認する。
+4. 独自ドメインのHTTPS・canonical・301リダイレクトを確認する。
+5. Search Consoleでサイトマップを送信し、主要ページをURL検査する。
+6. 公開後に修正が必要なら、再び `npm run indexing:staging` を使うのではなく、公開ページとして修正する。
+
 ## 公開後
 
 - 構造・共通部品・20ページ以上の変更後は14〜28日、別の大きな変更を重ねない。

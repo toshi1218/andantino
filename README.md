@@ -9,7 +9,9 @@ npm run validate
 python3 -m http.server 8000
 ```
 
-`npm run build` は19ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP、JSON-LD、パンくず、画像、内部リンク、robots、旧URLリダイレクトを監査します。
+`npm run build` は20ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、旧URLリダイレクトを監査します。
+
+制作中は `npm run indexing:staging`、本公開直前は `npm run indexing:live` で、全ページのrobots metaとCloudflare PagesのHTTPヘッダーを一括切替します。現在は制作中のため `noindex,nofollow,nosnippet` を維持しています。
 
 ## Cloudflare Pages
 

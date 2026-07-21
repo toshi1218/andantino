@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/generate-sitemap.mjs && node scripts/audit-site.mjs",
-    "validate": "node --check script.js && node scripts/audit-site.mjs"
+    "validate": "node --check script.js && node scripts/audit-site.mjs",
+    "seo:sync-social": "node scripts/sync-social-meta.mjs",
+    "indexing:staging": "node scripts/set-indexing.mjs staging",
+    "indexing:live": "node scripts/set-indexing.mjs live"
   }
 }
