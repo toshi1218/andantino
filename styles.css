@@ -36,6 +36,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body.menu-open {
+  overflow: hidden;
+}
+
 img {
   display: block;
   width: 100%;
@@ -175,10 +179,23 @@ a {
 
 .nav__panel {
   display: grid;
-  grid-template-columns: 1.05fr 1.25fr 1fr 0.85fr 1.05fr;
+  grid-template-columns: 1fr 1.2fr 1fr 1.15fr;
   gap: 30px;
   padding-top: 32px;
   padding-bottom: 38px;
+}
+
+.nav__group--priority {
+  padding: 18px;
+  margin: -18px 0;
+  border-radius: 18px;
+  background: #f7f1ff;
+}
+
+.nav__group--secondary a:nth-last-child(-n + 4) {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
 }
 
 .nav__group {
@@ -344,13 +361,13 @@ a {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 43% 57%;
+  grid-template-columns: 48% 52%;
   align-items: center;
 }
 
 .hero__copy {
   z-index: 2;
-  padding-right: 58px;
+  padding-right: 44px;
   animation: fade-up 520ms ease both;
 }
 
@@ -373,10 +390,17 @@ a {
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1.48;
+  text-wrap: balance;
 }
 
 .hero h1 {
-  font-size: clamp(42px, 4.3vw, 65px);
+  font-size: clamp(44px, 4.1vw, 58px);
+  line-height: 1.42;
+}
+
+.hero h1 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .hero__lead {
@@ -965,7 +989,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
 @media (max-width: 1100px) {
   .nav__panel {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .phone-link {
@@ -973,15 +997,34 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__grid {
-    grid-template-columns: 46% 54%;
+    grid-template-columns: 48% 52%;
   }
 
   .hero__copy {
-    padding-right: 32px;
+    padding-right: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 4.6vw, 50px);
   }
 
   .hero__visual {
     min-height: 530px;
+  }
+}
+
+@media (max-width: 960px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .hero__copy {
+    padding-right: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 6vw, 56px);
   }
 }
 
@@ -1052,7 +1095,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero h1 {
-    font-size: clamp(40px, 9.8vw, 58px);
+    font-size: clamp(38px, 8vw, 52px);
   }
 
   .hero__lead {
@@ -1151,7 +1194,7 @@ a.button[href^="https://line.me/"] .button__icon {
     left: 0;
     min-height: 64px;
     display: grid;
-    grid-template-columns: repeat(3, 0.8fr) 1.35fr;
+    grid-template-columns: 0.85fr 1.4fr;
     align-items: stretch;
     border-top: 1px solid var(--line);
     background: #fff;
@@ -1163,7 +1206,7 @@ a.button[href^="https://line.me/"] .button__icon {
     place-items: center;
     border-right: 1px solid var(--line);
     color: var(--teal);
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
   }
 
@@ -1185,7 +1228,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero h1 {
-    font-size: 39px;
+    font-size: clamp(32px, 9vw, 39px);
   }
 
   .hero__buttons,
@@ -1302,6 +1345,9 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .info-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   border-bottom: 1px solid var(--line);
   background: rgba(255, 253, 249, 0.96);
 }
@@ -1314,12 +1360,16 @@ a.button[href^="https://line.me/"] .button__icon {
   gap: 32px;
 }
 
-.info-header nav {
+.info-header__inner > nav {
   display: flex;
   align-items: center;
   gap: 26px;
   font-size: 14px;
   font-weight: 700;
+}
+
+.info-header .menu-button {
+  margin-left: auto;
 }
 
 .info-hero {
@@ -1339,6 +1389,7 @@ a.button[href^="https://line.me/"] .button__icon {
   font-family: var(--serif);
   font-size: clamp(40px, 5vw, 66px);
   line-height: 1.42;
+  text-wrap: balance;
 }
 
 .info-hero p {
@@ -1410,6 +1461,7 @@ a.button[href^="https://line.me/"] .button__icon {
   font-family: var(--serif);
   font-size: clamp(30px, 3vw, 43px);
   line-height: 1.5;
+  text-wrap: balance;
 }
 
 .info-content p {
@@ -1520,22 +1572,58 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .faq-list {
+  display: grid;
   max-width: 860px;
+  gap: 14px;
 }
 
-.faq-list article {
-  padding: 34px 0;
-  border-bottom: 1px solid var(--line);
+.faq-list details {
+  overflow: clip;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(55, 52, 49, 0.045);
 }
 
-.faq-list article:first-child {
-  border-top: 1px solid var(--line);
-}
-
-.faq-list h2 {
-  margin: 0 0 14px;
+.faq-list summary {
+  position: relative;
+  padding: 24px 62px 24px 26px;
+  color: var(--teal);
+  cursor: pointer;
   font-family: var(--serif);
   font-size: clamp(21px, 2.3vw, 28px);
+  font-weight: 600;
+  line-height: 1.55;
+  list-style: none;
+  text-wrap: balance;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list summary::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--coral);
+  font-family: var(--sans);
+  transform: translateY(-50%);
+}
+
+.faq-list details[open] summary::after {
+  content: "−";
+}
+
+.faq-list details > div {
+  padding: 0 26px 26px;
 }
 
 .faq-list p {
@@ -1574,7 +1662,7 @@ a.button[href^="https://line.me/"] .button__icon {
     min-height: 76px;
   }
 
-  .info-header nav > a:not(.button) {
+  .info-header__inner > nav > a:not(.button) {
     display: none;
   }
 
@@ -1619,6 +1707,14 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .info-header .brand__name {
     font-size: 20px;
+  }
+
+  .info-header__inner > nav .button {
+    display: none;
+  }
+
+  .info-header .menu-button__text {
+    display: inline;
   }
 
   .info-hero h1 {
@@ -1881,6 +1977,7 @@ a.button[href^="https://line.me/"] .button__icon {
   font-size: clamp(38px, 5vw, 62px);
   font-weight: 600;
   line-height: 1.45;
+  text-wrap: balance;
 }
 
 .article-hero p {
@@ -1981,6 +2078,8 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--teal);
   font-family: var(--serif);
   font-size: clamp(23px, 2.5vw, 32px);
+  line-height: 1.55;
+  text-wrap: balance;
 }
 
 .author-note p {
@@ -2013,6 +2112,7 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--teal);
   font-family: var(--serif);
   font-size: clamp(27px, 3vw, 38px);
+  text-wrap: balance;
 }
 
 .guide-path p {
@@ -2285,16 +2385,12 @@ a.button[href^="https://line.me/"] .button__icon {
 
 @media (max-width: 520px) {
   .menu-button__text {
-    display: none;
+    display: inline;
   }
 
   .nav__panel {
     grid-template-columns: 1fr;
     gap: 24px;
-  }
-
-  .nav__group--policy {
-    padding-bottom: 18px;
   }
 
   .article-hero {
@@ -2349,5 +2445,105 @@ a.button[href^="https://line.me/"] .button__icon {
   .author-note__portrait {
     width: 112px;
     height: 112px;
+  }
+
+  .info-header__inner {
+    min-height: 70px;
+    gap: 10px;
+  }
+
+  .info-header .brand__name {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+  }
+
+  .info-header .menu-button {
+    min-height: 42px;
+    gap: 7px;
+    padding: 7px 10px;
+    font-size: 11px;
+  }
+
+  .info-header .nav {
+    top: 70px;
+    max-height: calc(100vh - 70px);
+  }
+
+  .info-hero h1,
+  .info-hero--compact h1,
+  .article-hero h1 {
+    font-size: clamp(28px, 8.4vw, 37px);
+    line-height: 1.48;
+    overflow-wrap: anywhere;
+  }
+
+  .info-hero p,
+  .article-hero p {
+    font-size: 15px;
+  }
+
+  .info-content,
+  .policy-content,
+  .prose,
+  .article-cta > div {
+    min-width: 0;
+  }
+
+  .info-content h2,
+  .policy-content h2,
+  .prose h2,
+  .guide-path h2,
+  .article-cta h2 {
+    font-size: clamp(25px, 7.5vw, 31px);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .author-note {
+    padding: 22px;
+  }
+
+  .author-note h2,
+  .author-note h3 {
+    font-size: clamp(22px, 6.8vw, 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .guide-path,
+  .article-cta,
+  .callout {
+    padding: 24px 20px;
+  }
+
+  .faq-list summary {
+    padding: 20px 54px 20px 20px;
+    font-size: clamp(19px, 6vw, 23px);
+  }
+
+  .faq-list summary::after {
+    right: 18px;
+  }
+
+  .faq-list details > div {
+    padding: 0 20px 22px;
+  }
+
+  .article-cta .button {
+    width: 100%;
+  }
+
+  .mobile-actions a {
+    padding: 8px 6px;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .policy-content a,
+  .prose a,
+  .official-links span,
+  .policy-table td {
+    overflow-wrap: anywhere;
   }
 }

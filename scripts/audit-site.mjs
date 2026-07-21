@@ -97,9 +97,13 @@ for (const page of pages) {
   if (meta(html, "name", "robots") !== expectedRobots) fail(page.file, `robots meta must match the ${isStaging ? "staging" : "live"} mode: ${expectedRobots}`);
 
   if (!/<main\b[^>]*>[\s\S]*?<\/main>/i.test(html)) fail(page.file, "missing non-empty main landmark");
+  if (!/<main\b[^>]*\bid=["']main["']/i.test(html)) fail(page.file, "main landmark must expose id=main");
+  if (!/<a\b[^>]*class=["'][^"']*skip-link[^"']*["'][^>]*href=["']#main["']/i.test(html)) fail(page.file, "missing skip link to main content");
 
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   if (h1Count !== 1) fail(page.file, `expected one H1, found ${h1Count}`);
+  const h1Markup = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "";
+  if (/<br\b/i.test(h1Markup)) fail(page.file, "H1 must not use forced line breaks; responsive CSS controls wrapping");
   const headingLevels = [...html.matchAll(/<h([1-6])\b/gi)].map((match) => Number(match[1]));
   if (headingLevels[0] !== 1) fail(page.file, "the first heading must be H1");
   for (let i = 1; i < headingLevels.length; i += 1) {
@@ -162,6 +166,17 @@ for (const page of pages) {
   if (/hreflang=/i.test(html)) fail(page.file, "hreflang found on Japanese-only site");
   if (/\\n/.test(html)) fail(page.file, "contains a literal backslash-n sequence");
 
+  if (page.path !== "/") {
+    if (!/class=["'][^"']*info-header/i.test(html)) fail(page.file, "missing shared information-page header");
+    if (!/class=["'][^"']*info-footer/i.test(html)) fail(page.file, "missing shared information-page footer");
+    if (!/<script\s+src=["']\.\/script\.js["']/i.test(html)) fail(page.file, "missing shared menu and mobile-action script");
+  }
+
+  for (const match of html.matchAll(/<a\b[^>]*target=["']_blank["'][^>]*>/gi)) {
+    const attrs = attributes(match[0]);
+    if (!(attrs.rel || "").split(/\s+/).includes("noopener")) fail(page.file, `external target=_blank link must use rel=noopener: ${match[0]}`);
+  }
+
   for (const match of html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)) {
     const href = match[1];
     if (/^(?:https?:|tel:|mailto:|#)/.test(href)) continue;
@@ -194,6 +209,30 @@ for (const [file, expectedTypes] of requiredTypes) {
   for (const type of expectedTypes) if (!types.includes(type)) fail(file, `missing required JSON-LD type ${type}`);
 }
 
+const conversionPages = [
+  "about.html", "adult-shoes.html", "childrens-shoes.html", "faq.html", "foot-check.html",
+  "foot-problems.html", "guides.html", "insoles.html", "owner.html", "pricing.html", "products.html",
+  "seminars.html", "shoe-wearing.html"
+];
+for (const file of conversionPages) {
+  const html = await readFile(new URL(file, root), "utf8");
+  if (!/class=["'][^"']*article-cta[^"']*["']/i.test(html)) fail(file, "missing end-of-page conversion CTA");
+  if (!/class=["']button["'][^>]+href=["']https:\/\/line\.me\/R\/ti\/p\/@680mdoos["']/i.test(html)) {
+    fail(file, "end-of-page CTA must link directly to the official LINE account");
+  }
+}
+
+const faqHtml = await readFile(new URL("faq.html", root), "utf8");
+if ((faqHtml.match(/<details\b/gi) || []).length !== 9) fail("faq.html", "expected nine independent FAQ disclosure cards");
+
+const homeHtml = await readFile(new URL("index.html", root), "utf8");
+const mobileActions = homeHtml.match(/<nav\b[^>]*class=["'][^"']*mobile-actions[^"']*["'][\s\S]*?<\/nav>/i)?.[0] || "";
+if ((mobileActions.match(/<a\b/gi) || []).length !== 2) fail("index.html", "mobile action bar must contain exactly phone and LINE actions");
+const globalMenu = homeHtml.match(/<nav\b[^>]*id=["']global-nav["'][\s\S]*?<\/nav>/i)?.[0] || "";
+if ((globalMenu.match(/class=["'][^"']*nav__group(?:\s|["'])/gi) || []).length !== 4) {
+  fail("index.html", "global menu must use four scannable groups");
+}
+
 for (const asset of ["favicon.ico", "favicon.svg", "assets/apple-touch-icon.png", "assets/icon-192.png", "assets/icon-512.png", "assets/og-image.png", "site.webmanifest"]) {
   try {
     await access(new URL(asset, root));
@@ -220,6 +259,9 @@ if (!isStaging && robotHeaderMatches.length) fail("_headers", "unexpected X-Robo
 
 const notFound = await readFile(new URL("404.html", root), "utf8");
 if (meta(notFound, "name", "robots") !== stagingRobots) fail("404.html", `robots meta must be ${stagingRobots}`);
+for (const requiredMarkup of ["info-header", "info-footer", '<script src="./script.js"']) {
+  if (!notFound.includes(requiredMarkup)) fail("404.html", `missing shared shell markup: ${requiredMarkup}`);
+}
 
 const redirects = await readFile(new URL("_redirects", root), "utf8");
 for (const oldPath of ["/index.php", "/about.php", "/selection.php", "/childrenshoes.php", "/product.php", "/insole.php", "/seminar.php", "/contact.php"]) {
