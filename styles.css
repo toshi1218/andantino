@@ -681,16 +681,6 @@ a {
   padding: 64px;
 }
 
-.feature-card__number {
-  position: absolute;
-  top: 38px;
-  right: 44px;
-  color: var(--peach);
-  font-family: var(--serif);
-  font-size: 58px;
-  font-weight: 700;
-}
-
 .feature-card__content h3,
 .service-card h3 {
   margin: 0;
@@ -829,20 +819,10 @@ a {
 }
 
 .service-card__body {
-  position: relative;
   padding: 32px;
 }
 
-.service-card__body > span {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  color: var(--coral);
-  font-family: var(--serif);
-}
-
 .service-card h3 {
-  padding-right: 42px;
   font-size: 25px;
 }
 
