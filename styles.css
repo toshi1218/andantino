@@ -912,7 +912,6 @@ a {
 
   .header__inner {
     min-height: 76px;
-    gap: 16px;
   }
 
   .brand__name {
@@ -921,15 +920,17 @@ a {
 
   .brand__tagline {
     font-size: 9px;
-    letter-spacing: 0.18em;
   }
 
   .header__actions {
+    margin-left: auto;
+  }
+
+  .header__actions .button {
     display: none;
   }
 
   .menu-button {
-    margin-left: auto;
     width: 44px;
     height: 44px;
     display: grid;
