@@ -1,0 +1,9 @@
+{
+  "name": "andantino-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate-sitemap.mjs && node scripts/audit-site.mjs",
+    "validate": "node --check script.js && node scripts/audit-site.mjs"
+  }
+}

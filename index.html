@@ -8,14 +8,21 @@
       content="和歌山市の子ども靴・婦人靴専門店ANDANTINO。シューフィッターによる靴選び、足育相談、インソール作製で家族の健やかな歩みを支えます。"
    >
     <meta name="theme-color" content="#fff9f2">
+    <meta name="robots" content="index,follow,max-image-preview:large">
     <link rel="canonical" href="https://www.andantino-shoes.jp/">
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+    <link rel="manifest" href="./site.webmanifest">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:site_name" content="ANDANTINO">
     <meta property="og:title" content="ANDANTINO｜和歌山の子ども靴・婦人靴と足の相談室">
     <meta property="og:description" content="シューフィッターによる靴選び、足育相談、インソール作製。和歌山市で家族の健やかな歩みを支えます。">
     <meta property="og:url" content="https://www.andantino-shoes.jp/">
-    <meta property="og:image" content="https://www.andantino-shoes.jp/assets/interior.webp">
+    <meta property="og:image" content="https://www.andantino-shoes.jp/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <title>ANDANTINO｜和歌山の子ども靴・婦人靴と足の相談室</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +75,17 @@
               "@type": "City",
               "name": "和歌山市"
             },
+            "foundingDate": "2007",
+            "founder": {
+              "@id": "https://www.andantino-shoes.jp/owner.html#yoko-igarashi"
+            },
+            "memberOf": {
+              "@type": "Organization",
+              "name": "Ferse",
+              "url": "https://ferse.jp/"
+            },
             "sameAs": [
+              "https://line.me/R/ti/p/@680mdoos",
               "https://www.facebook.com/share/18yvcF1E6G/",
               "https://blog.livedoor.jp/andantino7110/"
             ],
@@ -77,8 +94,22 @@
               "子どもの足育",
               "子ども靴のフィッティング",
               "インソール作製",
-              "足と靴の相談"
-            ]
+              "足と靴の相談",
+              "外反母趾に配慮した靴選び",
+              "内反小趾に配慮した靴選び",
+              "足の3つのアーチ",
+              "足育・靴選びセミナー"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "ANDANTINOの相談・サポート",
+              "itemListElement": [
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "足と靴のカウンセリング"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "子どもの足のカウンセリング"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "インソール作製・調整"}},
+                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "足育・靴選びセミナー"}}
+              ]
+            }
           },
           {
             "@type": "WebSite",
@@ -140,6 +171,7 @@
           <a href="#adult">大人の靴</a>
           <a href="#children">子どもの靴</a>
           <a href="#services">足と靴のお悩み</a>
+          <a href="./guides.html">足と靴の知識</a>
           <a href="#shop">店舗案内</a>
         </nav>
 
@@ -181,10 +213,10 @@
 
           <div class="hero__visual" role="img" aria-label="子どもの健やかな足を支える靴選び">
             <div class="hero__image hero__image--main">
-              <img src="./assets/child-feet.webp" alt="成長段階の異なる子どもたちの足">
+              <img src="./assets/child-feet.webp" width="500" height="600" fetchpriority="high" alt="成長段階の異なる子どもたちの足">
             </div>
             <div class="hero__image hero__image--secondary">
-              <img src="./assets/shoes.webp" alt="店内に並ぶ婦人靴">
+              <img src="./assets/shoes.webp" width="640" height="450" loading="lazy" alt="店内に並ぶ婦人靴">
             </div>
             <div class="hero__badge">
               <span class="hero__badge-icon">✓</span>
@@ -234,10 +266,10 @@
                   疲れやすい、外反母趾が気になる、膝や腰が痛む。足に合わない靴を見直し、
                   これから先も自分の足で歩ける毎日を支えます。
                 </p>
-                <a class="arrow-link" href="#consult">大人の足について相談する <span>→</span></a>
+                <a class="arrow-link" href="./adult-shoes.html">大人の靴選びを詳しく見る <span>→</span></a>
               </div>
               <div class="feature-card__media">
-                <img src="./assets/walking.webp" alt="公園を気持ちよく歩く人">
+                <img src="./assets/walking.webp" width="500" height="600" loading="lazy" alt="公園を気持ちよく歩く人">
               </div>
             </article>
 
@@ -250,10 +282,10 @@
                   ファーストシューズから成長期まで。子どもの足と靴を学んだ専門スタッフが、
                   健やかな成長と運動を足元から支えます。
                 </p>
-                <a class="arrow-link" href="#consult">子どもの足について相談する <span>→</span></a>
+                <a class="arrow-link" href="./childrens-shoes.html">子ども靴の選び方を見る <span>→</span></a>
               </div>
               <div class="feature-card__media">
-                <img src="./assets/child-feet.webp" alt="成長段階の異なる子どもたちの足">
+                <img src="./assets/child-feet.webp" width="500" height="600" loading="lazy" alt="成長段階の異なる子どもたちの足">
               </div>
             </article>
           </div>
@@ -275,30 +307,52 @@
 
           <div class="services__grid">
             <article class="service-card">
-              <div class="service-card__media"><img src="./assets/shoes.webp" alt="足に合わせて選べる婦人靴"></div>
+              <div class="service-card__media"><img src="./assets/shoes.webp" width="640" height="450" loading="lazy" alt="足に合わせて選べる婦人靴"></div>
               <div class="service-card__body">
                 <span>01</span>
                 <h3>専門的な靴選び</h3>
                 <p>足の形やお悩み、用途に合う靴を丁寧にフィッティングします。</p>
+                <a class="arrow-link" href="./adult-shoes.html">詳しく見る <span>→</span></a>
               </div>
             </article>
             <article class="service-card service-card--raised">
-              <div class="service-card__media"><img src="./assets/insole.webp" alt="職人の手によるインソールの微調整"></div>
+              <div class="service-card__media"><img src="./assets/insole.webp" width="640" height="450" loading="lazy" alt="職人の手によるインソールの微調整"></div>
               <div class="service-card__body">
                 <span>02</span>
                 <h3>インソール作製</h3>
                 <p>靴と足が一体になるよう、一人ひとりに合わせて細かく調整します。</p>
+                <a class="arrow-link" href="./insoles.html">詳しく見る <span>→</span></a>
               </div>
             </article>
             <article class="service-card">
-              <div class="service-card__media"><img src="./assets/interior.webp" alt="相談できる落ち着いた店内"></div>
+              <div class="service-card__media"><img src="./assets/interior.webp" width="1200" height="800" loading="lazy" alt="相談できる落ち着いた店内"></div>
               <div class="service-card__body">
                 <span>03</span>
                 <h3>カウンセリング</h3>
                 <p>足の痛みや歩き方、靴選びのお悩みを、落ち着いてお聞きします。</p>
+                <a class="arrow-link" href="./foot-check.html">詳しく見る <span>→</span></a>
               </div>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="knowledge section" aria-labelledby="knowledge-title">
+        <div class="container">
+          <div class="section-heading section-heading--row">
+            <div>
+              <span class="section-kicker">FOOT &amp; SHOE GUIDE</span>
+              <h2 id="knowledge-title">足と靴を知ることから、<br>心地よい一歩へ。</h2>
+            </div>
+            <p>ANDANTINOの公式情報と専門機関の公開情報をもとに、来店前に知っておきたい基礎知識をまとめました。</p>
+          </div>
+          <div class="knowledge__grid">
+            <a href="./foot-problems.html"><span>01</span><strong>外反母趾・内反小趾と<br>足の3つのアーチ</strong><small>足の形と靴選びの基礎</small></a>
+            <a href="./insoles.html"><span>02</span><strong>インソール作製の流れ</strong><small>計測・作製・調整について</small></a>
+            <a href="./childrens-shoes.html"><span>03</span><strong>子ども靴の選び方</strong><small>ファーストシューズから成長期まで</small></a>
+            <a href="./foot-check.html"><span>04</span><strong>足の計測とカウンセリング</strong><small>何を見て、何を相談できるか</small></a>
+          </div>
+          <a class="outline-button knowledge__more" href="./guides.html">足と靴の解説をすべて見る <span>→</span></a>
         </div>
       </section>
 
@@ -331,7 +385,7 @@
       <section class="shop section" id="shop">
         <div class="container shop__grid">
           <div class="shop__media">
-            <img src="./assets/store.webp" alt="和歌山市新高町にあるANDANTINOの店舗外観">
+            <img src="./assets/store.webp" width="640" height="450" loading="lazy" alt="和歌山市新高町にあるANDANTINOの店舗外観">
             <span>WAKAYAMA · ANDANTINO</span>
           </div>
           <div class="shop__content">
@@ -373,12 +427,24 @@
           <a href="#services">インソール</a>
           <a href="#shop">店舗案内</a>
           <a href="./about.html">ANDANTINOについて</a>
+          <a href="./owner.html">五十嵐洋子</a>
           <a href="./faq.html">よくある質問</a>
+          <a href="./guides.html">足と靴の知識</a>
+          <a href="./products.html">取扱商品</a>
+          <a href="./seminars.html">セミナー</a>
+          <a href="./contact.html">お問い合わせ</a>
+          <a href="./links.html">外部リンク</a>
+          <a href="./privacy.html">プライバシー</a>
+          <a href="./terms.html">利用規約</a>
+          <a href="./legal.html">特定商取引法</a>
         </div>
       </div>
       <div class="container footer__bottom">
         <span>© 2026 ANDANTINO. All Rights Reserved.</span>
-        <span class="footer__social">\n          <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook</a>\n          <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ</a>\n        </span>
+        <span class="footer__social">
+          <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ</a>
+        </span>
       </div>
     </footer>
 
