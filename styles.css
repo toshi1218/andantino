@@ -866,18 +866,18 @@ a {
   overflow: hidden;
   border-radius: 34px;
   background:
-    radial-gradient(circle at 95% 10%, rgba(255, 255, 255, 0.12), transparent 30%),
-    var(--teal);
-  color: #fff;
+    radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.6), transparent 34%),
+    linear-gradient(135deg, #efe8f8, #e4d7f2);
+  color: var(--teal);
 }
 
 .section-kicker--light {
-  color: #a9d9df;
+  color: var(--coral);
 }
 
 .consult__content p {
   margin: 0 0 26px;
-  color: #dce9e8;
+  color: var(--charcoal);
 }
 
 .consult__buttons {
@@ -925,7 +925,7 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .consult__phone small {
-  color: #b7cecf;
+  color: var(--muted);
   font-size: 11px;
 }
 
@@ -1895,6 +1895,10 @@ a.button[href^="https://line.me/"] .button__icon {
   font-family: var(--serif);
   font-size: clamp(22px, 2.4vw, 30px);
   line-height: 1.55;
+}
+
+.knowledge__grid strong {
+  margin-top: 0;
 }
 
 .knowledge__grid small,
