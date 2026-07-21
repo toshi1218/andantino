@@ -195,22 +195,61 @@
           <span class="brand__tagline">足と靴の相談室</span>
         </a>
 
-        <button
-          class="menu-button"
-          type="button"
-          aria-expanded="false"
-          aria-controls="global-nav"
-        >
-          <span></span><span></span><span></span>
-          <span class="sr-only">メニューを開く</span>
-        </button>
-
-        <nav class="nav" id="global-nav" aria-label="メインナビゲーション">
+        <nav class="primary-nav" aria-label="主要ページ">
           <a href="#adult">大人の靴</a>
           <a href="#children">子どもの靴</a>
           <a href="#services">足と靴のお悩み</a>
           <a href="./guides.html">足と靴の知識</a>
           <a href="#shop">店舗案内</a>
+        </nav>
+
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="global-nav">
+          <span class="menu-button__text">全メニュー</span>
+          <span class="menu-button__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="sr-only">全メニューを開く</span>
+        </button>
+
+        <nav class="nav" id="global-nav" aria-label="全ページメニュー">
+          <div class="container nav__panel">
+            <div class="nav__group">
+              <strong>靴・サービス</strong>
+              <a href="./adult-shoes.html">大人の靴選び</a>
+              <a href="./childrens-shoes.html">子どもの足育・靴</a>
+              <a href="./insoles.html">インソール</a>
+              <a href="./products.html">取扱商品</a>
+              <a href="./pricing.html">料金</a>
+              <a href="./seminars.html">足育・靴選びセミナー</a>
+            </div>
+            <div class="nav__group">
+              <strong>足と靴の知識</strong>
+              <a href="./guides.html">知識ページ一覧</a>
+              <a href="./shoe-wearing.html">靴の選び方・履き方</a>
+              <a href="./foot-problems.html">外反母趾・内反小趾・3つのアーチ</a>
+              <a href="./foot-check.html">足・靴・歩き方を見る理由</a>
+              <a href="./faq.html">よくある質問</a>
+            </div>
+            <div class="nav__group">
+              <strong>ANDANTINO</strong>
+              <a href="./about.html">店舗・個人事業概要</a>
+              <a href="./owner.html">五十嵐洋子について</a>
+              <a href="#shop">店舗案内・アクセス</a>
+              <a href="./contact.html">お問い合わせ・相談予約</a>
+            </div>
+            <div class="nav__group">
+              <strong>公式情報</strong>
+              <a href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINE ↗</a>
+              <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook ↗</a>
+              <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ ↗</a>
+              <a href="./links.html">公式・関連外部リンク</a>
+            </div>
+            <div class="nav__group nav__group--policy">
+              <strong>サイトポリシー</strong>
+              <a href="./editorial-policy.html">編集方針・情報源</a>
+              <a href="./privacy.html">プライバシーポリシー</a>
+              <a href="./terms.html">利用規約</a>
+              <a href="./legal.html">特定商取引法に基づく表記</a>
+            </div>
+          </div>
         </nav>
 
         <div class="header__actions">
