@@ -2068,8 +2068,31 @@ a.button[href^="https://line.me/"] .button__icon {
   border-radius: 999px;
 }
 
+.expert__role {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.02em;
+}
+
 .expert__body h2 {
-  margin: 10px 0 18px;
+  margin: 8px 0 16px;
+}
+
+.expert__what {
+  margin: 0 0 18px;
+  padding: 16px 20px;
+  background: var(--cream-2);
+  border-left: 3px solid var(--coral);
+  border-radius: 0 12px 12px 0;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--charcoal);
+}
+
+.expert__what strong {
+  color: var(--coral);
 }
 
 .expert__body > p {
