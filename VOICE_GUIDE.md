@@ -10,6 +10,10 @@
 - 靴やインソールを渡して終わりではなく、正しい履き方と家庭での確認方法まで伝える。
 - 子どもの靴選びに迷う保護者を責めず、「難しくて当然」という立場で一緒に考える。
 - 和歌山の方が、自分の足で自然の中を気持ちよく歩き続けられることを願う。
+- ブランド名や「理想の一足」を先に決めず、一人ずつ異なる足型と、実際に歩く姿で選ぶ。
+- 足や身体は変化するものとして、記録・再確認・調整をサービスの一部と考える。
+- 子ども靴の価格や買い替えが家庭の負担になる現実にも目を向け、必要性と家庭でできる確認を具体的に伝える。
+- 学び続け、履いて確かめ、「本当にそうか」と率直に問い直す姿勢を残す。
 
 ## 文体
 
@@ -27,6 +31,10 @@
 - [公式ブログ「上履きの比較 その3」](https://blog.livedoor.jp/andantino7110/archives/1978808.html)
 - [公式ブログ「フラウプラッツ訪問記」](https://blog.livedoor.jp/andantino7110/archives/1919333.html)
 - [公式ブログ「外反母趾と自然療法フットケア」](https://blog.livedoor.jp/andantino7110/archives/1771620.html)
+- [公式ブログ「アフガニスタンへ義足を送る」](https://blog.livedoor.jp/andantino7110/archives/1179447.html)
+- [旧公式サイト「30代からはじめる靴選び」](https://www.andantino-shoes.jp/selection.php)
+- [旧公式サイト「子どもの足育と靴」](https://www.andantino-shoes.jp/childrenshoes.php)
+- [旧公式サイト「インソール作製・料金」](https://www.andantino-shoes.jp/insole.php)
 
 ## 医療表現の扱い
 

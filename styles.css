@@ -1781,6 +1781,81 @@ a.button[href^="https://line.me/"] .button__icon {
   min-width: 0;
 }
 
+.author-note {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  margin: 0 0 56px;
+  padding: 26px;
+  border: 1px solid rgba(112, 78, 160, 0.2);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #f6f0ff, var(--paper));
+  box-shadow: 0 12px 32px rgba(73, 48, 105, 0.07);
+}
+
+.author-note__portrait {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 24%;
+  border-radius: 50%;
+}
+
+.author-note__label {
+  display: block;
+  margin-bottom: 8px;
+  color: #704ea0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.author-note h2,
+.author-note h3 {
+  margin: 0 0 10px;
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: clamp(23px, 2.5vw, 32px);
+}
+
+.author-note p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.author-note__signature {
+  display: block;
+  margin-top: 12px;
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.guide-intro {
+  max-width: 980px;
+  margin: 0 auto 42px;
+}
+
+.guide-path {
+  margin-top: 54px;
+  padding: 34px;
+  border-radius: 24px;
+  background: var(--cream);
+}
+
+.guide-path h2 {
+  margin: 0 0 18px;
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: clamp(27px, 3vw, 38px);
+}
+
+.guide-path p {
+  margin: 0;
+  color: var(--muted);
+}
+
 .prose section + section {
   margin-top: 72px;
 }
@@ -2072,5 +2147,16 @@ a.button[href^="https://line.me/"] .button__icon {
   .legacy-gallery,
   .legacy-gallery--three {
     grid-template-columns: 1fr;
+  }
+
+  .author-note {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: left;
+  }
+
+  .author-note__portrait {
+    width: 112px;
+    height: 112px;
   }
 }

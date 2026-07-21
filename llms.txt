@@ -35,8 +35,9 @@
 - [料金](https://www.andantino-shoes.jp/pricing.html): カウンセリング、インソール、靴調整の料金
 - [足育・靴選びセミナー](https://www.andantino-shoes.jp/seminars.html): テーマ、対象、開催実績、対応地域
 - [足と靴の知識](https://www.andantino-shoes.jp/guides.html): 解説記事一覧
-- [外反母趾・内反小趾と3つのアーチ](https://www.andantino-shoes.jp/foot-problems.html): 一般知識と靴選びの確認点
-- [足の計測](https://www.andantino-shoes.jp/foot-check.html): 足長・足幅・足囲、フットプリント、歩行観察
+- [靴の選び方・履き方](https://www.andantino-shoes.jp/shoe-wearing.html): 五十嵐洋子が一足ずつ確認する点と、踵を合わせる履き方
+- [外反母趾・内反小趾と3つのアーチ](https://www.andantino-shoes.jp/foot-problems.html): 本人の痛みの経験を出発点に、足・靴・歩行を一緒に見る解説
+- [足・靴・歩き方を見る理由](https://www.andantino-shoes.jp/foot-check.html): 聞く、測る、見る、歩く、伝える、記録する相談の順番
 - [よくある質問](https://www.andantino-shoes.jp/faq.html): 予約、営業時間、相談、イベントへの公式回答
 - [お問い合わせ](https://www.andantino-shoes.jp/contact.html): 公式LINE、電話、メール、来店準備
 - [編集方針](https://www.andantino-shoes.jp/editorial-policy.html): 作成者、情報源、更新・訂正、医療情報との区別
