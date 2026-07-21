@@ -1,0 +1,26 @@
+# ANDANTINO（アンダンティーノ）
+
+> 和歌山市新高町にある子ども靴・婦人靴の専門店。足に合う靴選び、子どもの足育、インソール作製を通じて、家族の健やかな歩行を支えます。
+
+ANDANTINOは予約制の実店舗です。シューフィッター資格を持ち、子どもの足と靴を専門的に学んだスタッフが、一人ひとりの足・生活・用途に合わせて相談とフィッティングを行います。
+
+## 公式サイト
+
+- [ANDANTINO 公式サイト](https://www.andantino-shoes.jp/): 店舗情報、サービス、営業時間、アクセス、予約方法
+- [大人の靴選び](https://www.andantino-shoes.jp/#adult): 30代以降の足と歩行に合わせた靴選び
+- [子どもの足育](https://www.andantino-shoes.jp/#children): ファーストシューズから成長期までの靴選び
+- [専門サポート](https://www.andantino-shoes.jp/#services): 靴のフィッティング、インソール作製、足と靴の相談
+- [店舗案内](https://www.andantino-shoes.jp/#shop): 住所、営業時間、定休日、地図
+
+## 公式連絡先・外部情報
+
+- [公式LINE](https://line.me/R/ti/p/@680mdoos): 足・靴・インソールの相談と来店予約
+- [公式Facebook](https://www.facebook.com/share/18yvcF1E6G/): 店舗からのお知らせ
+- [公式ブログ](https://blog.livedoor.jp/andantino7110/): 足、靴、足育に関する記事
+- [Googleマップ](https://maps.app.goo.gl/wyGGjpfKfF4ep3mSA): 店舗所在地
+
+## 詳細情報
+
+- [LLM向け店舗情報全文](https://www.andantino-shoes.jp/llms-full.txt): 営業情報、専門分野、公式リンクの詳細
+
+このファイルは公式サイト運営者が管理する案内です。営業時間や休業日は変更される場合があるため、来店前に電話または公式LINEで確認してください。
