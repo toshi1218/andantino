@@ -294,6 +294,47 @@ a {
   font-weight: 700;
 }
 
+.header__primary {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-left: 12px;
+}
+
+.header__primary a {
+  position: relative;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+  text-decoration: none;
+  padding: 6px 2px;
+  transition: color 160ms ease;
+}
+
+.header__primary a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--coral);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.header__primary a:hover,
+.header__primary a:focus-visible {
+  color: var(--coral);
+}
+
+.header__primary a:hover::after,
+.header__primary a:focus-visible::after {
+  transform: scaleX(1);
+}
+
 .menu-button {
   min-height: 44px;
   display: inline-flex;
@@ -990,6 +1031,10 @@ a.button[href^="https://line.me/"] .button__icon {
 @media (max-width: 1100px) {
   .nav__panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .header__primary {
+    display: none;
   }
 
   .phone-link {
@@ -1946,6 +1991,45 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--teal);
   font-size: 13px;
   font-weight: 700;
+}
+
+/* ---------- Quick nav (mobile/tablet) ---------- */
+.quicknav {
+  display: none;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.quicknav__inner {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 12px 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.quicknav__inner::-webkit-scrollbar {
+  display: none;
+}
+
+.quicknav a {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal);
+  background: var(--cream-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 15px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .quicknav {
+    display: block;
+  }
 }
 
 /* ---------- 専門家紹介 (Expert) ---------- */
