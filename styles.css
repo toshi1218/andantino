@@ -721,6 +721,54 @@ a {
   transform: scale(1.025);
 }
 
+.shoe-joy {
+  background: #fffdf9;
+}
+
+.shoe-joy__panel {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  overflow: hidden;
+  border: 1px solid rgba(105, 78, 178, 0.22);
+  border-radius: 32px;
+  background: linear-gradient(135deg, #f8f3ff 0%, #fffaf4 100%);
+  box-shadow: 0 14px 44px rgba(71, 49, 31, 0.07);
+}
+
+.shoe-joy__media {
+  min-height: 440px;
+  overflow: hidden;
+}
+
+.shoe-joy__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shoe-joy__content {
+  align-self: center;
+  padding: clamp(42px, 6vw, 78px);
+}
+
+.shoe-joy__content h2 {
+  margin: 12px 0 24px;
+  font-family: var(--serif);
+  font-size: clamp(31px, 4vw, 50px);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.shoe-joy__content > p {
+  color: var(--muted);
+}
+
+.shoe-joy__note {
+  margin: 18px 0 30px;
+  padding-left: 18px;
+  border-left: 3px solid var(--coral);
+}
+
 .arrow-link {
   display: inline-flex;
   align-items: center;
@@ -1197,6 +1245,15 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .feature-card__media {
     min-height: 360px;
+  }
+
+  .shoe-joy__panel {
+    grid-template-columns: 1fr;
+  }
+
+  .shoe-joy__media {
+    min-height: 300px;
+    max-height: 420px;
   }
 
   .services__grid {

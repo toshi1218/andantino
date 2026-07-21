@@ -18,6 +18,7 @@ export const pages = [
   { file: "faq.html", path: "/faq.html", priority: "0.8" },
   { file: "contact.html", path: "/contact.html", priority: "0.9" },
   { file: "links.html", path: "/links.html", priority: "0.6" },
+  { file: "editorial-policy.html", path: "/editorial-policy.html", priority: "0.4" },
   { file: "privacy.html", path: "/privacy.html", priority: "0.4" },
   { file: "terms.html", path: "/terms.html", priority: "0.4" },
   { file: "legal.html", path: "/legal.html", priority: "0.5" }

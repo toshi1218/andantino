@@ -181,6 +181,20 @@ for (const page of pages) {
     if (html.includes(phrase)) fail(page.file, `customer-facing copy must use polite Japanese: ${phrase}`);
   }
 
+  const unsupportedFirstPersonClaims = [
+    "保護者の方を責めるための足育ではありません",
+    "記録を残して次に比べることまでが私の仕事です",
+    "商品をお渡しした日を終わりにしないこと",
+    "商品からではなく、履く方の足から考えます"
+  ];
+  for (const phrase of unsupportedFirstPersonClaims) {
+    if (html.includes(phrase)) fail(page.file, `unsupported first-person claim must not be presented as a verified quote: ${phrase}`);
+  }
+
+  if (/https?:\/\/(?:www\.)?ameblo\.jp\//i.test(html)) {
+    fail(page.file, "unverified Ameba account must not be presented as an official source");
+  }
+
   if (page.path !== "/") {
     if (!/class=["'][^"']*info-header/i.test(html)) fail(page.file, "missing shared information-page header");
     if (!/class=["'][^"']*info-footer/i.test(html)) fail(page.file, "missing shared information-page footer");
@@ -259,11 +273,24 @@ const faqHtml = await readFile(new URL("faq.html", root), "utf8");
 if ((faqHtml.match(/<details\b/gi) || []).length !== 10) fail("faq.html", "expected ten independent FAQ disclosure cards");
 
 const homeHtml = await readFile(new URL("index.html", root), "utf8");
+if (!homeHtml.includes("足に合うことも、<br>履いて出かける楽しさも。")) {
+  fail("index.html", "home must express both fit and the joy of wearing shoes");
+}
 const mobileActions = homeHtml.match(/<nav\b[^>]*class=["'][^"']*mobile-actions[^"']*["'][\s\S]*?<\/nav>/i)?.[0] || "";
 if ((mobileActions.match(/<a\b/gi) || []).length !== 2) fail("index.html", "mobile action bar must contain exactly phone and LINE actions");
 const globalMenu = homeHtml.match(/<nav\b[^>]*id=["']global-nav["'][\s\S]*?<\/nav>/i)?.[0] || "";
 if ((globalMenu.match(/class=["'][^"']*nav__group(?:\s|["'])/gi) || []).length !== 4) {
   fail("index.html", "global menu must use four scannable groups");
+}
+
+const productsHtml = await readFile(new URL("products.html", root), "utf8");
+if (!productsHtml.includes('id="style"') || !productsHtml.includes("約3.5cmのヒール")) {
+  fail("products.html", "products must include the sourced fit-and-style example");
+}
+
+const childrenHtml = await readFile(new URL("childrens-shoes.html", root), "utf8");
+for (const detail of ['id="case"', "23.0cmの細い足に、24.5cmの学校靴", "ほかのお子さまに当てはまる基準ではありません"]) {
+  if (!childrenHtml.includes(detail)) fail("childrens-shoes.html", `missing sourced and qualified consultation example: ${detail}`);
 }
 
 const css = await readFile(new URL("styles.css", root), "utf8");
