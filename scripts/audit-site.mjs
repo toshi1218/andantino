@@ -265,8 +265,11 @@ if (!contactHtml.includes("<h1>ご予約・ご相談・お問い合わせ</h1>")
 }
 
 const sharedScript = await readFile(new URL("script.js", root), "utf8");
-for (const label of ["ご予約・ご相談・お問い合わせ", "LINEでご予約・ご相談", "お電話でご相談"]) {
+for (const label of ["ご予約・ご相談・お問い合わせ", "LINEでご予約・ご相談"]) {
   if (!sharedScript.includes(label)) fail("script.js", `shared navigation is missing polite label: ${label}`);
+}
+for (const action of ["tel:0734947110", "mailto:andantino@wine.plala.or.jp", "line.me/R/ti/p/@680mdoos"]) {
+  if (!sharedScript.includes(action)) fail("script.js", `sticky action bar is missing contact action: ${action}`);
 }
 
 const faqHtml = await readFile(new URL("faq.html", root), "utf8");
