@@ -2539,18 +2539,24 @@ a.button[href^="https://line.me/"] .button__icon {
   margin-top: 72px;
   padding: 30px;
   border-radius: 22px;
-  background: var(--teal);
-  color: #fff;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.6), transparent 34%),
+    linear-gradient(135deg, #efe8f8, #e4d7f2);
+  color: var(--charcoal);
 }
 
 .article-cta h2,
 .article-cta p {
   margin: 0;
-  color: #fff;
 }
 
-.article-cta h2 {
+.article-cta div h2 {
+  color: var(--teal);
   font-size: 28px;
+}
+
+.article-cta div p {
+  color: var(--charcoal);
 }
 
 .policy-content {

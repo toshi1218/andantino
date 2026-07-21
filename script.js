@@ -47,7 +47,7 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
   menuButton.type = "button";
   menuButton.setAttribute("aria-expanded", "false");
   menuButton.setAttribute("aria-controls", "global-nav");
-  menuButton.innerHTML = '<span class="menu-button__text">全メニュー</span><span class="menu-button__bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="sr-only">全メニューを開く</span>';
+  menuButton.innerHTML = '<span class="menu-button__text">メニュー</span><span class="menu-button__bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="sr-only">メニューを開く</span>';
   headerInner.insertBefore(menuButton, quickNav || null);
 
   const navigation = document.createElement("nav");
@@ -61,7 +61,7 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
 if (infoHeader && !document.querySelector(".mobile-actions")) {
   document.body.insertAdjacentHTML(
     "beforeend",
-    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">お電話でご相談</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a></nav>'
+    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">お電話</a><a href="mailto:andantino@wine.plala.or.jp">メール</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a></nav>'
   );
 }
 
@@ -75,7 +75,7 @@ if (menuButton && navigation) {
     menuButton.setAttribute("aria-expanded", String(isOpen));
     navigation.classList.toggle("is-open", isOpen);
     document.body.classList.toggle("menu-open", isOpen);
-    if (menuLabel) menuLabel.textContent = isOpen ? "全メニューを閉じる" : "全メニューを開く";
+    if (menuLabel) menuLabel.textContent = isOpen ? "メニューを閉じる" : "メニューを開く";
     if (!isOpen && returnFocus) menuButton.focus();
   };
 
