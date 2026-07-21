@@ -1872,14 +1872,13 @@ a.button[href^="https://line.me/"] .button__icon {
 .connect-line,
 .connect-ferse {
   min-width: 0;
-  min-height: 340px;
   border-radius: 24px;
 }
 
 .connect-line {
   display: grid;
-  grid-template-columns: minmax(160px, 184px) minmax(0, 1fr);
-  gap: 30px;
+  grid-template-columns: minmax(140px, 156px) minmax(0, 1fr);
+  gap: 26px;
   align-items: center;
   padding: 30px;
   border: 1px solid #8bdfa9;
@@ -1887,7 +1886,7 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .connect-line__qr {
-  width: min(184px, 100%);
+  width: min(156px, 100%);
   aspect-ratio: 1 / 1;
   display: grid;
   align-self: center;
@@ -1922,7 +1921,8 @@ a.button[href^="https://line.me/"] .button__icon {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 38px;
+  gap: 4px;
+  padding: 34px 38px;
   border: 1px solid #f1cfd2;
   background: linear-gradient(145deg, #fff, #fff7f7);
   transition: transform 180ms ease, box-shadow 180ms ease;
