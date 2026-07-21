@@ -838,6 +838,15 @@ a {
   font-size: 12px;
 }
 
+.footer__social {
+  display: flex;
+  gap: 18px;
+}
+
+.footer__social a:hover {
+  color: var(--coral);
+}
+
 .mobile-actions {
   display: none;
 }
