@@ -256,7 +256,7 @@ for (const label of ["ご予約・ご相談・お問い合わせ", "LINEでご�
 }
 
 const faqHtml = await readFile(new URL("faq.html", root), "utf8");
-if ((faqHtml.match(/<details\b/gi) || []).length !== 9) fail("faq.html", "expected nine independent FAQ disclosure cards");
+if ((faqHtml.match(/<details\b/gi) || []).length !== 10) fail("faq.html", "expected ten independent FAQ disclosure cards");
 
 const homeHtml = await readFile(new URL("index.html", root), "utf8");
 const mobileActions = homeHtml.match(/<nav\b[^>]*class=["'][^"']*mobile-actions[^"']*["'][\s\S]*?<\/nav>/i)?.[0] || "";
