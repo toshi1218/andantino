@@ -95,6 +95,14 @@ for (const page of pages) {
     const attrs = attributes(match[0]);
     if (!("alt" in attrs)) fail(page.file, `image missing alt: ${match[0]}`);
     if (!attrs.width || !attrs.height) fail(page.file, `image missing width/height: ${attrs.src || match[0]}`);
+    if (attrs.src && !/^(?:https?:|data:)/.test(attrs.src)) {
+      const target = attrs.src.replace(/^\.\//, "").replace(/^\//, "");
+      try {
+        await access(new URL(target, root));
+      } catch {
+        fail(page.file, `missing image asset: ${attrs.src}`);
+      }
+    }
   }
 
   if (/hreflang=/i.test(html)) fail(page.file, "hreflang found on Japanese-only site");
