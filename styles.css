@@ -2,9 +2,9 @@
   --cream: #fff9f2;
   --cream-2: #f7f0e7;
   --paper: #fffdf9;
-  --peach: #e9dff3;
-  --coral: #6d4aa3;
-  --coral-dark: #55357f;
+  --peach: #d9e9e6;
+  --coral: #3c7b86;
+  --coral-dark: #2b5f63;
   --line-green: #06c755;
   --line-green-dark: #05b94e;
   --line-green-ink: #073b1e;
@@ -95,7 +95,7 @@ a {
 }
 
 .notice {
-  background: linear-gradient(90deg, #eee7f7, #fbf8ff);
+  background: linear-gradient(90deg, #e7f1ee, #fbfefd);
   color: var(--teal);
   font-family: var(--serif);
   font-size: 13px;
@@ -189,7 +189,7 @@ a {
   padding: 18px;
   margin: -18px 0;
   border-radius: 18px;
-  background: #f7f1ff;
+  background: #eaf4f1;
 }
 
 .nav__group--secondary a:nth-last-child(-n + 4) {
@@ -261,7 +261,7 @@ a {
   border: 0;
   border-radius: 999px;
   background: var(--coral);
-  box-shadow: 0 10px 24px rgba(109, 74, 163, 0.24);
+  box-shadow: 0 10px 24px rgba(38, 78, 82, 0.2);
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -272,7 +272,7 @@ a {
 .button:focus-visible {
   transform: translateY(-2px);
   background: var(--coral-dark);
-  box-shadow: 0 14px 30px rgba(109, 74, 163, 0.3);
+  box-shadow: 0 14px 30px rgba(38, 78, 82, 0.26);
 }
 
 .button--small {
@@ -721,9 +721,9 @@ a {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   overflow: hidden;
-  border: 1px solid rgba(105, 78, 178, 0.22);
+  border: 1px solid rgba(38, 78, 82, 0.16);
   border-radius: 32px;
-  background: linear-gradient(135deg, #f8f3ff 0%, #fffaf4 100%);
+  background: linear-gradient(135deg, #e9f2ef 0%, #fffaf4 100%);
   box-shadow: 0 14px 44px rgba(71, 49, 31, 0.07);
 }
 
@@ -847,7 +847,7 @@ a {
   border-radius: 34px;
   background:
     radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.6), transparent 34%),
-    linear-gradient(135deg, #efe8f8, #e4d7f2);
+    linear-gradient(135deg, #e7f1ee, #d3e6e2);
   color: var(--teal);
 }
 
@@ -2378,10 +2378,10 @@ a.button[href^="https://line.me/"] .button__icon {
   align-items: center;
   margin: 0 0 56px;
   padding: 26px;
-  border: 1px solid rgba(112, 78, 160, 0.2);
+  border: 1px solid rgba(38, 78, 82, 0.16);
   border-radius: 24px;
-  background: linear-gradient(135deg, #f6f0ff, var(--paper));
-  box-shadow: 0 12px 32px rgba(73, 48, 105, 0.07);
+  background: linear-gradient(135deg, #e9f2ef, var(--paper));
+  box-shadow: 0 12px 32px rgba(38, 78, 82, 0.07);
 }
 
 .author-note__portrait {
@@ -2395,7 +2395,7 @@ a.button[href^="https://line.me/"] .button__icon {
 .author-note__label {
   display: block;
   margin-bottom: 8px;
-  color: #704ea0;
+  color: var(--coral);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -2541,7 +2541,7 @@ a.button[href^="https://line.me/"] .button__icon {
   border-radius: 22px;
   background:
     radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.6), transparent 34%),
-    linear-gradient(135deg, #efe8f8, #e4d7f2);
+    linear-gradient(135deg, #e7f1ee, #d3e6e2);
   color: var(--charcoal);
 }
 
@@ -2820,12 +2820,22 @@ a.button[href^="https://line.me/"] .button__icon {
     max-height: calc(100vh - 70px);
   }
 
+  .section-heading h2,
+  .trust h2,
+  .consult h2,
+  .shop h2 {
+    font-size: clamp(22px, 5.6vw, 26px);
+    line-height: 1.5;
+    word-break: auto-phrase;
+  }
+
   .info-hero h1,
   .info-hero--compact h1,
   .article-hero h1 {
-    font-size: clamp(28px, 8.4vw, 37px);
-    line-height: 1.48;
-    overflow-wrap: anywhere;
+    font-size: clamp(20px, 5.4vw, 25px);
+    line-height: 1.5;
+    word-break: auto-phrase;
+    text-wrap: balance;
   }
 
   .info-hero p,
@@ -2844,10 +2854,10 @@ a.button[href^="https://line.me/"] .button__icon {
   .policy-content h2,
   .prose h2,
   .guide-path h2,
-  .article-cta h2 {
-    font-size: clamp(25px, 7.5vw, 31px);
-    line-height: 1.55;
-    overflow-wrap: anywhere;
+  .article-cta div h2 {
+    font-size: clamp(19px, 5vw, 24px);
+    line-height: 1.5;
+    word-break: auto-phrase;
     text-wrap: balance;
   }
 
@@ -2857,8 +2867,10 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .author-note h2,
   .author-note h3 {
-    font-size: clamp(22px, 6.8vw, 28px);
-    overflow-wrap: anywhere;
+    font-size: clamp(18px, 4.8vw, 22px);
+    line-height: 1.5;
+    word-break: auto-phrase;
+    text-wrap: balance;
   }
 
   .guide-path,
