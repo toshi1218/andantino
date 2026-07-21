@@ -381,7 +381,7 @@ a {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 68px 0 118px;
+  padding: 64px 0 96px;
   background:
     radial-gradient(circle at -1% 18%, rgba(246, 213, 200, 0.82) 0 72px, transparent 73px),
     linear-gradient(180deg, var(--cream), #fffdf8);
@@ -626,7 +626,7 @@ a {
 }
 
 .section {
-  padding: 118px 0;
+  padding: 100px 0;
 }
 
 .section-heading {
@@ -1177,7 +1177,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero {
-    padding: 52px 0 95px;
+    padding: 44px 0 60px;
   }
 
   .hero::before {
@@ -1202,7 +1202,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__visual {
-    min-height: 520px;
+    min-height: 420px;
   }
 
   .hero__image--main {
@@ -1229,11 +1229,11 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .section,
   .trust {
-    padding: 88px 0;
+    padding: 70px 0;
   }
 
   .section-heading {
-    margin-bottom: 42px;
+    margin-bottom: 34px;
   }
 
   .feature-card,
@@ -1250,7 +1250,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .feature-card__media {
-    min-height: 360px;
+    min-height: 280px;
   }
 
   .shoe-joy__panel {
@@ -1258,8 +1258,8 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .shoe-joy__media {
-    min-height: 300px;
-    max-height: 420px;
+    min-height: 240px;
+    max-height: 340px;
   }
 
   .services__grid {
@@ -1279,7 +1279,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .shop__media img {
-    min-height: 420px;
+    min-height: 320px;
   }
 
   .footer__top {
@@ -1335,6 +1335,15 @@ a.button[href^="https://line.me/"] .button__icon {
     display: none;
   }
 
+  .section,
+  .trust {
+    padding: 56px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 26px;
+  }
+
   .hero h1 {
     font-size: clamp(32px, 9vw, 39px);
   }
@@ -1350,7 +1359,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__visual {
-    min-height: 430px;
+    min-height: 330px;
   }
 
   .hero__image--main {
@@ -1393,17 +1402,11 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .feature-card__content {
-    padding: 46px 26px;
-  }
-
-  .feature-card__number {
-    top: 22px;
-    right: 24px;
-    font-size: 46px;
+    padding: 38px 24px;
   }
 
   .feature-card__media {
-    min-height: 280px;
+    min-height: 210px;
   }
 
   .consult__panel {
@@ -1412,7 +1415,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .shop__media img {
-    min-height: 310px;
+    min-height: 230px;
   }
 
   .shop__details div {
@@ -1523,7 +1526,7 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .info-section {
-  padding: 88px 0 120px;
+  padding: 80px 0 96px;
 }
 
 .info-layout {
@@ -1790,7 +1793,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .info-hero img {
-    height: 320px;
+    height: 260px;
   }
 
   .info-layout aside {
@@ -1830,11 +1833,11 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .info-hero img {
-    height: 260px;
+    height: 200px;
   }
 
   .info-section {
-    padding: 64px 0 90px;
+    padding: 48px 0 64px;
   }
 
   .fact-list div {
