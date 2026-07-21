@@ -233,6 +233,12 @@ if ((globalMenu.match(/class=["'][^"']*nav__group(?:\s|["'])/gi) || []).length !
   fail("index.html", "global menu must use four scannable groups");
 }
 
+const css = await readFile(new URL("styles.css", root), "utf8");
+const qrImageRule = css.match(/\.connect-line__qr img\s*\{([\s\S]*?)\}/)?.[1] || "";
+if (!/object-fit:\s*contain/.test(qrImageRule) || /object-fit:\s*cover/.test(qrImageRule)) {
+  fail("styles.css", "the official LINE QR code must be fully visible with object-fit: contain");
+}
+
 for (const asset of ["favicon.ico", "favicon.svg", "assets/apple-touch-icon.png", "assets/icon-192.png", "assets/icon-512.png", "assets/og-image.png", "site.webmanifest"]) {
   try {
     await access(new URL(asset, root));
