@@ -2,9 +2,9 @@
   --cream: #fff9f2;
   --cream-2: #f7f0e7;
   --paper: #fffdf9;
-  --peach: #f6d5c8;
-  --coral: #df705d;
-  --coral-dark: #c95b4b;
+  --peach: #e9dff3;
+  --coral: #6d4aa3;
+  --coral-dark: #55357f;
   --blue: #dceef2;
   --blue-strong: #3c7b86;
   --teal: #264e52;
@@ -88,7 +88,7 @@ a {
 }
 
 .notice {
-  background: linear-gradient(90deg, #fdebe2, #fff7ef);
+  background: linear-gradient(90deg, #eee7f7, #fbf8ff);
   color: var(--teal);
   font-family: var(--serif);
   font-size: 13px;
@@ -210,7 +210,7 @@ a {
   border: 0;
   border-radius: 999px;
   background: var(--coral);
-  box-shadow: 0 10px 24px rgba(223, 112, 93, 0.24);
+  box-shadow: 0 10px 24px rgba(109, 74, 163, 0.24);
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -221,7 +221,7 @@ a {
 .button:focus-visible {
   transform: translateY(-2px);
   background: var(--coral-dark);
-  box-shadow: 0 14px 30px rgba(223, 112, 93, 0.3);
+  box-shadow: 0 14px 30px rgba(109, 74, 163, 0.3);
 }
 
 .button--small {
