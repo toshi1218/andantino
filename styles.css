@@ -292,6 +292,7 @@ a {
   color: var(--coral);
   font-size: 9px;
   font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .header__primary {
@@ -1146,6 +1147,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .header__inner {
     min-height: 76px;
+    gap: 18px;
   }
 
   .brand__name {
@@ -1154,6 +1156,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .brand__tagline {
     font-size: 9px;
+    letter-spacing: 0.14em;
   }
 
   .header__actions {
@@ -1335,8 +1338,48 @@ a.button[href^="https://line.me/"] .button__icon {
     display: none;
   }
 
+  .notice__inner strong {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .header__inner {
+    gap: 12px;
+  }
+
+  .brand__name {
+    font-size: 21px;
+    letter-spacing: 0.08em;
+  }
+
+  .brand__tagline {
+    margin-top: 7px;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .menu-button {
+    gap: 0;
+    padding: 8px 11px;
+  }
+
+  .menu-button__text {
+    display: none;
+  }
+
+  .hero {
+    padding: 48px 0 86px;
+  }
+
   .hero h1 {
-    font-size: clamp(32px, 9vw, 39px);
+    font-size: clamp(31px, 8.8vw, 36px);
+    line-height: 1.44;
+  }
+
+  .hero__lead {
+    margin-top: 24px;
+    font-size: 15px;
+    line-height: 1.9;
   }
 
   .hero__buttons,
@@ -1347,6 +1390,14 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .hero__buttons .text-link {
     align-self: center;
+  }
+
+  .hero__buttons .button {
+    width: 100%;
+    padding-right: 18px;
+    padding-left: 18px;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .hero__visual {
@@ -1822,7 +1873,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .info-header .menu-button__text {
-    display: inline;
+    display: none;
   }
 
   .info-hero h1 {
@@ -2721,7 +2772,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
 @media (max-width: 520px) {
   .menu-button__text {
-    display: inline;
+    display: none;
   }
 
   .nav__panel {

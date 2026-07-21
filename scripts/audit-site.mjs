@@ -11,7 +11,7 @@ const stagingRobots = "noindex,nofollow,nosnippet";
 const stagingRobotsHeader = "noindex, nofollow, nosnippet";
 const liveRobots = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 const socialImage = `${siteUrl}/assets/og-image.png`;
-const socialImageAlt = "ANDANTINO｜和歌山の足と靴の相談室";
+const socialImageAlt = "ANDANTINO｜和歌山の靴とインソール専門店";
 const headers = await readFile(new URL("_headers", root), "utf8");
 const isStaging = headers.includes(`X-Robots-Tag: ${stagingRobotsHeader}`);
 const expectedRobots = isStaging ? stagingRobots : liveRobots;
@@ -273,6 +273,12 @@ const faqHtml = await readFile(new URL("faq.html", root), "utf8");
 if ((faqHtml.match(/<details\b/gi) || []).length !== 10) fail("faq.html", "expected ten independent FAQ disclosure cards");
 
 const homeHtml = await readFile(new URL("index.html", root), "utf8");
+for (const requiredPhrase of ["靴とインソールの専門店", "歩くと痛い、疲れる、靴が合わない方へ。", "インソールで、", "もっと歩きやすく。"]) {
+  if (!homeHtml.includes(requiredPhrase)) fail("index.html", `home positioning is missing: ${requiredPhrase}`);
+}
+for (const discouragedPhrase of ["足と靴の相談室", "シューフィッターの五十嵐洋子が丁寧にフィッティング"]) {
+  if (homeHtml.includes(discouragedPhrase)) fail("index.html", `home must not use the old consultation-room positioning: ${discouragedPhrase}`);
+}
 if (!homeHtml.includes("足に合うことも、") || !homeHtml.includes("履いて出かける") || !homeHtml.includes("楽しさも。")) {
   fail("index.html", "home must express both fit and the joy of wearing shoes");
 }

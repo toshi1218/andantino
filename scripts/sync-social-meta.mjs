@@ -2,7 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { pages, siteUrl } from "./site-pages.mjs";
 
 const root = new URL("../", import.meta.url);
-const imageAlt = "ANDANTINO｜和歌山の足と靴の相談室";
+const imageAlt = "ANDANTINO｜和歌山の靴とインソール専門店";
 
 function attributes(tag) {
   return Object.fromEntries([...tag.matchAll(/([:\w-]+)\s*=\s*["']([^"']*)["']/g)].map((match) => [match[1], match[2]]));
