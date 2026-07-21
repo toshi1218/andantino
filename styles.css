@@ -815,7 +815,7 @@ a {
 }
 
 .service-card__media--portrait img {
-  object-position: center 24%;
+  object-position: center 44%;
 }
 
 .service-card__body {
@@ -2107,9 +2107,11 @@ a.button[href^="https://line.me/"] .button__icon {
 .expert__media img {
   width: 100%;
   height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 22px;
   box-shadow: var(--shadow);
   object-fit: cover;
+  object-position: center 38%;
 }
 
 .expert__badge {
@@ -2388,7 +2390,7 @@ a.button[href^="https://line.me/"] .button__icon {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  object-position: center 24%;
+  object-position: center 44%;
   border-radius: 50%;
 }
 
