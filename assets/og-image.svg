@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">ANDANTINO 足と靴の相談室</title>
-  <desc id="desc">和歌山の子ども靴、婦人靴、インソール、足育相談を案内するANDANTINOの共有画像</desc>
+  <title id="title">ANDANTINO 靴とインソールの専門店</title>
+  <desc id="desc">和歌山の子ども靴、婦人靴、インソールを案内するANDANTINOの共有画像</desc>
   <rect width="1200" height="630" fill="#fff9f2"/>
-  <circle cx="1058" cy="92" r="190" fill="#e9dff3"/>
+  <circle cx="1058" cy="92" r="190" fill="#d9e9e6"/>
   <circle cx="115" cy="590" r="210" fill="#dceef2"/>
-  <path d="M912 170c80 22 140 92 153 176 12 79-18 157-82 212" fill="none" stroke="#6d4aa3" stroke-width="18" stroke-linecap="round" opacity=".82"/>
+  <path d="M912 170c80 22 140 92 153 176 12 79-18 157-82 212" fill="none" stroke="#3c7b86" stroke-width="18" stroke-linecap="round" opacity=".82"/>
   <path d="M966 190c39 28 64 70 72 117" fill="none" stroke="#264e52" stroke-width="8" stroke-linecap="round"/>
   <rect x="90" y="92" width="110" height="110" rx="28" fill="#264e52"/>
   <path d="m117 172 25-63h8l25 63h-16l-5-13h-18l-5 13zm24-28h9l-5-16z" fill="#fff9f2"/>
   <text x="90" y="292" fill="#264e52" font-size="78" font-family="Georgia, 'Times New Roman', serif" font-weight="700" letter-spacing="5">ANDANTINO</text>
-  <text x="94" y="365" fill="#373431" font-size="40" font-family="Arial, sans-serif" font-weight="700" letter-spacing="2">FOOT &amp; SHOE CONSULTATION</text>
+  <text x="94" y="365" fill="#373431" font-size="40" font-family="Arial, sans-serif" font-weight="700" letter-spacing="2">SHOES &amp; INSOLES</text>
   <text x="94" y="430" fill="#766f68" font-size="27" font-family="Arial, sans-serif">CHILDREN'S SHOES · WOMEN'S SHOES · INSOLES</text>
   <line x1="94" y1="475" x2="670" y2="475" stroke="#e9dfd4" stroke-width="3"/>
   <text x="94" y="530" fill="#3c7b86" font-size="26" font-family="Arial, sans-serif" font-weight="700">WAKAYAMA, JAPAN · BY APPOINTMENT</text>
