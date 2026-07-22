@@ -509,44 +509,32 @@ a {
 
 .hero__visual {
   position: relative;
-  min-height: 600px;
   animation: fade-in 620ms 100ms ease both;
 }
 
 .hero__image {
-  position: absolute;
+  position: relative;
   overflow: hidden;
   background: var(--peach);
   box-shadow: var(--shadow);
 }
 
 .hero__image img {
-  height: 100%;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .hero__image--main {
-  inset: 0 0 0 12%;
   border-radius: 92px 18px 92px 18px;
 }
 
-.hero__image--secondary {
-  left: 0;
-  top: 26px;
-  width: 210px;
-  height: 190px;
-  border: 10px solid var(--cream);
-  border-radius: 30px;
-}
-
 .hero__badge {
-  position: absolute;
-  right: -16px;
-  top: 30px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 14px;
-  padding: 16px 22px;
+  margin-top: 18px;
+  padding: 15px 22px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
@@ -1137,7 +1125,8 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__visual {
-    min-height: 530px;
+    max-width: 460px;
+    margin-inline: auto;
   }
 }
 
@@ -1230,22 +1219,6 @@ a.button[href^="https://line.me/"] .button__icon {
     font-size: 15px;
   }
 
-  .hero__visual {
-    min-height: 420px;
-  }
-
-  .hero__image--main {
-    inset: 0 0 0 8%;
-  }
-
-  .hero__image--secondary {
-    width: 180px;
-    height: 160px;
-  }
-
-  .hero__badge {
-    right: -4px;
-  }
 
   .trust__grid,
   .section-heading--row,
@@ -1387,25 +1360,12 @@ a.button[href^="https://line.me/"] .button__icon {
     align-self: center;
   }
 
-  .hero__visual {
-    min-height: 330px;
-  }
-
   .hero__image--main {
-    inset: 0;
     border-radius: 54px 14px 54px 14px;
   }
 
-  .hero__image--secondary {
-    width: 132px;
-    height: 122px;
-    border-width: 7px;
-  }
-
   .hero__badge {
-    right: 10px;
-    top: 14px;
-    padding: 12px 14px;
+    padding: 12px 16px;
   }
 
   .hero__badge-icon {
@@ -2680,8 +2640,8 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .legacy-photo img {
   width: 100%;
-  max-height: 500px;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .legacy-photo--portrait img {
@@ -2723,7 +2683,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .legacy-gallery img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
 }
 
