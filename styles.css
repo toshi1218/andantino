@@ -2880,6 +2880,12 @@ a.button[href^="https://line.me/"] .button__icon {
     word-break: auto-phrase;
   }
 
+  .shoe-joy__content h2 {
+    font-size: clamp(21px, 5.4vw, 26px);
+    line-height: 1.5;
+    word-break: auto-phrase;
+  }
+
   .info-hero h1,
   .info-hero--compact h1,
   .article-hero h1 {
