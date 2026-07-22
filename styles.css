@@ -950,6 +950,24 @@ a {
   gap: 24px;
 }
 
+.consult__qr {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(6, 155, 68, 0.16);
+}
+
+.consult__qr img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .button--light {
   background: #fff;
   box-shadow: none;
@@ -1064,6 +1082,20 @@ a.button[href^="https://line.me/"] .button__icon {
 .shop__details dd {
   margin: 0;
   font-weight: 500;
+}
+
+.shop__map {
+  margin-top: 40px;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.shop__map iframe {
+  display: block;
+  width: 100%;
+  height: 360px;
+  border: 0;
 }
 
 .outline-button {
@@ -2044,12 +2076,7 @@ a.button[href^="https://line.me/"] .button__icon {
   letter-spacing: 0.11em;
 }
 
-.connect-card__mark--line {
-  color: #087536;
-}
-
-.connect-card h3,
-.connect-line h3 {
+.connect-card h3 {
   margin: 17px 0 10px;
   color: var(--teal);
   font-family: var(--serif);
@@ -2058,7 +2085,6 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .connect-card p,
-.connect-line p,
 .connect-ferse p {
   color: var(--muted);
   font-size: 14px;
@@ -2071,59 +2097,12 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 .connect__relations {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 20px;
-  align-items: stretch;
   margin-top: 20px;
 }
 
-.connect-line,
 .connect-ferse {
   min-width: 0;
   border-radius: 24px;
-}
-
-.connect-line {
-  display: grid;
-  grid-template-columns: minmax(140px, 156px) minmax(0, 1fr);
-  gap: 26px;
-  align-items: center;
-  padding: 30px;
-  border: 1px solid #8bdfa9;
-  background: #f2fff7;
-}
-
-.connect-line__qr {
-  width: min(156px, 100%);
-  aspect-ratio: 1 / 1;
-  display: grid;
-  align-self: center;
-  justify-self: center;
-  place-items: center;
-  overflow: hidden;
-  padding: 8px;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 10px 28px rgba(6, 155, 68, 0.12);
-}
-
-.connect-line__qr img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-.connect-line > div {
-  min-width: 0;
-}
-
-.connect-line .button {
-  max-width: 100%;
-  margin-top: 8px;
-  white-space: normal;
-  text-align: center;
 }
 
 .connect-ferse {
@@ -2135,6 +2114,11 @@ a.button[href^="https://line.me/"] .button__icon {
   border: 1px solid #f1cfd2;
   background: linear-gradient(145deg, #fff, #fff7f7);
   transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.connect-ferse--wide {
+  align-items: center;
+  text-align: center;
 }
 
 .connect-ferse img {
@@ -2812,14 +2796,6 @@ a.button[href^="https://line.me/"] .button__icon {
     gap: 38px;
   }
 
-  .connect-line {
-    grid-template-columns: 144px minmax(0, 1fr);
-  }
-
-  .connect-line__qr {
-    width: 144px;
-  }
-
   .article-toc {
     position: static;
   }
@@ -2889,16 +2865,6 @@ a.button[href^="https://line.me/"] .button__icon {
   .legacy-gallery,
   .legacy-gallery--three {
     grid-template-columns: 1fr;
-  }
-
-  .connect-line {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    padding: 24px 20px;
-  }
-
-  .connect-line__qr {
-    width: 160px;
   }
 
   .connect-ferse {
