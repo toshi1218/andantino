@@ -715,6 +715,14 @@ a {
   transition: transform 600ms ease;
 }
 
+.feature-card__media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
+}
+
 .feature-card:hover .feature-card__media img {
   transform: scale(1.025);
 }
