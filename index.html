@@ -65,7 +65,7 @@
               "streetAddress": "新高町2-13",
               "addressCountry": "JP"
             },
-            "hasMap": "https://maps.app.goo.gl/wyGGjpfKfF4ep3mSA",
+            "hasMap": "https://maps.app.goo.gl/xUfvVPCJhyE5ioJL9",
             "openingHoursSpecification": {
               "@type": "OpeningHoursSpecification",
               "dayOfWeek": [
@@ -178,6 +178,8 @@
     </script>
   </head>
   <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v19.0"></script>
     <a class="skip-link" href="#main">本文へ移動</a>
 
     <header class="header" id="top">
@@ -405,14 +407,21 @@
                 >
               </div>
               <div class="feature-card__media">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/L32TawQ9Eo8"
-                  title="外反母趾とモートン病に悩み、今は悩みから脱した店主がおすすめする靴選びや靴の履き方"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-               ></iframe>
+                <button
+                  type="button"
+                  class="yt-facade"
+                  data-yt-id="L32TawQ9Eo8"
+                  aria-label="動画を再生：外反母趾とモートン病に悩み、今は悩みから脱した店主がおすすめする靴選びや靴の履き方"
+                >
+                  <img
+                    src="https://i.ytimg.com/vi/L32TawQ9Eo8/hqdefault.jpg"
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                    alt="外反母趾とモートン病に悩み、今は悩みから脱した店主がおすすめする靴選びや靴の履き方"
+                 >
+                  <span class="yt-facade__play" aria-hidden="true"></span>
+                </button>
               </div>
             </article>
 
@@ -644,33 +653,24 @@
               <h2 id="voice-title">お客様の声</h2>
             </div>
             <p class="voice__note">
-              ご相談いただいた方の声を掲載していきます。<br>
-              ※ 下記は掲載イメージのサンプルです。実際のお客様の声に差し替えます。
+              Googleのクチコミよりご紹介します。
             </p>
           </div>
           <div class="voice__grid">
             <figure class="voice__card">
-              <span class="voice__sample">サンプル</span>
               <div class="voice__stars" aria-hidden="true">★★★★★</div>
-              <blockquote>長く歩くと足が痛くて出かけるのが億劫でしたが、足に合う靴を選んでいただいてから散歩が楽しみになりました。正しい履き方まで教えてもらえたのが良かったです。</blockquote>
-              <figcaption><strong>60代・女性</strong>／大人の靴選び</figcaption>
+              <blockquote>転倒して骨を折ったあと、足の計測をしていただき靴を合わせてもらいました。正しい足のサイズや靴の履き方を知ることができ、とても勉強になりました。おかげで、自分の足でしっかり歩ける、心地よい老後の準備がやっとできた気持ちになりました。五本指ソックスも初めて試しましたが、とても良かったです。</blockquote>
+              <figcaption><strong>お客様の声</strong>／足の計測・靴のフィッティング</figcaption>
             </figure>
             <figure class="voice__card">
-              <span class="voice__sample">サンプル</span>
               <div class="voice__stars" aria-hidden="true">★★★★★</div>
-              <blockquote>初めての子ども靴で何を選べばいいか分からず不安でしたが、足を測って一つひとつ丁寧に見てくださり安心できました。家での確認の仕方も教えてもらえました。</blockquote>
-              <figcaption><strong>30代・女性</strong>／お子さまの靴選び</figcaption>
-            </figure>
-            <figure class="voice__card">
-              <span class="voice__sample">サンプル</span>
-              <div class="voice__stars" aria-hidden="true">★★★★★</div>
-              <blockquote>膝の負担が気になり相談しました。足・靴・歩き方まで一緒に見てインソールを作っていただき、以前より楽に歩けるようになりました。じっくり話を聞いてもらえます。</blockquote>
-              <figcaption><strong>50代・男性</strong>／インソール作製</figcaption>
+              <blockquote>産後、市販のパンプスが合わなくなり悩んでいました。カウンセリングで足の計測や歩き方を見ていただき、正しいサイズを教えてもらいました。いつも適当に結んでいた靴紐も、正しい締め方を教わると驚くほど歩きやすくなりました。親指が痛くて履けなくなっていたセミオーダーのパンプスも、その場でインソールや靴の調整をしていただき、履き心地がかなり改善しました。</blockquote>
+              <figcaption><strong>お客様の声</strong>／セミオーダーパンプスの調整</figcaption>
             </figure>
           </div>
           <div class="voice__foot">
             <p>ご相談後のご感想は、Googleのクチコミでもご覧いただけます。</p>
-            <a class="outline-button" href="https://maps.app.goo.gl/wyGGjpfKfF4ep3mSA" target="_blank" rel="noopener">Googleのクチコミを見る <span>↗</span></a>
+            <a class="outline-button" href="https://maps.app.goo.gl/xUfvVPCJhyE5ioJL9" target="_blank" rel="noopener">Googleのクチコミを見る <span>↗</span></a>
           </div>
         </div>
       </section>
@@ -687,10 +687,23 @@
             </p>
           </div>
 
+          <div class="connect__facebook">
+            <div class="connect__facebook-intro">
+              <span class="connect-card__mark">Facebook</span>
+              <h3>営業カレンダー・イベントのお知らせ</h3>
+              <p>毎月の営業カレンダー、定休日（水曜日）以外の臨時休業、相談会や足育イベントの予定をお知らせしています。</p>
+            </div>
+            <div class="fb-page" data-href="https://www.facebook.com/andantino.foot/" data-tabs="timeline" data-width="500" data-height="480" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+              <blockquote cite="https://www.facebook.com/andantino.foot/" class="fb-xfbml-parse-ignore">
+                <a href="https://www.facebook.com/andantino.foot/">ANDANTINO - アンダンティーノ</a>
+              </blockquote>
+            </div>
+          </div>
+
           <div class="connect__updates">
             <a class="connect-card" href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">
               <span class="connect-card__mark">Facebook</span>
-              <h3>営業日・イベントのお知らせ</h3>
+              <h3>公式Facebookページ</h3>
               <p>相談会、足育イベント、営業予定など、ANDANTINOからの最新のお知らせはこちらでご確認ください。</p>
               <strong>公式Facebookを見る <span>↗</span></strong>
             </a>
@@ -805,7 +818,7 @@
             </dl>
             <a
               class="outline-button"
-              href="https://maps.app.goo.gl/wyGGjpfKfF4ep3mSA"
+              href="https://maps.app.goo.gl/xUfvVPCJhyE5ioJL9"
               target="_blank"
               rel="noopener"
             >
