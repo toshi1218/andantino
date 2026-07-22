@@ -942,6 +942,17 @@ a {
   font-size: 12px;
 }
 
+.consult__price-note {
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.consult__price-note a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .consult__buttons {
   display: flex;
   align-items: center;
