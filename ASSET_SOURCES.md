@@ -49,3 +49,5 @@
 | 新サイトのファイル | 内容 | 用途 |
 |---|---|---|
 | `assets/paramount-pumps.webp` | パラマウント・ワーカーズ・コープの本革パンプス実物写真 | 取扱商品ページ |
+| `assets/zori-floral.webp` | 花柄生地の草履実物写真 | 取扱商品ページ |
+| `assets/zori-metallic.webp` | メタリックカラーの草履実物写真 | 取扱商品ページ |
