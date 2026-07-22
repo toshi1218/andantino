@@ -2831,7 +2831,6 @@ a.button[href^="https://line.me/"] .button__icon {
   .connect__relations,
   .voice__grid,
   .expert__grid,
-  .definition-grid,
   .article-layout {
     grid-template-columns: 1fr;
   }
@@ -2840,21 +2839,25 @@ a.button[href^="https://line.me/"] .button__icon {
     gap: 38px;
   }
 
-  .step-grid {
+  .step-grid,
+  .definition-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
-  .step-grid > * {
+  .step-grid > *,
+  .definition-grid > * {
     padding: 16px 14px;
   }
 
-  .step-grid h3 {
+  .step-grid h3,
+  .definition-grid h3 {
     margin-bottom: 6px;
     font-size: 15px;
   }
 
-  .step-grid p {
+  .step-grid p,
+  .definition-grid p {
     font-size: 13px;
   }
 
