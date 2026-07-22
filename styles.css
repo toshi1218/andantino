@@ -1443,6 +1443,16 @@ a.button[href^="https://line.me/"] .button__icon {
     font-weight: 700;
   }
 
+  .mobile-actions a[href^="tel:"] {
+    background: var(--blue);
+    color: var(--blue-strong);
+  }
+
+  .mobile-actions a[href^="mailto:"] {
+    background: #f3ece0;
+    color: var(--charcoal);
+  }
+
   .mobile-actions__primary {
     background: var(--accent);
     color: #fff !important;
