@@ -6,7 +6,7 @@
 |---|---|---|
 | `assets/yoko-igarashi.webp` | `https://www.andantino-shoes.jp/img/2.jpg` | 五十嵐洋子プロフィール |
 | `assets/walking.webp` | `https://www.andantino-shoes.jp/img/top_img1.png` | 大人の靴選び |
-| `assets/child-feet.webp` | `https://www.andantino-shoes.jp/img/top_img2.png` | 子どもの足育 |
+| `assets/child-feet-v2.webp` | `https://www.andantino-shoes.jp/img/top_img2.png`（下端の足跡装飾をトリミングし、キャッシュ更新のためファイル名変更） | 子どもの足育 |
 | `assets/legacy-child-measurement.webp` | `https://www.andantino-shoes.jp/img/9.png` | 子どもの足計測 |
 | `assets/legacy-superfit-1.webp` | `https://www.andantino-shoes.jp/img/10.png` | 旧掲載商品 Superfit |
 | `assets/legacy-superfit-2.webp` | `https://www.andantino-shoes.jp/img/11.png` | 旧掲載商品 Superfit |
