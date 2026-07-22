@@ -1443,6 +1443,16 @@ a.button[href^="https://line.me/"] .button__icon {
     font-weight: 700;
   }
 
+  .mobile-actions a[href^="tel:"] {
+    background: var(--blue);
+    color: var(--blue-strong);
+  }
+
+  .mobile-actions a[href^="mailto:"] {
+    background: #f3ece0;
+    color: var(--charcoal);
+  }
+
   .mobile-actions__primary {
     background: var(--accent);
     color: #fff !important;
@@ -1810,13 +1820,13 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .faq-list summary {
   position: relative;
-  padding: 24px 62px 24px 26px;
+  padding: 22px 62px 22px 26px;
   color: var(--teal);
   cursor: pointer;
   font-family: var(--serif);
-  font-size: clamp(21px, 2.3vw, 28px);
+  font-size: clamp(17px, 1.6vw, 20px);
   font-weight: 600;
-  line-height: 1.55;
+  line-height: 1.5;
   list-style: none;
   text-wrap: balance;
 }
@@ -2822,13 +2832,30 @@ a.button[href^="https://line.me/"] .button__icon {
   .voice__grid,
   .expert__grid,
   .definition-grid,
-  .step-grid,
   .article-layout {
     grid-template-columns: 1fr;
   }
 
   .article-layout {
     gap: 38px;
+  }
+
+  .step-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .step-grid > * {
+    padding: 16px 14px;
+  }
+
+  .step-grid h3 {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  .step-grid p {
+    font-size: 13px;
   }
 
   .article-toc {
@@ -3020,8 +3047,8 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .faq-list summary {
-    padding: 20px 54px 20px 20px;
-    font-size: clamp(19px, 6vw, 23px);
+    padding: 18px 50px 18px 18px;
+    font-size: clamp(15px, 4vw, 17px);
   }
 
   .faq-list summary::after {

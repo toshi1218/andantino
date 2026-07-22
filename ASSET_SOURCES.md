@@ -6,7 +6,7 @@
 |---|---|---|
 | `assets/yoko-igarashi.webp` | `https://www.andantino-shoes.jp/img/2.jpg` | 五十嵐洋子プロフィール |
 | `assets/walking.webp` | `https://www.andantino-shoes.jp/img/top_img1.png` | 大人の靴選び |
-| `assets/child-feet.webp` | `https://www.andantino-shoes.jp/img/top_img2.png` | 子どもの足育 |
+| `assets/child-feet-v2.webp` | `https://www.andantino-shoes.jp/img/top_img2.png`（下端の足跡装飾をトリミングし、キャッシュ更新のためファイル名変更） | 子どもの足育 |
 | `assets/legacy-child-measurement.webp` | `https://www.andantino-shoes.jp/img/9.png` | 子どもの足計測 |
 | `assets/legacy-superfit-1.webp` | `https://www.andantino-shoes.jp/img/10.png` | 旧掲載商品 Superfit |
 | `assets/legacy-superfit-2.webp` | `https://www.andantino-shoes.jp/img/11.png` | 旧掲載商品 Superfit |
@@ -34,4 +34,13 @@
 
 ## 相談風景の合成写真について
 
-`assets/yoko-igarashi-counseling.webp` は、本人の実際の顔・髪型・服装（チェックシャツ＋デニムエプロン）をもとに、お客様と向き合いカウンセリングシートに記入している場面としてAIで新たに構成した画像です。既存の1枚の写真の一部差し替えではなく、ポーズ・構図・お客様役の人物を含めて新規に生成しているため、上記の「持ち物のみ差し替え」とは区別して記載します。トップページのカウンセリング紹介カードにのみ使用しています。
+`assets/yoko-igarashi-counseling.webp` は、本人の実際の顔・髪型・服装（チェックシャツ＋デニムエプロン）をもとに、お客様と向き合いカウンセリングシートに記入している場面としてAIで新たに構成した画像です。既存の1枚の写真の一部差し替えではなく、ポーズ・構図・お客様役の人物を含めて新規に生成しているため、上記の「持ち物のみ差し替え」とは区別して記載します。トップページのカウンセリング紹介カードと、インソールページのカウンセリング説明箇所に使用しています。
+
+## 提供いただいた実物写真
+
+| 新サイトのファイル | 内容 | 用途 |
+|---|---|---|
+| `assets/paramount-pumps.webp` | パラマウント・ワーカーズ・コープの本革パンプス実物写真 | 取扱商品ページ |
+| `assets/nordic-walking-park.webp` | ノルディックウォーキングをする様子のイメージ写真 | ノルディックウォーキングのすすめページ |
+| `assets/zori-floral.webp` | 花柄生地の草履実物写真 | 取扱商品ページ |
+| `assets/zori-metallic.webp` | メタリックカラーの草履実物写真 | 取扱商品ページ |
