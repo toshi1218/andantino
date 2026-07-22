@@ -31,6 +31,7 @@ const fullMenuMarkup = `
       <a href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINE ↗</a>
       <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook ↗</a>
       <a href="https://www.youtube.com/@andantino7110" target="_blank" rel="noopener">YouTube ↗</a>
+      <a href="https://www.instagram.com/yoko1367/" target="_blank" rel="noopener">Instagram ↗</a>
       <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ ↗</a>
       <a href="./links.html">公式・関連外部リンク</a>
       <a href="./editorial-policy.html">編集方針・情報源</a>

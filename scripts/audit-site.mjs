@@ -297,7 +297,7 @@ for (const detail of ['id="case"', "23.0cmの細い足に、24.5cmの学校靴",
 }
 
 const css = await readFile(new URL("styles.css", root), "utf8");
-const qrImageRule = css.match(/\.connect-line__qr img\s*\{([\s\S]*?)\}/)?.[1] || "";
+const qrImageRule = css.match(/\.consult__qr img\s*\{([\s\S]*?)\}/)?.[1] || "";
 if (!/object-fit:\s*contain/.test(qrImageRule) || /object-fit:\s*cover/.test(qrImageRule)) {
   fail("styles.css", "the official LINE QR code must be fully visible with object-fit: contain");
 }

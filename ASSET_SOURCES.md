@@ -6,7 +6,7 @@
 |---|---|---|
 | `assets/yoko-igarashi.webp` | `https://www.andantino-shoes.jp/img/2.jpg` | 五十嵐洋子プロフィール |
 | `assets/walking.webp` | `https://www.andantino-shoes.jp/img/top_img1.png` | 大人の靴選び |
-| `assets/child-feet.webp` | `https://www.andantino-shoes.jp/img/top_img2.png` | 子どもの足育 |
+| `assets/child-feet-v2.webp` | `https://www.andantino-shoes.jp/img/top_img2.png`（下端の足跡装飾をトリミングし、キャッシュ更新のためファイル名変更） | 子どもの足育 |
 | `assets/legacy-child-measurement.webp` | `https://www.andantino-shoes.jp/img/9.png` | 子どもの足計測 |
 | `assets/legacy-superfit-1.webp` | `https://www.andantino-shoes.jp/img/10.png` | 旧掲載商品 Superfit |
 | `assets/legacy-superfit-2.webp` | `https://www.andantino-shoes.jp/img/11.png` | 旧掲載商品 Superfit |
@@ -22,3 +22,25 @@
 | `assets/ferse-logo.png` | `https://www.andantino-shoes.jp/img/ferse_logo.png` | Ferse加盟店表示 |
 
 商品・サービス写真には旧公式サイト掲載時点のものであることを明記し、現在の在庫・価格・仕様を保証する表示には使用しません。
+
+## 本人写真の加工について
+
+以下の2点は、本人公認の実写真(`assets/yoko-igarashi.webp`と同一の撮影)をもとに、**顔・表情・服装・背景は一切変更せず**、手に持っている商品のみをページのテーマに合わせてAIで差し替えた画像です。
+
+| 新サイトのファイル | 元になった写真 | 差し替えた内容 | 用途 |
+|---|---|---|---|
+| `assets/yoko-igarashi-insoles.webp` | `assets/yoko-igarashi.webp` と同一撮影 | 手に持つ物を子ども靴からインソールに変更 | インソール作製ページ |
+| `assets/yoko-igarashi-pumps.webp` | `assets/yoko-igarashi.webp` と同一撮影 | 手に持つ物を子ども靴からパンプスに変更 | 大人の靴選びページ |
+
+## 相談風景の合成写真について
+
+`assets/yoko-igarashi-counseling.webp` は、本人の実際の顔・髪型・服装（チェックシャツ＋デニムエプロン）をもとに、お客様と向き合いカウンセリングシートに記入している場面としてAIで新たに構成した画像です。既存の1枚の写真の一部差し替えではなく、ポーズ・構図・お客様役の人物を含めて新規に生成しているため、上記の「持ち物のみ差し替え」とは区別して記載します。トップページのカウンセリング紹介カードと、インソールページのカウンセリング説明箇所に使用しています。
+
+## 提供いただいた実物写真
+
+| 新サイトのファイル | 内容 | 用途 |
+|---|---|---|
+| `assets/paramount-pumps.webp` | パラマウント・ワーカーズ・コープの本革パンプス実物写真 | 取扱商品ページ |
+| `assets/nordic-walking-park.webp` | ノルディックウォーキングをする様子のイメージ写真 | ノルディックウォーキングのすすめページ |
+| `assets/zori-floral.webp` | 花柄生地の草履実物写真 | 取扱商品ページ |
+| `assets/zori-metallic.webp` | メタリックカラーの草履実物写真 | 取扱商品ページ |
