@@ -15,6 +15,8 @@ export const pages = [
   { file: "shoe-wearing.html", path: "/shoe-wearing.html", priority: "0.9" },
   { file: "foot-problems.html", path: "/foot-problems.html", priority: "0.8" },
   { file: "foot-check.html", path: "/foot-check.html", priority: "0.8" },
+  { file: "nordic-walking.html", path: "/nordic-walking.html", priority: "0.6" },
+  { file: "case-studies.html", path: "/case-studies.html", priority: "0.6" },
   { file: "faq.html", path: "/faq.html", priority: "0.8" },
   { file: "contact.html", path: "/contact.html", priority: "0.9" },
   { file: "links.html", path: "/links.html", priority: "0.6" },
