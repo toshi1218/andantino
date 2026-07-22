@@ -1307,7 +1307,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .nav {
     top: 76px;
-    max-height: calc(100vh - 76px);
+    max-height: calc(100vh - 76px - 64px);
   }
 
   .nav__panel {
