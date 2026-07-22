@@ -532,7 +532,7 @@ a {
 
 .hero__image--secondary {
   left: 0;
-  bottom: 28px;
+  top: 26px;
   width: 210px;
   height: 190px;
   border: 10px solid var(--cream);
@@ -542,7 +542,7 @@ a {
 .hero__badge {
   position: absolute;
   right: -16px;
-  bottom: 34px;
+  top: 30px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -1404,7 +1404,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .hero__badge {
     right: 10px;
-    bottom: 16px;
+    top: 14px;
     padding: 12px 14px;
   }
 
