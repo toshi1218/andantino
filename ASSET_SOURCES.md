@@ -36,18 +36,11 @@
 
 `assets/yoko-igarashi-counseling.webp` は、本人の実際の顔・髪型・服装（チェックシャツ＋デニムエプロン）をもとに、お客様と向き合いカウンセリングシートに記入している場面としてAIで新たに構成した画像です。既存の1枚の写真の一部差し替えではなく、ポーズ・構図・お客様役の人物を含めて新規に生成しているため、上記の「持ち物のみ差し替え」とは区別して記載します。トップページのカウンセリング紹介カードと、インソールページのカウンセリング説明箇所に使用しています。
 
-## フリー素材（Wikimedia Commons）
-
-本人・店舗に関係しない、活動内容を説明するための一般的なイメージ写真は、クリエイティブ・コモンズ・ライセンスのフリー素材を使用しています。
-
-| 新サイトのファイル | 出典 | ライセンス | 用途 |
-|---|---|---|---|
-| `assets/nordic-walking-group.webp` | [Nordic Walking is enjoyed by all.jpg](https://commons.wikimedia.org/wiki/File:Nordic_Walking_is_enjoyed_by_all.jpg)（撮影: Vijay.shivu） | CC BY-SA 4.0 | ノルディックウォーキングのすすめページ |
-
 ## 提供いただいた実物写真
 
 | 新サイトのファイル | 内容 | 用途 |
 |---|---|---|
 | `assets/paramount-pumps.webp` | パラマウント・ワーカーズ・コープの本革パンプス実物写真 | 取扱商品ページ |
+| `assets/nordic-walking-park.webp` | ノルディックウォーキングをする様子のイメージ写真 | ノルディックウォーキングのすすめページ |
 | `assets/zori-floral.webp` | 花柄生地の草履実物写真 | 取扱商品ページ |
 | `assets/zori-metallic.webp` | メタリックカラーの草履実物写真 | 取扱商品ページ |
