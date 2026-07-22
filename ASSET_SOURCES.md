@@ -22,3 +22,12 @@
 | `assets/ferse-logo.png` | `https://www.andantino-shoes.jp/img/ferse_logo.png` | Ferse加盟店表示 |
 
 商品・サービス写真には旧公式サイト掲載時点のものであることを明記し、現在の在庫・価格・仕様を保証する表示には使用しません。
+
+## 本人写真の加工について
+
+以下の2点は、本人公認の実写真(`assets/yoko-igarashi.webp`と同一の撮影)をもとに、**顔・表情・服装・背景は一切変更せず**、手に持っている商品のみをページのテーマに合わせてAIで差し替えた画像です。
+
+| 新サイトのファイル | 元になった写真 | 差し替えた内容 | 用途 |
+|---|---|---|---|
+| `assets/yoko-igarashi-insoles.webp` | `assets/yoko-igarashi.webp` と同一撮影 | 手に持つ物を子ども靴からインソールに変更 | インソール作製ページ |
+| `assets/yoko-igarashi-pumps.webp` | `assets/yoko-igarashi.webp` と同一撮影 | 手に持つ物を子ども靴からパンプスに変更 | 大人の靴選びページ |
