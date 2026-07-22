@@ -531,24 +531,24 @@ a {
 
 .hero__badge {
   position: absolute;
-  right: 5%;
-  bottom: 5%;
+  left: 4%;
+  bottom: 6%;
   z-index: 2;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 6px;
-  max-width: 100px;
-  padding: 10px 8px;
-  border-radius: 16px;
+  gap: 10px;
+  padding: 8px 18px 8px 8px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
-  text-align: center;
+  white-space: nowrap;
 }
 
 .hero__badge-icon {
   display: grid;
   place-items: center;
+  flex: 0 0 auto;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -561,8 +561,8 @@ a {
 .hero__badge strong {
   color: var(--blue-strong);
   font-family: var(--serif);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1;
 }
 
 
@@ -1488,18 +1488,20 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__badge {
-    max-width: 80px;
-    padding: 8px 6px;
+    left: 3%;
+    bottom: 5%;
+    gap: 8px;
+    padding: 6px 14px 6px 6px;
   }
 
   .hero__badge-icon {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     font-size: 12px;
   }
 
   .hero__badge strong {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .trust__points {
