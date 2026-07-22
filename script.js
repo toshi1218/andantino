@@ -117,3 +117,17 @@ if (menuButton && navigation) {
     setMenuState(false);
   });
 }
+
+document.querySelectorAll(".yt-facade").forEach((facade) => {
+  facade.addEventListener("click", () => {
+    const videoId = facade.dataset.ytId;
+    if (!videoId) return;
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+    iframe.title = facade.getAttribute("aria-label") || "";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allowFullscreen = true;
+    facade.replaceWith(iframe);
+  });
+});
