@@ -1880,6 +1880,81 @@ a.button[href^="https://line.me/"] .button__icon {
   text-underline-offset: 3px;
 }
 
+.case-details {
+  overflow: clip;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(55, 52, 49, 0.045);
+}
+
+.case-details summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 62px 20px 20px;
+  color: var(--teal);
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 600;
+  line-height: 1.5;
+  list-style: none;
+  text-wrap: balance;
+}
+
+.case-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.case-details summary .section-icon {
+  flex-shrink: 0;
+}
+
+.case-details summary::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--accent);
+  font-family: var(--sans);
+  transform: translateY(-50%);
+}
+
+.case-details[open] summary::after {
+  content: "−";
+}
+
+.case-details > div {
+  padding: 0 22px 24px 20px;
+}
+
+.case-details > div .callout {
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .case-details summary {
+    padding: 18px 50px 18px 16px;
+    font-size: clamp(15px, 4vw, 17px);
+  }
+
+  .case-details summary::after {
+    right: 16px;
+  }
+
+  .case-details > div {
+    padding: 0 16px 20px;
+  }
+}
+
 .info-footer {
   padding: 32px 0;
   border-top: 1px solid var(--line);
