@@ -2994,7 +2994,8 @@ a.button[href^="https://line.me/"] .button__icon {
     grid-template-columns: 1fr;
   }
 
-  .guide-card {
+  .guide-card,
+  .knowledge__grid a {
     min-height: 0;
     padding: 18px 20px;
   }
@@ -3003,10 +3004,15 @@ a.button[href^="https://line.me/"] .button__icon {
     display: none;
   }
 
-  .guide-card strong {
+  .guide-card strong,
+  .knowledge__grid strong {
     margin: 0 0 4px;
     font-size: 17px;
     line-height: 1.4;
+  }
+
+  .knowledge__grid small {
+    font-size: 12.5px;
   }
 
   .guide-card small {
