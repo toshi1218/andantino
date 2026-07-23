@@ -3029,6 +3029,10 @@ a.button[href^="https://line.me/"] .button__icon {
     font-size: 19px;
   }
 
+  .official-links a {
+    padding: 16px 18px;
+  }
+
   .article-layout {
     gap: 38px;
   }
