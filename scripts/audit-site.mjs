@@ -197,7 +197,7 @@ for (const page of pages) {
 
   if (page.path !== "/") {
     if (!/class=["'][^"']*info-header/i.test(html)) fail(page.file, "missing shared information-page header");
-    if (!/class=["'][^"']*info-footer/i.test(html)) fail(page.file, "missing shared information-page footer");
+    if (!/class=["'][^"']*footer__social/i.test(html)) fail(page.file, "missing shared site footer");
     if (!/<script\s+src=["']\.\/script\.js["']/i.test(html)) fail(page.file, "missing shared menu and mobile-action script");
   }
 
