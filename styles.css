@@ -185,14 +185,32 @@ a {
   padding-bottom: 38px;
 }
 
-.nav__group--priority {
+.nav__group--priority,
+.nav__group--knowledge,
+.nav__group--offerings,
+.nav__group--secondary {
   padding: 18px;
   margin: -18px 0;
   border-radius: 18px;
+}
+
+.nav__group--priority {
   background: #eaf4f1;
 }
 
-.nav__group--secondary a:nth-last-child(-n + 4) {
+.nav__group--knowledge {
+  background: var(--cream-2);
+}
+
+.nav__group--offerings {
+  background: var(--blue);
+}
+
+.nav__group--secondary {
+  background: #f4e7e1;
+}
+
+.nav__group--secondary a:nth-last-child(-n + 3) {
   color: var(--muted);
   font-size: 11px;
   font-weight: 500;
@@ -1314,7 +1332,7 @@ a.button[href^="https://line.me/"] .button__icon {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px 34px;
     padding-top: 26px;
-    padding-bottom: 34px;
+    padding-bottom: 102px;
   }
 
   .hero {
