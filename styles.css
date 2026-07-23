@@ -1263,6 +1263,10 @@ a.button[href^="https://line.me/"] .button__icon {
     gap: 48px;
   }
 
+  .hero__visual {
+    order: -1;
+  }
+
   .hero__copy {
     padding-right: 0;
   }
