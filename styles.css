@@ -2831,6 +2831,55 @@ a.button[href^="https://line.me/"] .button__icon {
   overflow: hidden;
 }
 
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0 44px;
+  padding: 0;
+  list-style: none;
+}
+
+.product-grid__item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.product-grid__item:hover,
+.product-grid__item:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(55, 52, 49, 0.16);
+}
+
+.product-grid__item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: var(--cream-2);
+}
+
+.product-grid__item span {
+  padding: 10px 12px;
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+@media (min-width: 700px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .legacy-gallery__frame img {
   position: absolute;
   inset: 0;
