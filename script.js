@@ -65,7 +65,7 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
 if (infoHeader && !document.querySelector(".mobile-actions")) {
   document.body.insertAdjacentHTML(
     "beforeend",
-    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">お電話</a><a href="mailto:andantino@wine.plala.or.jp">メール</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a></nav>'
+    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">📞 お電話</a><a href="mailto:andantino@wine.plala.or.jp">✉️ メール</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">💬 LINEでご予約・ご相談</a></nav>'
   );
 }
 
