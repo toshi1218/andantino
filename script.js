@@ -8,7 +8,7 @@ const fullMenuMarkup = `
       <a href="./pricing.html">料金</a>
       <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
     </div>
-    <div class="nav__group">
+    <div class="nav__group nav__group--knowledge">
       <strong>足と靴の知識</strong>
       <a href="./guides.html">足と靴の知識一覧</a>
       <a href="./shoe-wearing.html">靴の選び方・履き方</a>
@@ -17,7 +17,7 @@ const fullMenuMarkup = `
       <a href="./case-studies.html">ご相談事例</a>
       <a href="./faq.html">よくある質問</a>
     </div>
-    <div class="nav__group">
+    <div class="nav__group nav__group--offerings">
       <strong>取扱商品・サービス</strong>
       <a href="./products.html">取扱商品</a>
       <a href="./dimoco-insole.html">ディモコ・インソール</a>
@@ -35,7 +35,6 @@ const fullMenuMarkup = `
       <a href="https://www.instagram.com/yoko1367/" target="_blank" rel="noopener">Instagram ↗</a>
       <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ ↗</a>
       <a href="./links.html">公式・関連外部リンク</a>
-      <a href="./editorial-policy.html">編集方針・情報源</a>
       <a href="./privacy.html">プライバシーポリシー</a>
       <a href="./terms.html">利用規約</a>
       <a href="./legal.html">特定商取引法に基づく表記</a>

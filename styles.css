@@ -160,7 +160,10 @@ a {
   right: 0;
   left: 0;
   max-height: calc(100vh - 94px);
+  max-height: calc(100dvh - 94px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   transform: translateY(-8px);
   visibility: hidden;
   opacity: 0;
@@ -185,16 +188,34 @@ a {
   padding-bottom: 38px;
 }
 
-.nav__group--priority {
+.nav__group--priority,
+.nav__group--knowledge,
+.nav__group--offerings,
+.nav__group--secondary {
   padding: 18px;
   margin: -18px 0;
   border-radius: 18px;
+}
+
+.nav__group--priority {
   background: #eaf4f1;
 }
 
-.nav__group--secondary a:nth-last-child(-n + 4) {
+.nav__group--knowledge {
+  background: var(--cream-2);
+}
+
+.nav__group--offerings {
+  background: var(--blue);
+}
+
+.nav__group--secondary {
+  background: #f4e7e1;
+}
+
+.nav__group--secondary a:nth-last-child(-n + 3) {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -488,23 +509,6 @@ a {
 .text-link {
   padding: 10px 2px;
   border-bottom: 1px solid currentColor;
-}
-
-.hero__checks {
-  display: flex;
-  gap: 12px;
-  padding: 0;
-  margin: 28px 0 0;
-  list-style: none;
-}
-
-.hero__checks li {
-  padding: 6px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.65);
-  color: var(--muted);
-  font-size: 12px;
 }
 
 .hero__visual {
@@ -961,11 +965,11 @@ a {
 
 .consult__qr {
   flex: 0 0 auto;
-  width: 64px;
-  height: 64px;
+  width: 88px;
+  height: 88px;
   display: grid;
   place-items: center;
-  padding: 6px;
+  padding: 8px;
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 8px 20px rgba(6, 155, 68, 0.16);
@@ -1308,13 +1312,14 @@ a.button[href^="https://line.me/"] .button__icon {
   .nav {
     top: 76px;
     max-height: calc(100vh - 76px);
+    max-height: calc(100dvh - 76px);
   }
 
   .nav__panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px 34px;
     padding-top: 26px;
-    padding-bottom: 34px;
+    padding-bottom: 140px;
   }
 
   .hero {
@@ -1401,6 +1406,10 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .consult__panel {
     padding: 48px 36px;
+  }
+
+  .consult__qr {
+    display: none;
   }
 
   .shop__media {
@@ -1511,7 +1520,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__badge strong {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .trust__points {
@@ -2183,14 +2192,29 @@ a.button[href^="https://line.me/"] .button__icon {
 .quicknav a {
   flex: 0 0 auto;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--teal);
-  background: var(--cream-2);
-  border: 1px solid var(--line);
+  background: var(--paper);
+  border: 1.5px solid var(--teal);
   border-radius: 999px;
   padding: 8px 15px;
   text-decoration: none;
   white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(38, 78, 82, 0.12);
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.quicknav a:hover,
+.quicknav a:focus-visible {
+  background: var(--teal);
+  color: #fff;
+}
+
+.quicknav a:active {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+  transform: scale(0.97);
 }
 
 @media (max-width: 1100px) {
@@ -2959,12 +2983,13 @@ a.button[href^="https://line.me/"] .button__icon {
     min-height: 42px;
     gap: 7px;
     padding: 7px 10px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .info-header .nav {
     top: 70px;
     max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
   }
 
   .section-heading h2,
