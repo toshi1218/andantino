@@ -1205,11 +1205,31 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .footer__social {
   display: flex;
-  gap: 18px;
+  gap: 10px;
 }
 
-.footer__social a:hover {
-  color: var(--accent);
+.footer__social a {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--teal);
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.footer__social a svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer__social a:hover,
+.footer__social a:focus-visible {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
 }
 
 .mobile-actions {
