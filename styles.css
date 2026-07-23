@@ -2147,25 +2147,6 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--muted);
 }
 
-.connect__updates {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.connect-card {
-  min-height: 260px;
-  display: flex;
-  flex-direction: column;
-  padding: 34px;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: var(--paper);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-}
-
-.connect-card:hover,
-.connect-card:focus-visible,
 .connect-ferse:hover,
 .connect-ferse:focus-visible {
   transform: translateY(-3px);
@@ -2179,24 +2160,9 @@ a.button[href^="https://line.me/"] .button__icon {
   letter-spacing: 0.11em;
 }
 
-.connect-card h3 {
-  margin: 17px 0 10px;
-  color: var(--teal);
-  font-family: var(--serif);
-  font-size: clamp(23px, 2.5vw, 31px);
-  line-height: 1.5;
-}
-
-.connect-card p,
 .connect-ferse p {
   color: var(--muted);
   font-size: 14px;
-}
-
-.connect-card > strong {
-  margin-top: auto;
-  padding-top: 20px;
-  color: var(--teal);
 }
 
 .connect__relations {
@@ -2985,7 +2951,6 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .knowledge__grid,
   .guide-grid,
-  .connect__updates,
   .connect__relations,
   .voice__grid,
   .expert__grid,
@@ -3017,16 +2982,6 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .guide-card small {
     font-size: 12.5px;
-  }
-
-  .connect-card {
-    min-height: 0;
-    padding: 20px 22px;
-  }
-
-  .connect-card h3 {
-    margin: 10px 0 6px;
-    font-size: 19px;
   }
 
   .official-links a {
