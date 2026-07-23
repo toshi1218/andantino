@@ -557,7 +557,7 @@ a {
   height: 30px;
   border-radius: 50%;
   background: var(--blue);
-  color: var(--blue-strong);
+  color: var(--teal);
   font-size: 14px;
   font-weight: 700;
 }
@@ -1454,7 +1454,7 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .mobile-actions a[href^="tel:"] {
     background: var(--blue);
-    color: var(--blue-strong);
+    color: var(--teal);
   }
 
   .mobile-actions a[href^="mailto:"] {
