@@ -3019,6 +3019,16 @@ a.button[href^="https://line.me/"] .button__icon {
     font-size: 12.5px;
   }
 
+  .connect-card {
+    min-height: 0;
+    padding: 20px 22px;
+  }
+
+  .connect-card h3 {
+    margin: 10px 0 6px;
+    font-size: 19px;
+  }
+
   .article-layout {
     gap: 38px;
   }
