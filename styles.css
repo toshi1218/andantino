@@ -160,7 +160,10 @@ a {
   right: 0;
   left: 0;
   max-height: calc(100vh - 94px);
+  max-height: calc(100dvh - 94px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   transform: translateY(-8px);
   visibility: hidden;
   opacity: 0;
@@ -212,7 +215,7 @@ a {
 
 .nav__group--secondary a:nth-last-child(-n + 3) {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -1326,13 +1329,14 @@ a.button[href^="https://line.me/"] .button__icon {
   .nav {
     top: 76px;
     max-height: calc(100vh - 76px);
+    max-height: calc(100dvh - 76px);
   }
 
   .nav__panel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px 34px;
     padding-top: 26px;
-    padding-bottom: 102px;
+    padding-bottom: 140px;
   }
 
   .hero {
@@ -1529,7 +1533,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .hero__badge strong {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .trust__points {
@@ -2977,12 +2981,13 @@ a.button[href^="https://line.me/"] .button__icon {
     min-height: 42px;
     gap: 7px;
     padding: 7px 10px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .info-header .nav {
     top: 70px;
     max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
   }
 
   .section-heading h2,
