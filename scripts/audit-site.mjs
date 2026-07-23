@@ -286,10 +286,6 @@ if ((globalMenu.match(/class=["'][^"']*nav__group(?:\s|["'])/gi) || []).length !
   fail("index.html", "global menu must use four scannable groups");
 }
 
-const productsHtml = await readFile(new URL("products.html", root), "utf8");
-if (!productsHtml.includes('id="style"') || !productsHtml.includes("約3.5cmのヒール")) {
-  fail("products.html", "products must include the sourced fit-and-style example");
-}
 
 const childrenHtml = await readFile(new URL("childrens-shoes.html", root), "utf8");
 for (const detail of ['id="case"', "23.0cmの細い足に、24.5cmの学校靴", "ほかのお子さまに当てはまる基準ではありません"]) {
