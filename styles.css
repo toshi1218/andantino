@@ -2994,6 +2994,25 @@ a.button[href^="https://line.me/"] .button__icon {
     grid-template-columns: 1fr;
   }
 
+  .guide-card {
+    min-height: 0;
+    padding: 18px 20px;
+  }
+
+  .guide-card span {
+    display: none;
+  }
+
+  .guide-card strong {
+    margin: 0 0 4px;
+    font-size: 17px;
+    line-height: 1.4;
+  }
+
+  .guide-card small {
+    font-size: 12.5px;
+  }
+
   .article-layout {
     gap: 38px;
   }
