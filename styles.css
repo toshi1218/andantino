@@ -3285,3 +3285,133 @@ a.button[href^="https://line.me/"] .button__icon {
     overflow-wrap: anywhere;
   }
 }
+
+/* ---------- Print ---------- */
+@media print {
+  :root {
+    --cream: #fff;
+    --cream-2: #fff;
+    --paper: #fff;
+    --blue: #fff;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    margin: 0;
+    color: #1a1a1a;
+    background: #fff;
+    font-size: 11pt;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Interactive chrome and calls-to-action are meaningless on paper */
+  .skip-link,
+  .menu-button,
+  .header__actions,
+  .phone-link,
+  .header .nav,
+  .header__primary,
+  .info-header nav:not(.breadcrumb),
+  .quicknav,
+  .mobile-actions,
+  .hero__buttons,
+  .hero__cta-note,
+  .hero__badge,
+  .hero__curve,
+  .hero__visual,
+  .article-cta,
+  .consult,
+  .yt-facade,
+  .connect,
+  .footer__social,
+  .shop__map,
+  .article-toc,
+  .info-layout aside,
+  .article-hero-photo {
+    display: none !important;
+  }
+
+  /* Flatten decorative surfaces so ink is spent on content, not backgrounds */
+  .hero,
+  .article-hero,
+  .info-hero,
+  .article-body,
+  .info-section,
+  .trust,
+  .services,
+  .shop,
+  .section,
+  header,
+  footer {
+    padding-block: 12pt;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  main {
+    max-width: 100%;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  /* Single-column so the sticky-TOC layout doesn't leave a blank first column */
+  .article-layout,
+  .info-hero__grid,
+  .info-layout,
+  .hero__grid,
+  .shop__grid,
+  .expert__grid {
+    display: block;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: #000;
+    break-after: avoid;
+  }
+
+  figure,
+  .callout,
+  .policy-table,
+  tr,
+  .fact-list > div,
+  .fee {
+    break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .info-hero img {
+    max-height: 8cm;
+    object-fit: contain;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .policy-table th,
+  .policy-table td {
+    border: 1px solid #999;
+  }
+
+  /* Surface the store's contact details at the foot of every printed page */
+  .footer__top p,
+  .footer__links {
+    color: #000;
+  }
+}
