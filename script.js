@@ -204,6 +204,27 @@ document.querySelectorAll(".yt-facade").forEach((facade) => {
   });
 });
 
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  const target = document.querySelector(button.dataset.copyTarget);
+  const status = document.querySelector(`#${button.getAttribute("aria-describedby")}`);
+  if (!target) return;
+
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(target.textContent.trim());
+      button.textContent = "コピーしました";
+      if (status) status.textContent = "公式LINEを開いて、そのまま貼り付けてください。";
+    } catch {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(target);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      if (status) status.textContent = "ひな形を選択しました。長押ししてコピーしてください。";
+    }
+  });
+});
+
 const tocLinks = [...document.querySelectorAll('.article-toc a[href^="#"]')];
 
 if (tocLinks.length) {
