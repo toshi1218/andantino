@@ -44,6 +44,6 @@
 | `assets/nordic-walking-park.webp` | ノルディックウォーキングをする様子のイメージ写真 | ノルディックウォーキングのすすめページ |
 | `assets/zori-floral.webp` | 花柄生地の草履実物写真 | 取扱商品ページ |
 | `assets/zori-metallic.webp` | メタリックカラーの草履実物写真 | 取扱商品ページ |
-| `assets/yoko-igarashi-adjusting-shoes.webp` | 店内で五十嵐洋子が革靴を調整している実写（ユーザー提供、リサイズ・圧縮のみ） | トップページの担当者・専門性 |
+| `assets/yoko-igarashi-adjusting-shoes.webp` | 店内で五十嵐洋子が革靴を調整している実写（ユーザー提供、リサイズ・圧縮のみ） | 大人の靴選びページの購入後調整 |
 | `assets/andantino-storefront.webp` | 赤い扉と看板が見えるANDANTINO店舗外観（ユーザー提供、リサイズ・圧縮のみ） | トップページ・店舗概要のアクセス |
 | `assets/yoko-igarashi-storefront.webp` | 店舗看板前に立つ五十嵐洋子の実写（ユーザー提供、リサイズ・圧縮のみ） | オーナーページ |
