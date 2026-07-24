@@ -213,7 +213,7 @@ a {
   background: #eaf4f1;
 }
 
-.nav__group--secondary a:nth-last-child(-n + 3) {
+.nav__group--secondary .nav__group-links a:nth-last-child(-n + 3) {
   color: var(--muted);
   font-size: 14px;
   font-weight: 500;
@@ -225,13 +225,53 @@ a {
   gap: 7px;
 }
 
-.nav__group strong {
+.nav__group strong,
+.nav__group-toggle {
   padding-bottom: 10px;
   margin-bottom: 4px;
   border-bottom: 2px solid var(--peach);
   color: var(--accent-dark);
   font-family: var(--serif);
   font-size: 17px;
+}
+
+.nav__group-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 10px;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  background: transparent;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav__group-chevron {
+  width: 9px;
+  height: 9px;
+  display: none;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.nav__group-toggle[aria-expanded="true"] .nav__group-chevron {
+  transform: rotate(225deg);
+}
+
+.nav__group-links {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.nav__group-links[hidden] {
+  display: none;
 }
 
 .nav__group a {
@@ -3251,16 +3291,102 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .nav__panel {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 10px;
+    padding-top: 14px;
+    padding-bottom: 92px;
   }
 
-  .nav__group strong {
-    font-size: 19px;
+  .nav__group--priority {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px;
+    margin: 0;
+    border-radius: 16px;
   }
 
-  .nav__group a {
-    padding: 8px 0;
-    font-size: 17px;
+  .nav__group--priority strong {
+    grid-column: 1 / -1;
+    padding: 0 0 10px;
+    margin: 0 0 4px;
+    font-size: 16px;
+  }
+
+  .nav__group--priority a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 10px;
+    border: 1px solid rgba(38, 78, 82, 0.14);
+    border-radius: 11px;
+    background: var(--paper);
+    font-size: 15px;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .nav__group--priority a:last-child {
+    grid-column: 1 / -1;
+    border-color: var(--teal);
+    background: var(--teal);
+    color: #fff;
+  }
+
+  .nav__group:not(.nav__group--priority) {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--paper);
+  }
+
+  .nav__group-toggle {
+    min-height: 54px;
+    padding: 14px 16px;
+    margin: 0;
+    border-bottom: 0;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .nav__group-toggle[aria-expanded="true"] {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav__group-chevron {
+    display: block;
+    flex: 0 0 auto;
+    margin: 0 3px 4px 12px;
+  }
+
+  .nav__group-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+    padding: 4px 16px 12px;
+  }
+
+  .nav__group-links a {
+    padding: 11px 2px;
+    border-bottom: 1px solid rgba(38, 78, 82, 0.1);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .nav__group--offerings .nav__group-links {
+    grid-template-columns: 1fr;
+  }
+
+  .nav__group--offerings a {
+    display: block;
+  }
+
+  .nav__group--offerings a img,
+  .nav__group--secondary .nav__group-links a[target="_blank"],
+  .nav__group--secondary .nav__group-links a:nth-last-child(-n + 3) {
+    display: none;
   }
 
   .article-hero {
