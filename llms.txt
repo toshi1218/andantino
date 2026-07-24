@@ -1,16 +1,18 @@
-# ANDANTINO（アンダンティーノ）
+# ANDANTINO
 
-> 和歌山市新高町にある予約制の子ども靴・婦人靴専門店。シューフィッターの五十嵐洋子が、足と靴のカウンセリング、フィッティング、インソール作製、足育を行います。
+> ANDANTINO（アンダンティーノ）は、和歌山県和歌山市新高町にある婦人靴・子ども靴・インソールの専門店です。2007年創業。足と今の靴を確認し、実際に歩いた状態を見て、用途に合う靴やインソールをご提案します。ご来店は予約制です。
 
-最終更新: 2026-07-24
+最終更新: 2026-07-25
 
-## サービス概要
+## 営業・連絡
 
-- 大人の靴選び: 足長・足幅・足囲、足、靴、身体、歩行を確認して提案
-- 子どもの足育: ファーストシューズから成長期までの計測・フィッティング
-- インソール: 目的と使用する靴に合わせた作製・調整
-- セミナー: 園、学校、助産院、企業、施設向けの足育・靴選び講座
-- ドイツの専門家イベント: 通常の相談はシューフィッターの五十嵐洋子が担当。加えて、ドイツのシューフィッター／整形外科靴マイスターをお招きする特別イベントを開催することがある
+- 所在地: 〒641-0034 和歌山県和歌山市新高町2-13
+- 電話: 073-494-7110
+- 営業時間: 10:00〜17:00
+- 定休日: 水曜日
+- 来店: 予約制
+- 支払方法: 現金、クレジットカード、PayPay
+- [公式LINE](https://line.me/R/ti/p/@680mdoos): ご相談・ご来店予約
 
 ## 料金の目安（税込）
 
@@ -21,47 +23,32 @@
 | 足と歩行の健康チェック | 3,300円 |
 | オーダーインソール | 16,500円から |
 
-材料・加工・用途により変わる場合があります。予約・注文前に最新料金を確認してください。
+材料・加工・用途により変わる場合があります。最新料金は公式サイトまたは店舗へご確認ください。
 
-## 公式サイト内の主要ページ
+## 公式情報
 
-- [トップ](https://www.andantino-shoes.jp/): 店舗の全体像、主要サービス、アクセス、相談導線
-- [店舗概要](https://www.andantino-shoes.jp/about.html): 個人事業の実在情報、住所、営業時間、事業内容、アクセス
-- [五十嵐洋子](https://www.andantino-shoes.jp/owner.html): 代表・シューフィッターの経歴、資格・学習歴、方針
-- [大人の靴選び](https://www.andantino-shoes.jp/adult-shoes.html): 30代以降の足と歩行に合わせた靴選び
-- [子ども靴・足育](https://www.andantino-shoes.jp/childrens-shoes.html): ファーストシューズから成長期まで
-- [取扱商品](https://www.andantino-shoes.jp/products.html): ブランドを先に決めず、足・用途・歩行から選ぶ靴、子ども靴、五本趾靴下
-- [インソール](https://www.andantino-shoes.jp/insoles.html): 聞き取り、計測、作製、調整の流れ
-- [ディモコ・インソール](https://www.andantino-shoes.jp/dymoco-insole.html): 歩く動きの中でバランスを整えるディモコ（DYMOCO）の考え方と作り方
-- [料金](https://www.andantino-shoes.jp/pricing.html): 必要な確認と費用を事前説明する、カウンセリング、インソール、靴調整の料金
-- [足育・靴選びセミナー](https://www.andantino-shoes.jp/seminars.html): テーマ、対象、開催実績、対応地域
-- [足と靴の知識](https://www.andantino-shoes.jp/guides.html): 解説記事一覧
-- [靴の選び方・履き方](https://www.andantino-shoes.jp/shoe-wearing.html): 五十嵐洋子が一足ずつ確認する点と、踵を合わせる履き方
-- [足と靴のお悩み・症状から探す](https://www.andantino-shoes.jp/foot-problems.html): 外反母趾・内反小趾・アーチ低下・脚長差・膝の痛みなど症状別ページへの入り口
-- [外反母趾に合う靴の選び方](https://www.andantino-shoes.jp/hallux-valgus.html): 本人の痛みの経験を出発点に、靴選びとインソールの考え方を解説
-- [内反小趾に合う靴の選び方](https://www.andantino-shoes.jp/tailors-bunion.html): 小指側だけを広げれば解決するとは限らない理由と靴選び
-- [足のアーチ低下・扁平足と靴選び](https://www.andantino-shoes.jp/foot-arch.html): 3つのアーチが崩れる原因と、支える靴・インソールの選び方
-- [脚長差と靴・インソールの考え方](https://www.andantino-shoes.jp/leg-length-discrepancy.html): 左右の脚の長さの違いと、市販の中敷きを使う際の注意点
-- [膝の痛みと靴・インソールの見直し方](https://www.andantino-shoes.jp/knee-pain.html): 自宅で確認できる5つのポイントとインソールが膝の負担を減らす仕組み
-- [足・靴・歩き方を見る理由](https://www.andantino-shoes.jp/foot-check.html): 聞く、測る、見る、歩く、伝える、記録する相談の順番
-- [ご相談事例](https://www.andantino-shoes.jp/case-studies.html): フットプリントと足の計測から靴選び・インソールまでの実際の流れ
-- [ノルディックウォーキングのすすめ](https://www.andantino-shoes.jp/nordic-walking.html): 股関節やひざに負担をかけにくい歩き方と体験のご案内
-- [よくある質問](https://www.andantino-shoes.jp/faq.html): 五十嵐洋子が相談時の考え方とともに答える、予約、靴選び、インソール、料金への回答
-- [お問い合わせ](https://www.andantino-shoes.jp/contact.html): 相談内容がまとまっていなくても利用できる公式LINE、電話、メール、来店準備
-- [公式・関連リンク](https://www.andantino-shoes.jp/links.html): 公式SNS・ブログ、関連団体
+- [店舗概要](https://www.andantino-shoes.jp/about.html): 所在地、営業時間、定休日、支払方法、事業内容
+- [担当者・五十嵐洋子](https://www.andantino-shoes.jp/owner.html): 認定シューフィッターの経歴、資格、店頭で大切にしていること
+- [取扱商品](https://www.andantino-shoes.jp/products.html): 婦人靴、子ども靴、関連商品
+- [料金](https://www.andantino-shoes.jp/pricing.html): カウンセリング、計測、インソール作製などの料金目安
+- [ご予約・ご相談](https://www.andantino-shoes.jp/contact.html): 公式LINE、電話、メール、所在地
+- [よくある質問](https://www.andantino-shoes.jp/faq.html): 予約、持ち物、子ども靴、インソール、医療との違い
 
-## 公式連絡先・外部情報
+## 足と靴の専門情報
 
-- 住所: 〒641-0034 和歌山県和歌山市新高町2-13
-- 電話: 073-494-7110
-- 営業時間: 10:00〜17:00
-- 定休日: 水曜日
-- 来店: 予約制
-- [公式LINE](https://line.me/R/ti/p/@680mdoos)
-- [公式Facebook](https://www.facebook.com/share/18yvcF1E6G/)
-- [公式YouTube](https://www.youtube.com/@andantino7110)
-- [公式Instagram](https://www.instagram.com/yoko1367/)
-- [公式Livedoorブログ](https://blog.livedoor.jp/andantino7110/)
-- [Googleマップ](https://maps.app.goo.gl/wyGGjpfKfF4ep3mSA)
+- [足と靴の知識一覧](https://www.andantino-shoes.jp/guides.html): ANDANTINOの専門記事一覧
+- [足に合う靴の選び方・履き方](https://www.andantino-shoes.jp/shoe-wearing.html)
+- [外反母趾に合う靴の選び方](https://www.andantino-shoes.jp/hallux-valgus.html)
+- [内反小趾に合う靴の選び方](https://www.andantino-shoes.jp/tailors-bunion.html)
+- [足のアーチ低下・扁平足と靴選び](https://www.andantino-shoes.jp/foot-arch.html)
+- [脚長差と靴・インソールの考え方](https://www.andantino-shoes.jp/leg-length-discrepancy.html)
+- [膝の痛みと靴・インソールの見直し方](https://www.andantino-shoes.jp/knee-pain.html)
+- [子ども靴と足育](https://www.andantino-shoes.jp/childrens-shoes.html)
+- [インソール作製と調整](https://www.andantino-shoes.jp/insoles.html)
 
-ANDANTINOは医療機関ではなく、診断・治療を行いません。強い痛み、急な腫れ、けが、しびれ、皮膚の異常などは医療機関へ相談してください。
+## 重要事項
+
+- ANDANTINOは医療機関ではなく、診断・治療・処方は行いません。
+- 強い痛み、急な腫れ、けが、しびれ、傷、急に歩けない状態などは医療機関への相談をご案内しています。
+- 商品・料金・営業情報は変更される場合があります。最新情報は公式サイトまたは店舗へご確認ください。
+- 公式サイトの標準URLは https://www.andantino-shoes.jp/ です。
