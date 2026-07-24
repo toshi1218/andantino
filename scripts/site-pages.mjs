@@ -25,6 +25,7 @@ export const pages = [
   { file: "case-studies.html", path: "/case-studies.html", priority: "0.6" },
   { file: "faq.html", path: "/faq.html", priority: "0.8" },
   { file: "contact.html", path: "/contact.html", priority: "0.9" },
+  { file: "news.html", path: "/news.html", priority: "0.6" },
   { file: "links.html", path: "/links.html", priority: "0.6" },
   { file: "privacy.html", path: "/privacy.html", priority: "0.4" },
   { file: "terms.html", path: "/terms.html", priority: "0.4" },

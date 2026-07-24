@@ -28,6 +28,7 @@ const fullMenuMarkup = `
       <strong>店舗情報・サイト案内</strong>
       <a href="./about.html">店舗概要</a>
       <a href="./owner.html">五十嵐洋子について</a>
+      <a href="./news.html">お知らせ</a>
       <a href="./#shop">店舗案内・アクセス</a>
       <a href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINE ↗</a>
       <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook ↗</a>
@@ -116,6 +117,57 @@ if (menuButton && navigation) {
     if (!navigation.classList.contains("is-open")) return;
     if (navigation.contains(event.target) || menuButton.contains(event.target)) return;
     setMenuState(false);
+  });
+}
+
+const contactForm = document.querySelector(".contact-form");
+
+if (contactForm) {
+  const statusEl = contactForm.querySelector(".contact-form__status");
+  const phoneField = contactForm.querySelector("#cf-phone");
+  const emailField = contactForm.querySelector("#cf-email");
+
+  const showStatus = (message, state) => {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    statusEl.dataset.state = state;
+    statusEl.hidden = false;
+  };
+
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!phoneField.value.trim() && !emailField.value.trim()) {
+      showStatus("電話番号かメールアドレスのいずれかをご記入ください。", "error");
+      phoneField.focus();
+      return;
+    }
+
+    if (!contactForm.reportValidity()) return;
+
+    const submitButton = contactForm.querySelector("button[type=submit]");
+    submitButton.disabled = true;
+    showStatus("送信しています…", "");
+
+    try {
+      const response = await fetch(contactForm.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(contactForm),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        contactForm.reset();
+        showStatus("送信しました。ご連絡いただきありがとうございます。折り返しご連絡いたします。", "success");
+      } else {
+        showStatus("送信に失敗しました。お手数ですがLINE・電話・メールでご連絡ください。", "error");
+      }
+    } catch {
+      showStatus("送信に失敗しました。お手数ですがLINE・電話・メールでご連絡ください。", "error");
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 }
 

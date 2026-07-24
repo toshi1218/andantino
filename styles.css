@@ -1807,6 +1807,153 @@ a.button[href^="https://line.me/"] .button__icon {
   font-size: 13px;
 }
 
+.contact-form {
+  display: grid;
+  gap: 18px;
+  max-width: 640px;
+  margin-top: 24px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.contact-form__row {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.contact-form label {
+  color: var(--teal);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.contact-form__required {
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: var(--blue-strong);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="tel"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--charcoal);
+  font: inherit;
+}
+
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 3px solid var(--blue-strong);
+  outline-offset: 2px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-form__note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.contact-form .button {
+  justify-self: start;
+}
+
+.contact-form__status {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.contact-form__status[data-state="success"] {
+  background: #eafff1;
+  color: #087536;
+}
+
+.contact-form__status[data-state="error"] {
+  background: #fdeceb;
+  color: #a83a2c;
+}
+
+.news-list {
+  display: grid;
+  max-width: 780px;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.news-empty {
+  color: var(--muted);
+}
+
+.news-item {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(55, 52, 49, 0.045);
+}
+
+.news-item time {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.news-item h3 {
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.news-item__body {
+  color: var(--charcoal);
+}
+
+.news-item__body p {
+  margin: 0 0 12px;
+}
+
+.news-item__body p:last-child {
+  margin-bottom: 0;
+}
+
+.news-footnote {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .faq-list {
   display: grid;
   max-width: 860px;
@@ -2006,7 +2153,8 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .answer-grid,
-  .official-links {
+  .official-links,
+  .contact-form__grid {
     grid-template-columns: 1fr;
   }
 }
@@ -2043,6 +2191,10 @@ a.button[href^="https://line.me/"] .button__icon {
   .fact-list div {
     grid-template-columns: 1fr;
     gap: 4px;
+  }
+
+  .contact-form {
+    padding: 22px;
   }
 
   .info-footer .container {
