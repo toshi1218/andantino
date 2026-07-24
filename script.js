@@ -240,20 +240,6 @@ if (tocLinks.length) {
       const isCurrent = link.getAttribute("href") === `#${id}`;
       if (isCurrent) {
         link.setAttribute("aria-current", "location");
-        const toc = link.closest(".article-toc");
-        if (toc && toc.scrollWidth > toc.clientWidth) {
-          const label = toc.querySelector("strong");
-          const reserved = label ? label.offsetWidth : 0;
-          const linkStart = link.offsetLeft;
-          const linkEnd = linkStart + link.offsetWidth;
-          const visibleStart = toc.scrollLeft + reserved;
-          const visibleEnd = toc.scrollLeft + toc.clientWidth;
-          if (linkStart < visibleStart) {
-            toc.scrollTo({ left: Math.max(0, linkStart - reserved), behavior: "smooth" });
-          } else if (linkEnd > visibleEnd) {
-            toc.scrollTo({ left: linkEnd - toc.clientWidth, behavior: "smooth" });
-          }
-        }
       } else {
         link.removeAttribute("aria-current");
       }
