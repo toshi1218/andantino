@@ -3612,6 +3612,10 @@ a.button[href^="https://line.me/"] .button__icon {
   box-shadow: var(--shadow-md);
 }
 
+.article-hero-photo--owner img {
+  object-position: center 42%;
+}
+
 .article-body {
   padding-block: 66px 104px;
 }
