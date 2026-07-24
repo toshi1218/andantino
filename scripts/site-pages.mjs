@@ -9,7 +9,7 @@ export const pages = [
   { file: "childrens-shoes.html", path: "/childrens-shoes.html", priority: "0.9" },
   { file: "products.html", path: "/products.html", priority: "0.8" },
   { file: "insoles.html", path: "/insoles.html", priority: "0.9" },
-  { file: "dimoco-insole.html", path: "/dimoco-insole.html", priority: "0.6" },
+  { file: "dymoco-insole.html", path: "/dymoco-insole.html", priority: "0.6" },
   { file: "pricing.html", path: "/pricing.html", priority: "0.9" },
   { file: "seminars.html", path: "/seminars.html", priority: "0.8" },
   { file: "guides.html", path: "/guides.html", priority: "0.9" },
