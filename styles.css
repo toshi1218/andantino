@@ -2843,6 +2843,17 @@ a.button[href^="https://line.me/"] .button__icon {
   background: var(--cream-2);
 }
 
+.legacy-photo-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.legacy-photo-pair .legacy-photo {
+  margin: 0;
+}
+
 .legacy-photo figcaption,
 .legacy-gallery figcaption {
   padding: 11px 14px;
