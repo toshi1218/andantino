@@ -213,12 +213,6 @@ a {
   background: #eaf4f1;
 }
 
-.nav__group--secondary a:nth-last-child(-n + 3) {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .nav__group {
   display: flex;
   flex-direction: column;
