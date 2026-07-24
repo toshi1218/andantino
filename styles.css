@@ -249,6 +249,26 @@ a {
   text-underline-offset: 4px;
 }
 
+.nav__group--offerings a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.nav__group--offerings a img {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.nav__group--offerings a span {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .header__actions {
   display: flex;
   align-items: center;
@@ -914,36 +934,6 @@ a {
 .consult__content p {
   margin: 0 0 26px;
   color: var(--charcoal);
-}
-
-.consult__steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 22px;
-  margin: 0 0 26px;
-  padding: 0;
-  list-style: none;
-}
-
-.consult__steps li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--charcoal);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.consult__steps li span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: var(--teal);
-  color: #fff;
-  font-size: 12px;
 }
 
 .consult__price-note {
@@ -2851,6 +2841,17 @@ a.button[href^="https://line.me/"] .button__icon {
   max-height: 560px;
   object-fit: contain;
   background: var(--cream-2);
+}
+
+.legacy-photo-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.legacy-photo-pair .legacy-photo {
+  margin: 0;
 }
 
 .legacy-photo figcaption,

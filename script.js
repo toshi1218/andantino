@@ -13,20 +13,20 @@ const fullMenuMarkup = `
       <a href="./guides.html">足と靴の知識一覧</a>
       <a href="./shoe-wearing.html">靴の選び方・履き方</a>
       <a href="./foot-problems.html">外反母趾・内反小趾・3つのアーチ</a>
-      <a href="./foot-check.html">足・靴・歩き方を見る理由</a>
+      <a href="./foot-check.html">ご相談で確認すること</a>
       <a href="./case-studies.html">ご相談事例</a>
       <a href="./faq.html">よくある質問</a>
     </div>
     <div class="nav__group nav__group--offerings">
       <strong>取扱商品・サービス</strong>
-      <a href="./products.html">取扱商品</a>
-      <a href="./dimoco-insole.html">ディモコ・インソール</a>
-      <a href="./seminars.html">足育・靴選びセミナー</a>
-      <a href="./nordic-walking.html">ノルディックウォーキング</a>
+      <a href="./products.html"><img src="./assets/paramount-pumps.webp" width="60" height="60" loading="lazy" alt=""><span>取扱商品</span></a>
+      <a href="./dymoco-insole.html"><img src="./assets/product-dymoco-insole.webp" width="60" height="60" loading="lazy" alt=""><span>オーダーインソール（ディモコ）</span></a>
+      <a href="./seminars.html"><img src="./assets/legacy-seminar.webp" width="60" height="60" loading="lazy" alt=""><span>足育・靴選びセミナー</span></a>
+      <a href="./nordic-walking.html"><img src="./assets/nordic-walking-park.webp" width="60" height="60" loading="lazy" alt=""><span>ノルディックウォーキング</span></a>
     </div>
     <div class="nav__group nav__group--secondary">
       <strong>店舗情報・サイト案内</strong>
-      <a href="./about.html">店舗・個人事業概要</a>
+      <a href="./about.html">店舗概要</a>
       <a href="./owner.html">五十嵐洋子について</a>
       <a href="./#shop">店舗案内・アクセス</a>
       <a href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINE ↗</a>
