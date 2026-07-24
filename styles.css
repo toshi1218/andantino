@@ -210,7 +210,7 @@ a {
 }
 
 .nav__group--secondary {
-  background: #f4e7e1;
+  background: #eaf4f1;
 }
 
 .nav__group--secondary a:nth-last-child(-n + 3) {
@@ -2575,7 +2575,7 @@ a.button[href^="https://line.me/"] .button__icon {
   flex-wrap: wrap;
   gap: 8px;
   padding: 0;
-  margin: 0;
+  margin-block: 0;
   color: var(--muted);
   font-size: 13px;
   list-style: none;
@@ -3027,6 +3027,21 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.6;
+}
+
+.diagram-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--cream-2);
+}
+
+.diagram-card svg {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
 }
 
 .legacy-gallery {
