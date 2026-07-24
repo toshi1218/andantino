@@ -190,57 +190,6 @@ if (menuButton && navigation) {
   });
 }
 
-const contactForm = document.querySelector(".contact-form");
-
-if (contactForm) {
-  const statusEl = contactForm.querySelector(".contact-form__status");
-  const phoneField = contactForm.querySelector("#cf-phone");
-  const emailField = contactForm.querySelector("#cf-email");
-
-  const showStatus = (message, state) => {
-    if (!statusEl) return;
-    statusEl.textContent = message;
-    statusEl.dataset.state = state;
-    statusEl.hidden = false;
-  };
-
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    if (!phoneField.value.trim() && !emailField.value.trim()) {
-      showStatus("電話番号かメールアドレスのいずれかをご記入ください。", "error");
-      phoneField.focus();
-      return;
-    }
-
-    if (!contactForm.reportValidity()) return;
-
-    const submitButton = contactForm.querySelector("button[type=submit]");
-    submitButton.disabled = true;
-    showStatus("送信しています…", "");
-
-    try {
-      const response = await fetch(contactForm.action, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(contactForm),
-      });
-      const result = await response.json();
-
-      if (result.success) {
-        contactForm.reset();
-        showStatus("送信しました。ご連絡いただきありがとうございます。折り返しご連絡いたします。", "success");
-      } else {
-        showStatus("送信に失敗しました。お手数ですがLINE・電話・メールでご連絡ください。", "error");
-      }
-    } catch {
-      showStatus("送信に失敗しました。お手数ですがLINE・電話・メールでご連絡ください。", "error");
-    } finally {
-      submitButton.disabled = false;
-    }
-  });
-}
-
 document.querySelectorAll(".yt-facade").forEach((facade) => {
   facade.addEventListener("click", () => {
     const videoId = facade.dataset.ytId;

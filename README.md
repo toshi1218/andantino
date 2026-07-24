@@ -33,12 +33,9 @@ python3 -m http.server 8000
 
 環境変数が未設定のままビルドすると `generate-news.mjs` は警告を出して既存の `news.html` をそのまま残し、ビルド自体は失敗しません。
 
-## お問い合わせフォーム（Web3Forms）
+## お問い合わせ導線
 
-`contact.html` のフォームは [Web3Forms](https://web3forms.com/) を使っています。バックエンド不要で、フォームのHTML自体はサイトのデザインをそのまま使えます。
-
-1. Web3Formsのサイトでメールアドレスを送信し、届いたアクセスキーを取得する。
-2. `contact.html` 内の `<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">` を実際のアクセスキーに差し替える。
+ご予約・お問い合わせは、公式LINE・電話・メールで受け付けます。送信先を設定していないフォームを公開しない方針です。将来フォームを追加する場合は、送信先・スパム対策・送信完了画面まで設定してから公開してください。
 
 ## Cloudflare Pages
 
