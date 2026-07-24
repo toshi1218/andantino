@@ -182,13 +182,14 @@ a {
 
 .nav__panel {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr 1.15fr;
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr;
   gap: 30px;
   padding-top: 32px;
   padding-bottom: 38px;
 }
 
 .nav__group--priority,
+.nav__group--symptoms,
 .nav__group--knowledge,
 .nav__group--offerings,
 .nav__group--secondary {
@@ -199,6 +200,10 @@ a {
 
 .nav__group--priority {
   background: #eaf4f1;
+}
+
+.nav__group--symptoms {
+  background: var(--peach);
 }
 
 .nav__group--knowledge {

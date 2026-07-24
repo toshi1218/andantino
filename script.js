@@ -8,6 +8,15 @@ const fullMenuMarkup = `
       <a href="./pricing.html">料金</a>
       <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
     </div>
+    <div class="nav__group nav__group--symptoms">
+      <strong>お悩み・症状から探す</strong>
+      <a href="./foot-problems.html">症状の一覧を見る</a>
+      <a href="./hallux-valgus.html">外反母趾</a>
+      <a href="./tailors-bunion.html">内反小趾</a>
+      <a href="./foot-arch.html">足のアーチ・扁平足</a>
+      <a href="./leg-length-discrepancy.html">脚長差</a>
+      <a href="./knee-pain.html">膝の痛み</a>
+    </div>
     <div class="nav__group nav__group--offerings">
       <strong>取扱商品・サービス</strong>
       <a href="./products.html"><img src="./assets/paramount-pumps.webp" width="60" height="60" loading="lazy" alt=""><span>取扱商品</span></a>
@@ -19,7 +28,6 @@ const fullMenuMarkup = `
       <strong>足と靴の知識</strong>
       <a href="./guides.html">足と靴の知識一覧</a>
       <a href="./shoe-wearing.html">靴の選び方・履き方</a>
-      <a href="./foot-problems.html">お悩み・症状から探す</a>
       <a href="./foot-check.html">ご相談で確認すること</a>
       <a href="./case-studies.html">ご相談事例</a>
       <a href="./faq.html">よくある質問</a>
