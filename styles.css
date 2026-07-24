@@ -213,12 +213,6 @@ a {
   background: #eaf4f1;
 }
 
-.nav__group--secondary a:nth-last-child(-n + 3) {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .nav__group {
   display: flex;
   flex-direction: column;
@@ -2768,6 +2762,35 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .prose section + section {
   margin-top: 72px;
+}
+
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.related-links a {
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--teal);
+  font-weight: 700;
+  font-size: 14px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.related-links a:hover,
+.related-links a:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  color: var(--accent);
+}
+
+.related-links a.related-links__all {
+  background: var(--blue);
+  color: var(--blue-strong);
 }
 
 .prose h2 {
