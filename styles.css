@@ -269,6 +269,76 @@ a {
   overflow-wrap: break-word;
 }
 
+.nav__accordion {
+  margin: 2px 0;
+}
+
+.nav__accordion summary {
+  position: relative;
+  padding: 5px 30px 5px 0;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  list-style: none;
+}
+
+.nav__accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav__accordion summary::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--accent);
+  font-size: 14px;
+  transform: translateY(-50%);
+}
+
+.nav__accordion[open] summary::after {
+  content: "−";
+}
+
+.nav__accordion summary:hover,
+.nav__accordion summary:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.nav__accordion-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 2px 16px;
+  margin-top: 2px;
+  border-left: 2px solid var(--peach);
+}
+
+.nav__accordion-body a {
+  padding: 3px 0;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.nav__accordion-body a:hover,
+.nav__accordion-body a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .header__actions {
   display: flex;
   align-items: center;
@@ -3258,6 +3328,16 @@ a.button[href^="https://line.me/"] .button__icon {
   .nav__group a {
     padding: 8px 0;
     font-size: 17px;
+  }
+
+  .nav__accordion summary {
+    padding: 8px 34px 8px 0;
+    font-size: 17px;
+  }
+
+  .nav__accordion-body a {
+    padding: 6px 0;
+    font-size: 16px;
   }
 
   .article-hero {
