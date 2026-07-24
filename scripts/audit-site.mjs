@@ -241,7 +241,8 @@ for (const [file, expectedTypes] of requiredTypes) {
 const conversionPages = [
   "about.html", "adult-shoes.html", "childrens-shoes.html", "faq.html", "foot-check.html",
   "foot-problems.html", "guides.html", "insoles.html", "owner.html", "pricing.html", "products.html",
-  "seminars.html", "shoe-wearing.html"
+  "seminars.html", "shoe-wearing.html", "hallux-valgus.html", "tailors-bunion.html", "foot-arch.html",
+  "leg-length-discrepancy.html", "knee-pain.html"
 ];
 for (const file of conversionPages) {
   const html = await readFile(new URL(file, root), "utf8");
