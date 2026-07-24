@@ -1,3 +1,8 @@
+const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+const currentFile = currentPath.split("/").pop() || "index.html";
+const pageName = currentFile.replace(/\.html$/, "") || "home";
+document.body.dataset.page = pageName;
+
 const fullMenuMarkup = `
   <div class="container nav__panel">
     <div class="nav__group nav__group--priority">
@@ -69,6 +74,19 @@ if (infoHeader && !document.querySelector(".mobile-actions")) {
     '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">📞 お電話</a><a href="mailto:andantino@wine.plala.or.jp">✉️ メール</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">💬 LINEでご予約・ご相談</a></nav>'
   );
 }
+
+const normalizePath = (href) => {
+  const url = new URL(href, window.location.href);
+  if (url.origin !== window.location.origin || url.hash) return "";
+  const normalized = url.pathname.replace(/\/index\.html$/, "/").replace(/\/+$/, "");
+  return normalized || "/";
+};
+
+document.querySelectorAll('a[href]:not([href^="#"])').forEach((link) => {
+  if (normalizePath(link.href) !== currentPath) return;
+  if (link.closest(".breadcrumb")) return;
+  link.setAttribute("aria-current", "page");
+});
 
 const menuButton = document.querySelector(".menu-button");
 const navigation = document.querySelector(".nav");
@@ -236,3 +254,40 @@ document.querySelectorAll(".yt-facade").forEach((facade) => {
     facade.replaceWith(iframe);
   });
 });
+
+const tocLinks = [...document.querySelectorAll('.article-toc a[href^="#"]')];
+
+if (tocLinks.length) {
+  const observedSections = tocLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setCurrentSection = (id) => {
+    tocLinks.forEach((link) => {
+      const isCurrent = link.getAttribute("href") === `#${id}`;
+      if (isCurrent) {
+        link.setAttribute("aria-current", "location");
+        const toc = link.closest(".article-toc");
+        if (toc && toc.scrollWidth > toc.clientWidth) {
+          const left = link.offsetLeft - (toc.clientWidth - link.offsetWidth) / 2;
+          toc.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+        }
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setCurrentSection(visible[0].target.id);
+    },
+    { rootMargin: "-18% 0px -68% 0px", threshold: 0 }
+  );
+
+  observedSections.forEach((section) => observer.observe(section));
+  setCurrentSection(observedSections[0]?.id);
+}
