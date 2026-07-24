@@ -78,7 +78,10 @@ if (infoHeader && !document.querySelector(".mobile-actions")) {
 const normalizePath = (href) => {
   const url = new URL(href, window.location.href);
   if (url.origin !== window.location.origin || url.hash) return "";
-  const normalized = url.pathname.replace(/\/index\.html$/, "/").replace(/\/+$/, "");
+  const normalized = url.pathname
+    .replace(/\/index\.html$/, "/")
+    .replace(/\.html$/, "")
+    .replace(/\/+$/, "");
   return normalized || "/";
 };
 
