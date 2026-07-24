@@ -264,6 +264,11 @@ a {
   object-fit: cover;
 }
 
+.nav__group--offerings a span {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .header__actions {
   display: flex;
   align-items: center;
