@@ -13,8 +13,24 @@ const liveRobots = "index,follow,max-image-preview:large,max-snippet:-1,max-vide
 const socialImage = `${siteUrl}/assets/og-image.png`;
 const socialImageAlt = "ANDANTINO｜和歌山の靴とインソール専門店";
 const headers = await readFile(new URL("_headers", root), "utf8");
+const robotsTxt = await readFile(new URL("robots.txt", root), "utf8");
+const llmsTxt = await readFile(new URL("llms.txt", root), "utf8");
 const isStaging = headers.includes(`X-Robots-Tag: ${stagingRobotsHeader}`);
 const expectedRobots = isStaging ? stagingRobots : liveRobots;
+
+for (const agent of ["OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "PerplexityBot"]) {
+  const block = new RegExp(`User-agent:\\s*${agent}[\\s\\S]*?Allow:\\s*/(?:\\n|$)`, "i");
+  if (!block.test(robotsTxt)) errors.push(`robots.txt: ${agent} must be allowed`);
+}
+if (!robotsTxt.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
+  errors.push("robots.txt: canonical sitemap URL is missing");
+}
+for (const path of ["/about.html", "/owner.html", "/pricing.html", "/contact.html", "/guides.html"]) {
+  if (!llmsTxt.includes(`${siteUrl}${path}`)) errors.push(`llms.txt: core page is missing: ${path}`);
+}
+if (!llmsTxt.includes("医療機関ではなく、診断・治療・処方は行いません")) {
+  errors.push("llms.txt: medical scope disclaimer is missing");
+}
 
 function fail(file, message) {
   errors.push(`${file}: ${message}`);
@@ -136,6 +152,9 @@ for (const page of pages) {
     }
     if (objectTypes.includes("Article")) {
       if (!object.author) fail(page.file, "Article JSON-LD is missing author");
+      if (!/<p\b[^>]*class=["'][^"']*article-byline[^"']*["'][^>]*>[\s\S]*?<a\b[^>]*href=["']\.\/owner\.html["'][^>]*>[^<]*五十嵐洋子[^<]*<\/a>/i.test(html)) {
+        fail(page.file, "Article must visibly identify and link its expert");
+      }
       if (object.dateModified) {
         const [year, month, day] = object.dateModified.slice(0, 10).split("-");
         const visibleDate = `${year}年${Number(month)}月${Number(day)}日`;

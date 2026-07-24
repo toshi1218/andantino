@@ -9,9 +9,26 @@ npm run validate
 python3 -m http.server 8000
 ```
 
-`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に23ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、旧URLリダイレクトを監査します。
+`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に28ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、AIクローラー設定、旧URLリダイレクトを監査します。
 
 制作中は `npm run indexing:staging`、本公開直前は `npm run indexing:live` で、全ページのrobots metaとCloudflare PagesのHTTPヘッダーを一括切替します。現在は制作中のため `noindex,nofollow,nosnippet` を維持しています。
+
+## AI検索・LLMO
+
+- `robots.txt` で OAI-SearchBot、ChatGPT-User、Claude-SearchBot、PerplexityBot などの検索・ユーザー取得クローラーを許可しています。
+- `llms.txt` は店舗の公式情報、専門記事、医療との境界を簡潔に案内する補助ファイルです。通常のHTML、robots、sitemap、構造化データの代わりにはしません。
+- 専門記事では、担当者の五十嵐洋子、最終更新日、FAQ、医療機関へ相談すべき目安を見える形で示します。
+
+AI検索から流入させるには、本番公開後に `noindex` を解除することが必須です。次の順番を守ります。
+
+1. Cloudflare Pagesへ `www.andantino-shoes.jp` と必要なルートドメインを接続し、新サイトが表示されることを確認する。
+2. canonical、OGP、sitemapが本番ドメインを指していることを確認する。
+3. `npm run indexing:live` を実行してコミットし、全ページを `index,follow` へ切り替える。
+4. 本番のHTTPレスポンスから `X-Robots-Tag: noindex` が消えたことを確認する。
+5. Google Search ConsoleとBing Webmaster Toolsへ `sitemap.xml` を送信する。
+6. 本番ドメインでキー確認ファイルが表示されることを確認し、`npm run indexnow:submit` で28ページをIndexNowへ通知する。
+
+旧サイトが本番ドメインに残っている間は、Pagesプレビュー側の `noindex` を解除しません。
 
 ## お知らせ欄（microCMS）
 
