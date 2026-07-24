@@ -1305,8 +1305,8 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .nav {
     top: 76px;
-    max-height: calc(100vh - 76px);
-    max-height: calc(100dvh - 76px);
+    max-height: calc(100vh - 76px - 68px);
+    max-height: calc(100dvh - 76px - 68px);
   }
 
   .nav__panel {
@@ -3171,8 +3171,8 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .info-header .nav {
     top: 70px;
-    max-height: calc(100vh - 70px);
-    max-height: calc(100dvh - 70px);
+    max-height: calc(100vh - 70px - 68px);
+    max-height: calc(100dvh - 70px - 68px);
   }
 
   .section-heading h2,
