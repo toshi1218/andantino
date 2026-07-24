@@ -249,6 +249,21 @@ a {
   text-underline-offset: 4px;
 }
 
+.nav__group--offerings a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.nav__group--offerings a img {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 .header__actions {
   display: flex;
   align-items: center;
