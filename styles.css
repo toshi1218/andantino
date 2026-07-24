@@ -520,8 +520,8 @@ a {
 }
 
 .hero h1 {
-  font-size: clamp(44px, 4.1vw, 58px);
-  line-height: 1.42;
+  font-size: clamp(40px, 3.7vw, 52px);
+  line-height: 1.38;
 }
 
 .hero h1 span {
@@ -1851,103 +1851,6 @@ a.button[href^="https://line.me/"] .button__icon {
   font-size: 13px;
 }
 
-.contact-form {
-  display: grid;
-  gap: 18px;
-  max-width: 640px;
-  margin-top: 24px;
-  padding: 28px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #fff;
-}
-
-.contact-form__honeypot {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-.contact-form__row {
-  display: grid;
-  gap: 8px;
-}
-
-.contact-form__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
-
-.contact-form label {
-  color: var(--teal);
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.contact-form__required {
-  margin-left: 6px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--blue);
-  color: var(--blue-strong);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.contact-form input[type="text"],
-.contact-form input[type="tel"],
-.contact-form input[type="email"],
-.contact-form textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--cream);
-  color: var(--charcoal);
-  font: inherit;
-}
-
-.contact-form input:focus-visible,
-.contact-form textarea:focus-visible {
-  outline: 3px solid var(--blue-strong);
-  outline-offset: 2px;
-}
-
-.contact-form textarea {
-  resize: vertical;
-}
-
-.contact-form__note {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.contact-form .button {
-  justify-self: start;
-}
-
-.contact-form__status {
-  margin: 0;
-  padding: 14px 16px;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-.contact-form__status[data-state="success"] {
-  background: #eafff1;
-  color: #087536;
-}
-
-.contact-form__status[data-state="error"] {
-  background: #fdeceb;
-  color: #a83a2c;
-}
-
 .news-list {
   display: grid;
   max-width: 780px;
@@ -2197,8 +2100,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .answer-grid,
-  .official-links,
-  .contact-form__grid {
+  .official-links {
     grid-template-columns: 1fr;
   }
 }
@@ -2235,10 +2137,6 @@ a.button[href^="https://line.me/"] .button__icon {
   .fact-list div {
     grid-template-columns: 1fr;
     gap: 4px;
-  }
-
-  .contact-form {
-    padding: 22px;
   }
 
   .info-footer .container {
@@ -2314,90 +2212,6 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .knowledge__more {
   margin-top: 28px;
-}
-
-.connect {
-  background: #fffdf9;
-}
-
-.connect__facebook {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 32px;
-  margin-bottom: 24px;
-  padding: 34px;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: var(--paper);
-}
-
-.connect__facebook-intro p {
-  margin: 10px 0 0;
-  color: var(--muted);
-}
-
-.connect-ferse:hover,
-.connect-ferse:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-}
-
-.connect-card__mark {
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-}
-
-.connect-ferse p {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.connect__relations {
-  margin-top: 20px;
-}
-
-.connect-ferse {
-  min-width: 0;
-  border-radius: 24px;
-}
-
-.connect-ferse {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  padding: 34px 38px;
-  border: 1px solid #f1cfd2;
-  background: linear-gradient(145deg, #fff, #fff7f7);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-}
-
-.connect-ferse--wide {
-  align-items: center;
-  text-align: center;
-}
-
-.connect-ferse img {
-  width: min(260px, 78%);
-  height: auto;
-  margin-bottom: 24px;
-}
-
-.connect-ferse p {
-  margin: 0 0 16px;
-}
-
-.connect-ferse p strong {
-  color: var(--teal);
-}
-
-.connect-ferse > span {
-  color: var(--teal);
-  font-size: 13px;
-  font-weight: 700;
 }
 
 /* ---------- Quick nav (mobile/tablet) ---------- */
@@ -3171,18 +2985,8 @@ a.button[href^="https://line.me/"] .button__icon {
 }
 
 @media (max-width: 820px) {
-  .connect__facebook {
-    grid-template-columns: 1fr;
-  }
-
-  .connect__facebook .fb-page,
-  .connect__facebook iframe {
-    width: 100% !important;
-  }
-
   .knowledge__grid,
   .guide-grid,
-  .connect__relations,
   .voice__grid,
   .expert__grid,
   .definition-grid,
@@ -3432,11 +3236,6 @@ a.button[href^="https://line.me/"] .button__icon {
   .legacy-gallery,
   .legacy-gallery--three {
     grid-template-columns: 1fr;
-  }
-
-  .connect-ferse {
-    min-height: 0;
-    padding: 30px 24px;
   }
 
   .author-note {
@@ -4065,7 +3864,6 @@ body[data-page="404"] main {
   .article-cta,
   .consult,
   .yt-facade,
-  .connect,
   .footer__social,
   .shop__map,
   .article-toc,
