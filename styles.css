@@ -291,6 +291,34 @@ a {
   text-underline-offset: 4px;
 }
 
+.nav__group--priority .nav__problem-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  background: var(--teal);
+  color: #fff;
+}
+
+.nav__group--priority .nav__problem-entry::after {
+  content: "›";
+  flex: 0 0 auto;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.nav__group--priority .nav__problem-entry:hover,
+.nav__group--priority .nav__problem-entry:focus-visible,
+.nav__group--priority .nav__problem-entry[aria-current="page"] {
+  background: var(--accent-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
 .nav__group--offerings a {
   display: flex;
   align-items: center;
@@ -3212,6 +3240,14 @@ a.button[href^="https://line.me/"] .button__icon {
     font-size: 15px;
     line-height: 1.45;
     text-align: center;
+  }
+
+  .nav__group--priority .nav__problem-entry {
+    grid-column: 1 / -1;
+    min-height: 52px;
+    justify-content: space-between;
+    padding-inline: 16px;
+    text-align: left;
   }
 
   .nav__group--priority a:last-child {
