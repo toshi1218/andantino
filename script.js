@@ -72,11 +72,61 @@ if (infoHeader && !document.querySelector(".mobile-actions")) {
 
 const menuButton = document.querySelector(".menu-button");
 const navigation = document.querySelector(".nav");
+const mobileMenuMedia = window.matchMedia("(max-width: 520px)");
+let resetMenuGroups = () => {};
+
+if (navigation) {
+  const collapsibleGroups = [
+    ...navigation.querySelectorAll(".nav__group:not(.nav__group--priority)"),
+  ].map((group, index) => {
+    const heading = group.querySelector(":scope > strong");
+    const links = [...group.querySelectorAll(":scope > a")];
+    const panel = document.createElement("div");
+    const button = document.createElement("button");
+    const panelId = `nav-group-${index + 1}`;
+
+    panel.className = "nav__group-links";
+    panel.id = panelId;
+    links.forEach((link) => panel.append(link));
+
+    button.className = "nav__group-toggle";
+    button.type = "button";
+    button.setAttribute("aria-controls", panelId);
+    button.innerHTML = `<span>${heading?.textContent || "メニュー"}</span><span class="nav__group-chevron" aria-hidden="true"></span>`;
+
+    heading?.replaceWith(button);
+    group.append(panel);
+
+    const setOpen = (isOpen) => {
+      button.setAttribute("aria-expanded", String(isOpen));
+      panel.hidden = !isOpen;
+    };
+
+    button.addEventListener("click", () => {
+      setOpen(button.getAttribute("aria-expanded") !== "true");
+    });
+
+    return { setOpen };
+  });
+
+  const syncMenuGroups = () => {
+    collapsibleGroups.forEach(({ setOpen }) => setOpen(!mobileMenuMedia.matches));
+  };
+
+  resetMenuGroups = () => {
+    if (!mobileMenuMedia.matches) return;
+    collapsibleGroups.forEach(({ setOpen }) => setOpen(false));
+  };
+
+  syncMenuGroups();
+  mobileMenuMedia.addEventListener?.("change", syncMenuGroups);
+}
 
 if (menuButton && navigation) {
   const menuLabel = menuButton.querySelector(".sr-only");
 
   const setMenuState = (isOpen, returnFocus = false) => {
+    if (isOpen) resetMenuGroups();
     menuButton.setAttribute("aria-expanded", String(isOpen));
     navigation.classList.toggle("is-open", isOpen);
     document.body.classList.toggle("menu-open", isOpen);
@@ -94,7 +144,9 @@ if (menuButton && navigation) {
 
   navigation.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") return;
-    const focusable = [...navigation.querySelectorAll("a[href]")];
+    const focusable = [
+      ...navigation.querySelectorAll("a[href], button:not([disabled])"),
+    ].filter((element) => element.getClientRects().length);
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
