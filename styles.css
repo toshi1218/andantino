@@ -2326,15 +2326,9 @@ a.button[href^="https://line.me/"] .button__icon {
 
 .quicknav__inner {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  overflow-x: auto;
   padding: 12px 0;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.quicknav__inner::-webkit-scrollbar {
-  display: none;
 }
 
 .quicknav a {
