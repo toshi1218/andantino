@@ -2877,6 +2877,21 @@ a.button[href^="https://line.me/"] .button__icon {
   line-height: 1.6;
 }
 
+.diagram-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--cream-2);
+}
+
+.diagram-card svg {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+}
+
 .legacy-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
