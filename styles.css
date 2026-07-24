@@ -2611,6 +2611,7 @@ a.button[href^="https://line.me/"] .button__icon {
   font-family: var(--serif);
   font-size: clamp(29px, 3.2vw, 42px);
   line-height: 1.5;
+  text-wrap: balance;
 }
 
 .section-icon-heading {
@@ -2650,6 +2651,7 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--teal);
   font-family: var(--serif);
   font-size: 22px;
+  text-wrap: balance;
 }
 
 .prose p,
@@ -2998,7 +3000,7 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .step-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
