@@ -12,6 +12,7 @@ export const pages = [
   { file: "dymoco-insole.html", path: "/dymoco-insole.html", priority: "0.6" },
   { file: "pricing.html", path: "/pricing.html", priority: "0.9" },
   { file: "seminars.html", path: "/seminars.html", priority: "0.8" },
+  { file: "for-professionals.html", path: "/for-professionals.html", priority: "0.7" },
   { file: "guides.html", path: "/guides.html", priority: "0.9" },
   { file: "shoe-wearing.html", path: "/shoe-wearing.html", priority: "0.9" },
   { file: "foot-problems.html", path: "/foot-problems.html", priority: "0.8" },
