@@ -182,63 +182,56 @@ a {
 
 .nav__panel {
   display: grid;
-  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr;
-  gap: 30px;
-  padding-top: 32px;
-  padding-bottom: 38px;
+  grid-template-columns: 1fr 1fr 1.15fr 1fr 1fr;
+  column-gap: 0;
+  padding-top: 36px;
+  padding-bottom: 42px;
 }
 
-.nav__group--priority,
-.nav__group--symptoms,
-.nav__group--knowledge,
-.nav__group--offerings,
-.nav__group--secondary {
-  padding: 18px;
-  margin: -18px 0;
-  border-radius: 18px;
-}
-
-.nav__group--priority {
-  background: #eaf4f1;
-}
-
-.nav__group--symptoms {
-  background: var(--peach);
-}
-
-.nav__group--knowledge {
-  background: var(--cream-2);
-}
-
-.nav__group--offerings {
-  background: var(--blue);
-}
-
-.nav__group--secondary {
-  background: #eaf4f1;
-}
-
+/* Calm, uniform surface — no per-group colour blocks. Columns are
+   separated on desktop by a quiet hairline, groups on mobile by a
+   hairline between stacked sections. */
 .nav__group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 1px;
+  padding-inline: 26px;
+  border-left: 1px solid var(--line);
+}
+
+.nav__group:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
 .nav__group strong {
-  padding-bottom: 10px;
-  margin-bottom: 4px;
-  border-bottom: 2px solid var(--peach);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
   color: var(--accent-dark);
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.nav__group strong::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 16px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
 }
 
 .nav__group a {
-  padding: 5px 0;
+  padding: 8px 0;
   color: var(--teal);
   font-size: 15px;
-  font-weight: 700;
-  line-height: 1.55;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: color 140ms ease;
 }
 
 .nav__group a:hover,
@@ -257,8 +250,8 @@ a {
 
 .nav__group--offerings a img {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   object-fit: cover;
 }
@@ -1217,7 +1210,31 @@ a.button[href^="https://line.me/"] .button__icon {
 
 @media (max-width: 1100px) {
   .nav__panel {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding-bottom: 140px;
+  }
+
+  .nav__group {
+    gap: 2px;
+    padding: 20px 2px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .nav__group:first-child {
+    padding-top: 4px;
+    border-top: 0;
+  }
+
+  .nav__group strong {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .nav__group a {
+    padding: 11px 0;
+    font-size: 16px;
   }
 
   .header__primary {
@@ -1309,9 +1326,8 @@ a.button[href^="https://line.me/"] .button__icon {
   }
 
   .nav__panel {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 34px;
-    padding-top: 26px;
+    grid-template-columns: 1fr;
+    padding-top: 24px;
     padding-bottom: 140px;
   }
 
@@ -3276,15 +3292,14 @@ a.button[href^="https://line.me/"] .button__icon {
 
   .nav__panel {
     grid-template-columns: 1fr;
-    gap: 24px;
   }
 
   .nav__group strong {
-    font-size: 19px;
+    font-size: 15px;
   }
 
   .nav__group a {
-    padding: 8px 0;
+    padding: 12px 0;
     font-size: 17px;
   }
 
