@@ -215,12 +215,6 @@ a {
   background: #eaf4f1;
 }
 
-.nav__group--secondary .nav__group-links a:nth-last-child(-n + 3) {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .nav__group {
   display: flex;
   flex-direction: column;
@@ -1278,6 +1272,42 @@ a.button[href^="https://line.me/"] .button__icon {
 .outline-button:hover {
   background: var(--teal);
   color: #fff;
+}
+
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.related-links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border: 1px solid var(--teal);
+  border-radius: 999px;
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.related-links a:hover,
+.related-links a:focus-visible {
+  background: var(--teal);
+  color: #fff;
+}
+
+.related-links__all {
+  border-color: transparent;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.related-links__all:hover,
+.related-links__all:focus-visible {
+  background: transparent;
+  color: var(--teal);
 }
 
 .fees__grid {
@@ -3386,9 +3416,7 @@ a.button[href^="https://line.me/"] .button__icon {
     display: block;
   }
 
-  .nav__group--offerings a img,
-  .nav__group--secondary .nav__group-links a[target="_blank"],
-  .nav__group--secondary .nav__group-links a:nth-last-child(-n + 3) {
+  .nav__group--offerings a img {
     display: none;
   }
 
