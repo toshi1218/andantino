@@ -3043,6 +3043,17 @@ a.button[href^="https://line.me/"] .button__icon {
   object-position: center 28%;
 }
 
+.article-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.article-video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .legacy-photo--narrow img {
   max-height: 560px;
   object-fit: contain;
