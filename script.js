@@ -75,6 +75,38 @@ if (infoHeader && !document.querySelector(".mobile-actions")) {
   );
 }
 
+if (!document.querySelector(".back-to-top")) {
+  const backToTop = document.createElement("button");
+  backToTop.type = "button";
+  backToTop.className = "back-to-top";
+  backToTop.setAttribute("aria-label", "ページの一番上に戻る");
+  backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="6 11 12 5 18 11"></polyline></svg>';
+  document.body.append(backToTop);
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let ticking = false;
+
+  const syncVisibility = () => {
+    backToTop.classList.toggle("is-visible", window.scrollY > 480);
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(syncVisibility);
+    },
+    { passive: true }
+  );
+  syncVisibility();
+
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  });
+}
+
 const normalizePath = (href) => {
   const url = new URL(href, window.location.href);
   if (url.origin !== window.location.origin || url.hash) return "";
