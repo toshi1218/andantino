@@ -258,6 +258,40 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
   });
 });
 
+const inquiryForm = document.querySelector("#inquiry-form-el");
+
+if (inquiryForm) {
+  const statusEl = inquiryForm.querySelector(".inquiry-form__status");
+  const successPanel = document.querySelector("#inquiry-form-success");
+  const submitButton = inquiryForm.querySelector('button[type="submit"]');
+
+  inquiryForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (submitButton) submitButton.disabled = true;
+    if (statusEl) statusEl.textContent = "送信しています…";
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(inquiryForm))),
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        inquiryForm.hidden = true;
+        if (successPanel) successPanel.hidden = false;
+        successPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        throw new Error(result.message || "submission failed");
+      }
+    } catch {
+      if (statusEl) statusEl.textContent = "送信できませんでした。お手数ですが、公式LINEまたはお電話でご連絡ください。";
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
+}
+
 const tocLinks = [...document.querySelectorAll('.article-toc a[href^="#"]')];
 
 if (tocLinks.length) {
