@@ -2930,10 +2930,22 @@ body.menu-open .back-to-top {
 .article-hero-photo img {
   display: block;
   width: 100%;
-  height: 360px;
+  height: 460px;
   object-fit: cover;
   border-radius: 22px 70px 22px 70px;
   box-shadow: var(--shadow);
+}
+
+.article-hero-photo--insoles img {
+  object-position: center 66%;
+}
+
+.article-hero-photo--counseling img {
+  object-position: center 68%;
+}
+
+.article-hero-photo--case-studies img {
+  object-position: center 58%;
 }
 
 .article-body {
@@ -3080,6 +3092,7 @@ body.menu-open .back-to-top {
   font-size: clamp(29px, 3.2vw, 42px);
   line-height: 1.5;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .section-icon-heading {
@@ -3648,7 +3661,7 @@ body.menu-open .back-to-top {
   }
 
   .article-hero-photo img {
-    height: 260px;
+    height: 320px;
   }
 
   .article-body {
