@@ -2937,11 +2937,15 @@ body.menu-open .back-to-top {
 }
 
 .article-hero-photo--insoles img {
-  object-position: center 66%;
+  object-position: center 40%;
 }
 
 .article-hero-photo--counseling img {
   object-position: center 68%;
+}
+
+.article-hero-photo--children img {
+  object-position: center 50%;
 }
 
 .article-hero-photo--case-studies img {
@@ -3983,12 +3987,16 @@ body.menu-open .back-to-top {
 }
 
 .article-hero-photo img {
-  height: 330px;
+  height: 460px;
   box-shadow: var(--shadow-md);
 }
 
 .article-hero-photo--owner img {
   object-position: center 42%;
+}
+
+.article-hero-photo--children img {
+  height: 640px;
 }
 
 .article-body {
