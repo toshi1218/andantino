@@ -2921,6 +2921,7 @@ body.menu-open .back-to-top {
 }
 
 .section-icon-heading h2 {
+  min-width: 0;
   margin: 0;
 }
 
