@@ -7,13 +7,21 @@ const fullMenuMarkup = `
   <div class="container nav__panel">
     <div class="nav__group nav__group--priority">
       <strong>相談内容から探す</strong>
-      <a class="nav__problem-entry" href="./foot-problems.html">お悩み・症状から探す</a>
       <a href="./adult-shoes.html">大人の靴選び</a>
       <a href="./childrens-shoes.html">子どもの足育・靴</a>
       <a href="./insoles.html">インソール</a>
       <a href="./case-studies.html">ご相談事例</a>
       <a href="./pricing.html">料金</a>
       <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
+    </div>
+    <div class="nav__group nav__group--symptoms">
+      <strong>お悩み・症状から探す</strong>
+      <a href="./hallux-valgus.html">外反母趾</a>
+      <a href="./tailors-bunion.html">内反小趾</a>
+      <a href="./foot-arch.html">アーチ低下・扁平足</a>
+      <a href="./leg-length-discrepancy.html">脚長差</a>
+      <a href="./knee-pain.html">膝の痛み</a>
+      <a href="./foot-problems.html">症状の一覧を見る</a>
     </div>
     <div class="nav__group nav__group--offerings">
       <strong>取扱商品・サービス</strong>
@@ -33,17 +41,7 @@ const fullMenuMarkup = `
       <a href="./about.html">店舗概要</a>
       <a href="./owner.html">五十嵐洋子について</a>
       <a href="./faq.html">よくある質問</a>
-      <a href="./news.html">お知らせ</a>
       <a href="./#shop">店舗案内・アクセス</a>
-      <a href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINE ↗</a>
-      <a href="https://www.facebook.com/share/18yvcF1E6G/" target="_blank" rel="noopener">Facebook ↗</a>
-      <a href="https://www.youtube.com/@andantino7110" target="_blank" rel="noopener">YouTube ↗</a>
-      <a href="https://www.instagram.com/yoko1367/" target="_blank" rel="noopener">Instagram ↗</a>
-      <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ ↗</a>
-      <a href="./links.html">公式・関連外部リンク</a>
-      <a href="./privacy.html">プライバシーポリシー</a>
-      <a href="./terms.html">利用規約</a>
-      <a href="./legal.html">特定商取引法に基づく表記</a>
     </div>
   </div>`;
 
