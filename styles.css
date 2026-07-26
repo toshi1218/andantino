@@ -2952,6 +2952,14 @@ body.menu-open .back-to-top {
   object-position: center 58%;
 }
 
+.article-hero-photo--paramount img {
+  object-position: center 10%;
+}
+
+.article-hero-photo--seminars img {
+  object-position: center 70%;
+}
+
 .article-body {
   padding: 76px 0 120px;
   background: var(--paper);
