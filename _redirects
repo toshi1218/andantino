@@ -1,3 +1,4 @@
+# 旧サイト（.php）からの301
 /index.php / 301
 /about.php /about.html 301
 /selection.php /adult-shoes.html 301
@@ -7,3 +8,16 @@
 /seminar.php /seminars.html 301
 /contact.php /contact.html 301
 /dimoco-insole.html /dymoco-insole.html 301
+
+# 配信しないファイル
+# Cloudflare Pages の Build output directory が "." のため、
+# リポジトリ直下のファイルはそのまま公開される。サイトの一部でない
+# ファイルはここで塞ぐ。リダイレクトは静的アセットより優先されるため、
+# 実ファイルが存在していても配信されない。
+# 新しい資料は必ず docs/ に置くこと（下の1行で自動的に塞がれる）。
+/docs/* / 301
+/scripts/* / 301
+/package.json / 301
+/README.md / 301
+/.env.example / 301
+/.gitignore / 301

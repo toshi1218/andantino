@@ -9,7 +9,9 @@ npm run validate
 python3 -m http.server 8000
 ```
 
-`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に29ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、AIクローラー設定、旧URLリダイレクトを監査します。
+`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に39ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、AIクローラー設定、旧URLリダイレクトを監査します。
+
+`npm run build` は**手元で実行するコマンド**です。Cloudflare Pages側のBuild commandは `exit 0` で、デプロイ時には何も実行されません（「Cloudflare Pages」の項を参照）。生成物は手元で作ってコミットします。
 
 制作中は `npm run indexing:staging`、本公開直前は `npm run indexing:live` で、全ページのrobots metaとCloudflare PagesのHTTPヘッダーを一括切替します。現在は制作中のため `noindex,nofollow,nosnippet` を維持しています。
 
@@ -26,13 +28,20 @@ AI検索から流入させるには、本番公開後に `noindex` を解除す�
 3. `npm run indexing:live` を実行してコミットし、全ページを `index,follow` へ切り替える。
 4. 本番のHTTPレスポンスから `X-Robots-Tag: noindex` が消えたことを確認する。
 5. Google Search ConsoleとBing Webmaster Toolsへ `sitemap.xml` を送信する。
-6. 本番ドメインでキー確認ファイルが表示されることを確認し、`npm run indexnow:submit` で29ページをIndexNowへ通知する。
+6. 本番ドメインでキー確認ファイルが表示されることを確認し、`npm run indexnow:submit` で39ページをIndexNowへ通知する。
 
 旧サイトが本番ドメインに残っている間は、Pagesプレビュー側の `noindex` を解除しません。
 
 ## お知らせ欄（microCMS）
 
-`news.html` の「最新のお知らせ」は、ビルド時に `scripts/generate-news.mjs` がmicroCMSから記事一覧を取得して静的HTMLへ書き込みます（Cloudflare Pages Functionsは使わず、静的サイトのまま更新できる方式）。
+`news.html` の「最新のお知らせ」は、`scripts/generate-news.mjs` がmicroCMSから記事一覧を取得して静的HTMLへ書き込みます（Cloudflare Pages Functionsは使わず、静的サイトのまま更新できる方式）。
+
+**更新は手元で行い、結果をコミットします。** Cloudflare PagesのBuild commandが `exit 0` のため、デプロイ時に自動生成は走りません。
+
+```bash
+npm run news:sync   # microCMSから取得して news.html を書き換える
+git add news.html && git commit -m "お知らせを更新" && git push
+```
 
 セットアップ手順:
 
@@ -45,10 +54,10 @@ AI検索から流入させるには、本番公開後に `noindex` を解除す�
 4. Cloudflare Pages の Settings → Environment variables で、Production と Preview の両方に以下を設定する。
    - `MICROCMS_SERVICE_DOMAIN`
    - `MICROCMS_API_KEY`
-5. ローカルで確認する場合は `.env.example` を `.env` にコピーして値を設定し、`npm run news:sync` を実行する（`.env` はコミットしないこと、`.gitignore` 済み）。
-6. microCMSの管理画面で記事を公開してもすぐにはサイトへ反映されません（Functionsを使わない静的生成のため）。microCMSの「Webhook」設定からCloudflare PagesのDeploy Hook URLを登録しておくと、記事の公開・更新のたびに自動で再ビルド・再デプロイされます。
+5. `.env.example` を `.env` にコピーして値を設定する（`.env` はコミットしないこと、`.gitignore` 済み）。
+6. microCMSの管理画面で記事を公開しても、自動ではサイトへ反映されません。**上記の `npm run news:sync` を実行し、`news.html` の差分をコミット・プッシュするまでが1セットの更新作業です。**
 
-環境変数が未設定のままビルドすると `generate-news.mjs` は警告を出して既存の `news.html` をそのまま残し、ビルド自体は失敗しません。
+環境変数が未設定のままローカルで実行すると `generate-news.mjs` は警告を出して既存の `news.html` をそのまま残し、コマンド自体は失敗しません。
 
 ## お問い合わせ導線
 
@@ -57,8 +66,8 @@ AI検索から流入させるには、本番公開後に `noindex` を解除す�
 ## Cloudflare Pages
 
 - Production branch: `main`
-- Build command: `npm run build`
-- Build output directory: `.`
+- Build command: `exit 0`（**ビルドは実行しない**。`npm run build` 等の生成物はすべて手元で作りコミットする運用）
+- Build output directory: `.`（リポジトリ直下をそのまま配信するため、公開してよいファイルだけをルートに置く。`docs/` や `scripts/` などサイトの一部でないものは `_redirects` で塞いでいる）
 - Canonical/custom domain: `www.andantino-shoes.jp`
 - Preview domain: `andantino.pages.dev`
 
@@ -79,6 +88,10 @@ Cloudflare PagesのGit連携で配信する、Functionsを使用しない静的�
 
 旧URLから代表ページへの301は `_redirects` で維持します。公開後はSearch Consoleへ `sitemap.xml` を送信し、本番で301・robots・sitemap・構造化データを確認してください。
 
-旧公式サイトから再利用した人物・商品・セミナー写真の移行元は `ASSET_SOURCES.md` に記録しています。
+旧公式サイトから再利用した人物・商品・セミナー写真の移行元は `docs/ASSET_SOURCES.md` に記録しています。
 
-五十嵐洋子本人の旧公式サイト・公式ブログをもとにした理念、文体、医療表現の編集基準は `VOICE_GUIDE.md` に記録しています。
+五十嵐洋子本人の旧公式サイト・公式ブログをもとにした理念、文体、医療表現の編集基準は `docs/VOICE_GUIDE.md` に記録しています。
+
+## 制作用ドキュメント
+
+サイト運用ルール、監査記録、企画資料などは `docs/` にまとめています。`_redirects` で `/docs/*` を塞いでいるため、サイトの一部としては配信されません。新しい資料は必ず `docs/` に置いてください（ルート直下は `Build output directory: .` によりそのまま公開されます）。
