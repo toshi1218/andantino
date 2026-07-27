@@ -9,7 +9,7 @@ npm run validate
 python3 -m http.server 8000
 ```
 
-`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に39ページ分の `sitemap.xml` をページ定義から生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、AIクローラー設定、旧URLリダイレクトを監査します。
+`npm run build` はまず `news.html` のお知らせ欄をmicroCMSから再生成し、次に `assets/supabase-config.js` を環境変数から再生成し、お役立ち記事CMS（Supabase）の公開済み記事を `articles/` 配下と一覧・カテゴリページへ反映し、ページ定義から `sitemap.xml` を生成し、メタ情報、canonical、OGP/Twitter Card、JSON-LD、パンくず、画像、内部リンク、robots、AIクローラー設定、旧URLリダイレクトを監査します。
 
 `npm run build` は**手元で実行するコマンド**です。Cloudflare Pages側のBuild commandは `exit 0` で、デプロイ時には何も実行されません（「Cloudflare Pages」の項を参照）。生成物は手元で作ってコミットします。
 
@@ -59,6 +59,47 @@ git add news.html && git commit -m "お知らせを更新" && git push
 
 環境変数が未設定のままローカルで実行すると `generate-news.mjs` は警告を出して既存の `news.html` をそのまま残し、コマンド自体は失敗しません。
 
+## お役立ち記事CMS・管理画面（Supabase）
+
+洋子さんが接客での気づきを入力し、内容を確認・承認した記事だけをサイトに公開する仕組みです。**承認なしの自動公開・自動SNS投稿はありません。**
+
+運用の流れ（1回あたり5〜10分想定）:
+
+1. 洋子さんが管理画面（`/admin/`）にログインし、「＋ 新しい記事」から出来事・気づきを入力する（`idea` → `draft`）。
+2. 「AIで下書きを作る／テンプレートを表示」を押すと、本文案とnote・Facebook・Instagram・X・公式LINE用の文章案が入る（AI未設定の環境では、媒体別テンプレートが自動的に表示される）。
+3. 洋子さんが内容を読み、必要な箇所を書き直す。
+4. 「確認待ちにする」→「承認する」→「公開する」の順にボタンを押す（`review` → `approved` → `published`）。公開にはSEO設定欄の「URL」入力が必要。
+5. 開発担当者が `npm run articles:sync` を実行し、生成された記事ページ・一覧ページの差分をコミット・プッシュする（`news:sync` と同じ「手元で生成してコミット」方式）。
+
+各媒体の投稿文は、テキストエリア横の「コピー」ボタンでコピーし、各サービスへ手動で貼り付けます。自動投稿機能はありません。
+
+### セットアップ
+
+1. [Supabase](https://supabase.com) でプロジェクトを作成し、`docs/supabase/schema.sql` の内容をSQL Editorで実行する（テーブル・RLSポリシーが一括で作成される）。
+2. Authentication > Providers で Email を有効にし、Authentication > Settings で新規登録を無効にする。
+3. Authentication > Users で、洋子さん（および必要な家族）のログインアカウントを作成する。
+4. 作成したメールアドレスを `admin_users` テーブルへ登録する（SQL Editorで `insert into admin_users (email) values ('...');`）。ここに登録されていないアカウントは、ログインできても記事の保存・公開はできない。
+5. Project Settings > API から Project URL と anon public key を取得し、`.env` の `SUPABASE_URL` / `SUPABASE_ANON_KEY` に設定する。Cloudflare Pages側にも同じ値を Production / Preview 両方の環境変数として設定する（`npm run build` を実行するローカル環境用）。
+6. `npm run cms:config` を実行し、`assets/supabase-config.js` を生成してコミットする（anon keyは公開されても問題ない設計のキーで、実際のアクセス制御はSupabaseのRLSが担う）。
+
+管理画面は `https://<公開ドメイン>/admin/` からアクセスする。ログインには、手順3で作成したメールアドレス・パスワードを使う。
+
+### AIによる下書き作成（任意）
+
+Cloudflare Pages Functions（`functions/api/generate.js`）を使い、AIプロバイダの秘密鍵はサーバー側の環境変数にのみ置く。Cloudflare Pagesダッシュボードの Settings > Environment variables で以下を設定すると有効になる（未設定なら管理画面は自動的にテンプレート表示に切り替わる）。
+
+- `AI_PROVIDER`（`anthropic` または `openai`）
+- `AI_API_KEY`
+- `AI_MODEL`（省略可）
+
+### オンライン相談・PDF商品の公開設定
+
+管理画面の「設定」タブから、オンライン相談の受付有効/無効・料金・所要時間、PDF商品の販売中/準備中を切り替えられる。コードの編集は不要。
+
+### 効果測定
+
+`analytics_events` テーブルに、記事閲覧・LINEボタンクリック・来店予約ボタンクリック・オンライン相談ページ閲覧・PDF商品ページ閲覧・外部SNSクリックのイベント種別とページパスのみを記録する（`script.js` から送信）。個人を特定できる情報は収集しない。匿名ユーザーは書き込み専用で、自分が送った内容も読み返せない。
+
 ## お問い合わせ導線
 
 ご予約・お問い合わせは、公式LINE・電話・メールで受け付けます。送信先を設定していないフォームを公開しない方針です。将来フォームを追加する場合は、送信先・スパム対策・送信完了画面まで設定してから公開してください。
@@ -71,7 +112,7 @@ git add news.html && git commit -m "お知らせを更新" && git push
 - Canonical/custom domain: `www.andantino-shoes.jp`
 - Preview domain: `andantino.pages.dev`
 
-Cloudflare PagesのGit連携で配信する、Functionsを使用しない静的サイトです。そのため `wrangler.toml` は意図的に置いていません。将来Functions等を導入してWrangler設定を正本にする場合は、既存ダッシュボード設定を上書きしないよう `npx wrangler pages download config` から開始してください。
+Cloudflare PagesのGit連携で配信する静的サイトです。`functions/api/generate.js` のみ、管理画面のAI下書き作成用にCloudflare Pages Functionsを使用します（ファイルベースルーティングのため `wrangler.toml` は不要）。これ以外のページ・導線はすべて静的HTMLで、デプロイ時のビルドは行いません。`AI_API_KEY` を設定しない限りこの関数は `{ configured: false }` を返すだけで、サイトの他の部分には影響しません。
 
 ## 旧サイト移行
 

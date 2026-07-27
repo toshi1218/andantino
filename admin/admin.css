@@ -1,0 +1,341 @@
+/* ANDANTINO 管理画面（コンテンツCMS）専用スタイル。styles.css の変数を流用する。 */
+
+body.admin-page {
+  background: var(--cream-2);
+  font-family: var(--sans);
+}
+
+.admin-header {
+  background: var(--teal);
+  color: #fff;
+}
+
+.admin-header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-header .brand__name {
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.admin-header__title {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.admin-header #sign-out-button {
+  margin-left: auto;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.admin-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+.admin-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-panel--narrow {
+  max-width: 420px;
+  margin: 60px auto;
+}
+
+.admin-panel h1,
+.admin-panel h2 {
+  font-family: var(--serif);
+  color: var(--teal);
+  margin-top: 0;
+}
+
+#login-form,
+#settings-form {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-page label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.admin-page input[type="text"],
+.admin-page input[type="email"],
+.admin-page input[type="password"],
+.admin-page input[type="number"],
+.admin-page textarea,
+.admin-page select {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--charcoal);
+}
+
+.admin-checkbox {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-checkbox input {
+  width: auto;
+}
+
+.admin-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.admin-status {
+  min-height: 1.4em;
+  font-size: 13px;
+  color: var(--accent-dark);
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-tabs__button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--teal);
+  background: #fff;
+  color: var(--teal);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-tabs__button.is-active {
+  background: var(--teal);
+  color: #fff;
+}
+
+.admin-articles {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.admin-articles__list {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.admin-articles__list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-articles__list-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.admin-status-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.admin-status-filter button {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--cream-2);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.admin-status-filter button.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.admin-article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.admin-article-list li button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--cream-2);
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+}
+
+.admin-article-list li button.is-selected {
+  border-color: var(--accent);
+  background: var(--peach);
+}
+
+.admin-article-list strong {
+  font-size: 14px;
+  color: var(--charcoal);
+}
+
+.status-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: var(--accent-dark);
+  text-transform: uppercase;
+}
+
+.admin-articles__editor {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.admin-editor__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-editor__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-generate {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--cream-2);
+  border-radius: 12px;
+}
+
+.admin-platforms {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+
+.admin-platforms legend {
+  font-weight: 700;
+  color: var(--teal);
+  padding: 0 6px;
+}
+
+.admin-platform {
+  display: grid;
+  gap: 6px;
+}
+
+.outline-button--small {
+  justify-self: start;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+.admin-seo {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.admin-seo[open] {
+  padding-bottom: 16px;
+}
+
+.admin-seo summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.admin-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-settings {
+  display: grid;
+  gap: 20px;
+  max-width: 720px;
+}
+
+.admin-product-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.admin-product-row {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+/* styles.css の .button / .outline-button は display を明示するため、
+   hidden 属性のデフォルト非表示が上書きされてしまう。管理画面内でも
+   hidden と組み合わせて使うため、既存サイトの慣習にならい明示的に戻す。 */
+.admin-page [hidden] {
+  display: none !important;
+}
+
+@media (max-width: 860px) {
+  .admin-articles {
+    grid-template-columns: 1fr;
+  }
+  .admin-editor__grid {
+    grid-template-columns: 1fr;
+  }
+}

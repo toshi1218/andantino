@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>コンテンツ管理｜ANDANTINO</title>
+    <meta name="robots" content="noindex,nofollow,nosnippet,noarchive">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="./admin.css">
+  </head>
+  <body class="admin-page">
+    <header class="admin-header">
+      <div class="admin-header__inner">
+        <span class="brand__name">ANDANTINO</span>
+        <span class="admin-header__title">コンテンツ管理</span>
+        <button type="button" class="outline-button" id="sign-out-button" hidden>ログアウト</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <!-- ログイン画面 -->
+      <section id="login-view" class="admin-panel admin-panel--narrow">
+        <h1>ログイン</h1>
+        <p class="admin-note">洋子さん、またはご家族の管理者アカウントでログインしてください。</p>
+        <form id="login-form">
+          <label>メールアドレス<input type="email" id="login-email" autocomplete="username" required></label>
+          <label>パスワード<input type="password" id="login-password" autocomplete="current-password" required></label>
+          <button class="button" type="submit">ログイン</button>
+          <p class="admin-status" id="login-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <!-- Supabase未設定の案内 -->
+      <section id="unconfigured-view" class="admin-panel admin-panel--narrow" hidden>
+        <h1>コンテンツ管理はまだ使えません</h1>
+        <p>Supabaseの設定が完了していません。<code>docs/supabase/schema.sql</code> の手順に沿ってプロジェクトを作成し、<code>SUPABASE_URL</code> / <code>SUPABASE_ANON_KEY</code> を設定してから <code>npm run cms:config</code> を実行してください。</p>
+      </section>
+
+      <!-- ログイン後のアプリ本体 -->
+      <section id="app-view" class="admin-app" hidden>
+        <nav class="admin-tabs" aria-label="管理メニュー">
+          <button type="button" class="admin-tabs__button is-active" data-tab="articles">記事</button>
+          <button type="button" class="admin-tabs__button" data-tab="settings">設定</button>
+        </nav>
+
+        <!-- 記事タブ -->
+        <div class="admin-tab-panel" data-tab-panel="articles">
+          <div class="admin-articles">
+            <div class="admin-articles__list">
+              <div class="admin-articles__list-header">
+                <h2>記事一覧</h2>
+                <button type="button" class="button button--small" id="new-article-button">＋ 新しい記事</button>
+              </div>
+              <div class="admin-status-filter" role="tablist" aria-label="ステータスで絞り込み">
+                <button type="button" data-status-filter="" class="is-active">すべて</button>
+                <button type="button" data-status-filter="idea">アイデア</button>
+                <button type="button" data-status-filter="draft">下書き</button>
+                <button type="button" data-status-filter="review">確認中</button>
+                <button type="button" data-status-filter="approved">承認済み</button>
+                <button type="button" data-status-filter="published">公開中</button>
+                <button type="button" data-status-filter="archived">非公開</button>
+              </div>
+              <ul class="admin-article-list" id="article-list"></ul>
+              <p class="admin-status" id="article-list-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="admin-articles__editor" id="editor-empty">
+              <p class="admin-note">左の一覧から記事を選ぶか、「＋ 新しい記事」を押してください。</p>
+            </div>
+
+            <form class="admin-articles__editor" id="editor-form" hidden>
+              <div class="admin-editor__row">
+                <span class="status-pill" id="editor-status-pill">idea</span>
+                <span class="admin-note" id="editor-meta"></span>
+              </div>
+
+              <label>記事タイトル<input type="text" id="field-title" required></label>
+
+              <label>元になった出来事・メモ（原文）
+                <textarea id="field-raw-content" rows="5" placeholder="接客での気づきや出来事を、思いつくままに書いてください。お客様のお名前や個人が特定できる内容は書かないでください。"></textarea>
+              </label>
+
+              <div class="admin-editor__grid">
+                <label>対象読者
+                  <input type="text" id="field-target-audience" placeholder="例：小学生の保護者">
+                </label>
+                <label>テーマ・カテゴリ
+                  <select id="field-category">
+                    <option value="children">子どもの靴</option>
+                    <option value="adult">大人の靴</option>
+                    <option value="foot-problems">外反母趾・足の悩み</option>
+                    <option value="insoles">インソール</option>
+                    <option value="shoe-wearing">靴の履き方・選び方</option>
+                    <option value="seasonal">季節の話題</option>
+                    <option value="other">その他</option>
+                  </select>
+                </label>
+              </div>
+              <div class="admin-editor__grid">
+                <label>出来事の種類
+                  <select id="field-source-type">
+                    <option value="接客事例">接客事例</option>
+                    <option value="気づき">気づき</option>
+                    <option value="季節ネタ">季節ネタ</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </label>
+                <label>タグ（カンマ区切り）
+                  <input type="text" id="field-tags" placeholder="例：ファーストシューズ, サイズ確認">
+                </label>
+              </div>
+
+              <div class="admin-generate">
+                <button type="button" class="outline-button" id="generate-button">AIで下書きを作る／テンプレートを表示</button>
+                <span class="admin-note" id="generate-status"></span>
+              </div>
+
+              <label>ホームページ用 本文（HTML可）
+                <textarea id="field-article-content" rows="8"></textarea>
+              </label>
+              <label>一覧・SNS用の要約
+                <textarea id="field-excerpt" rows="2"></textarea>
+              </label>
+
+              <fieldset class="admin-platforms">
+                <legend>媒体別の投稿文（コピーして手動投稿してください）</legend>
+                <div class="admin-platform">
+                  <label for="field-note">note用</label>
+                  <textarea id="field-note" rows="4"></textarea>
+                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-note">コピー</button>
+                </div>
+                <div class="admin-platform">
+                  <label for="field-facebook">Facebook用</label>
+                  <textarea id="field-facebook" rows="4"></textarea>
+                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-facebook">コピー</button>
+                </div>
+                <div class="admin-platform">
+                  <label for="field-instagram">Instagram用</label>
+                  <textarea id="field-instagram" rows="4"></textarea>
+                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-instagram">コピー</button>
+                </div>
+                <div class="admin-platform">
+                  <label for="field-x">X用</label>
+                  <textarea id="field-x" rows="3"></textarea>
+                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-x">コピー</button>
+                </div>
+                <div class="admin-platform">
+                  <label for="field-line">公式LINE用</label>
+                  <textarea id="field-line" rows="4"></textarea>
+                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-line">コピー</button>
+                </div>
+              </fieldset>
+
+              <details class="admin-seo">
+                <summary>SEO・公開設定（任意）</summary>
+                <label>URL（半角英数とハイフン）<input type="text" id="field-slug" placeholder="例：summer-break-shoe-size-check"></label>
+                <label>SEOタイトル<input type="text" id="field-seo-title"></label>
+                <label>SEO説明文<textarea id="field-seo-description" rows="2"></textarea></label>
+                <label>アイキャッチ画像URL<input type="text" id="field-featured-image" placeholder="./assets/....webp"></label>
+                <label>関連ページ<input type="text" id="field-related-service" placeholder="例：childrens-shoes.html"></label>
+                <label>記事末尾のご案内（CTA）
+                  <select id="field-cta">
+                    <option value="line">公式LINEで相談</option>
+                    <option value="reservation">来店予約</option>
+                    <option value="services">サービス内容を見る</option>
+                    <option value="children">子どもの靴相談を見る</option>
+                    <option value="insoles">インソール相談を見る</option>
+                  </select>
+                </label>
+              </details>
+
+              <div class="admin-editor__actions">
+                <button type="submit" class="button">下書きを保存</button>
+                <button type="button" class="outline-button" data-set-status="review">確認待ちにする</button>
+                <button type="button" class="outline-button" data-set-status="approved">承認する</button>
+                <button type="button" class="button" data-set-status="published">公開する</button>
+                <button type="button" class="outline-button" data-set-status="archived">非公開にする</button>
+              </div>
+              <p class="admin-status" id="editor-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+
+        <!-- 設定タブ -->
+        <div class="admin-tab-panel" data-tab-panel="settings" hidden>
+          <div class="admin-settings">
+            <section class="admin-panel">
+              <h2>オンライン相談の公開設定</h2>
+              <form id="settings-form">
+                <label class="admin-checkbox"><input type="checkbox" id="settings-enabled"> 受付を有効にする</label>
+                <label>料金表示<input type="text" id="settings-price"></label>
+                <label>所要時間（分）<input type="number" id="settings-duration" min="10" max="120" step="5"></label>
+                <label>受付状況の一言メモ<textarea id="settings-note" rows="2"></textarea></label>
+                <button class="button" type="submit">設定を保存</button>
+                <p class="admin-status" id="settings-status" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+
+            <section class="admin-panel">
+              <div class="admin-articles__list-header">
+                <h2>PDF商品</h2>
+                <button type="button" class="button button--small" id="new-product-button">＋ 商品を追加</button>
+              </div>
+              <ul class="admin-product-list" id="product-list"></ul>
+              <p class="admin-status" id="product-list-status" role="status" aria-live="polite"></p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template id="product-row-template">
+      <li class="admin-product-row">
+        <div class="admin-editor__grid">
+          <label>商品名<input type="text" data-field="name"></label>
+          <label>価格表示<input type="text" data-field="price"></label>
+        </div>
+        <label>説明<textarea data-field="description" rows="2"></textarea></label>
+        <div class="admin-editor__grid">
+          <label>サンプル画像URL<input type="text" data-field="sample_image" placeholder="./assets/....webp"></label>
+          <label>販売状況
+            <select data-field="status">
+              <option value="preparing">準備中</option>
+              <option value="selling">販売中</option>
+            </select>
+          </label>
+        </div>
+        <label>LINE問い合わせ用の定型文<input type="text" data-field="line_message"></label>
+        <div class="admin-editor__actions">
+          <button type="button" class="outline-button" data-action="save">保存</button>
+          <button type="button" class="outline-button" data-action="delete">削除</button>
+        </div>
+      </li>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/supabase-config.js"></script>
+    <script src="../assets/andantino-supabase.js"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>

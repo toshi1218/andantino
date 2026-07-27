@@ -35,6 +35,9 @@ const fullMenuMarkup = `
       <a href="./guides.html">知識記事一覧</a>
       <a href="./shoe-wearing.html">靴の選び方・履き方</a>
       <a href="./foot-check.html">ご相談の流れ・確認項目</a>
+      <a href="./articles.html">お役立ち記事一覧</a>
+      <a href="./online-consultation.html">オンライン相談</a>
+      <a href="./pdf-products.html">デジタル商品（PDF）</a>
     </div>
     <div class="nav__group nav__group--secondary">
       <strong>店舗情報・サイト案内</strong>
@@ -323,3 +326,54 @@ if (tocLinks.length) {
   observedSections.forEach((section) => observer.observe(section));
   setCurrentSection(observedSections[0]?.id);
 }
+
+// ---------- 効果測定（最低限のイベント計測） ----------
+// Supabase未設定の環境では何もしない。個人情報は送信せず、
+// イベント種別とページパスのみを記録する（analytics_events はINSERT専用、
+// 匿名ユーザーは自分が送った内容すら読み返せない設計）。
+(function () {
+  const config = window.ANDANTINO_SUPABASE || {};
+  if (!config.url || !config.anonKey) return;
+
+  const endpoint = `${config.url}/rest/v1/analytics_events`;
+  const headers = {
+    apikey: config.anonKey,
+    Authorization: `Bearer ${config.anonKey}`,
+    "Content-Type": "application/json",
+    Prefer: "return=minimal",
+  };
+
+  function sendEvent(eventType, meta) {
+    const payload = JSON.stringify({
+      event_type: eventType,
+      page_path: window.location.pathname,
+      meta: meta || {},
+    });
+    fetch(endpoint, { method: "POST", headers, body: payload, keepalive: true }).catch(() => {});
+  }
+
+  const path = window.location.pathname;
+  if (/\/articles\/[^/]+\.html$/.test(path)) {
+    sendEvent("article_view");
+  } else if (/\/online-consultation\.html$/.test(path)) {
+    sendEvent("consultation_view");
+  } else if (/\/pdf-products\.html$/.test(path)) {
+    sendEvent("pdf_view");
+  }
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (/^https:\/\/line\.me\//.test(href)) {
+      sendEvent("line_click", { href });
+    } else if (/contact\.html(?:[?#]|$)/.test(href)) {
+      sendEvent("reservation_click", { href });
+    } else if (
+      /^https:\/\/(www\.)?(facebook|instagram|youtube|note|x|twitter)\.com\//.test(href) ||
+      /^https:\/\/blog\.livedoor\.jp\//.test(href)
+    ) {
+      sendEvent("sns_click", { href });
+    }
+  });
+})();

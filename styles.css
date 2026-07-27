@@ -4414,3 +4414,231 @@ body[data-page="404"] main {
     color: #000;
   }
 }
+
+/* ---------- お役立ち記事一覧・カテゴリ・PDF商品・オンライン相談（CMS拡張） ---------- */
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 8px;
+}
+
+.category-pills a {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--paper);
+  border: 1.5px solid var(--teal);
+  border-radius: 999px;
+  padding: 8px 16px;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.category-pills a:hover,
+.category-pills a:focus-visible,
+.category-pills a[aria-current="page"] {
+  background: var(--teal);
+  color: #fff;
+}
+
+.article-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.article-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 22px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(55, 52, 49, 0.045);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.article-card:hover,
+.article-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.article-card__media {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--cream-2);
+}
+
+.article-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-card__category {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.article-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.article-card h3 a {
+  color: var(--teal);
+}
+
+.article-card p {
+  margin: 0 0 8px;
+  color: var(--charcoal);
+  font-size: 14.5px;
+}
+
+.article-card time {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-empty {
+  color: var(--muted);
+  padding: 20px 0;
+}
+
+@media (max-width: 640px) {
+  .article-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 販売状況バッジ（PDF商品・オンライン相談） ---------- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.status-badge--open {
+  background: var(--peach);
+  color: var(--accent-dark);
+}
+
+.status-badge--closed {
+  background: var(--cream-2);
+  color: var(--muted);
+}
+
+/* ---------- 商品カード（PDF商品） ---------- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(55, 52, 49, 0.045);
+}
+
+.product-card__media {
+  aspect-ratio: 3 / 4;
+  background: var(--cream-2);
+}
+
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.product-card__body h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--teal);
+}
+
+.product-card__price {
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.product-card__body p {
+  margin: 0;
+  color: var(--charcoal);
+  font-size: 14px;
+  flex: 1;
+}
+
+.product-card__body .button,
+.product-card__body .outline-button {
+  align-self: flex-start;
+}
+
+/* ---------- オンライン相談：できる/できない ---------- */
+.consult-scope {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin: 28px 0;
+}
+
+.consult-scope > div {
+  padding: 22px 24px;
+  border-radius: 18px;
+}
+
+.consult-scope__yes {
+  background: var(--peach);
+}
+
+.consult-scope__no {
+  background: var(--cream-2);
+}
+
+.consult-scope h3 {
+  margin: 0 0 12px;
+  color: var(--teal);
+}
+
+.consult-scope ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.consult-scope li {
+  margin: 6px 0;
+}
+
+@media (max-width: 720px) {
+  .consult-scope {
+    grid-template-columns: 1fr;
+  }
+}
