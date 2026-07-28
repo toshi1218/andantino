@@ -75,7 +75,9 @@ async function callOpenAI(env, prompt) {
 }
 
 async function verifySession(env, request) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return true; // Supabase未設定環境では検証をスキップ
+  // AI_API_KEY が設定されている＝実際にAIを呼べる状態なので、
+  // 検証できない場合は必ず拒否する（誰でも呼べてAPI利用料が発生する状態を作らない）。
+  if (!env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return false;
   const auth = request.headers.get("Authorization");
   if (!auth) return false;
   try {
