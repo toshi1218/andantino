@@ -1,4 +1,8 @@
--- ANDANTINO コンテンツ管理（CMS）用 Supabase スキーマ
+-- ANDANTINO 管理画面用 Supabase スキーマ
+--
+-- 記事はこのデータベースでは管理しない。記事の元データは
+-- リポジトリ内の content/articles/*.md で、ChatGPT(Codex)が直接更新する（AGENTS.md参照）。
+-- ここで扱うのは、オンライン相談の受付設定・PDF商品・アクセス計測の3つ。
 --
 -- 使い方:
 -- 1. https://supabase.com で新規プロジェクトを作成する（無料枠で開始できる）。
@@ -10,7 +14,7 @@
 --    管理者自身が作成する（メールアドレス＋パスワード）。
 -- 5. 作成したメールアドレスを、下の admin_users テーブルへ登録する。
 --    例: insert into admin_users (email) values ('yoko@example.com');
---    登録されていないメールアドレスでログインしても、記事の保存・公開はできない
+--    登録されていないメールアドレスでログインしても、設定の保存はできない
 --    （閲覧専用にもならず、書き込み操作がすべて拒否される）。
 -- 6. Project Settings > API から Project URL と anon public key を控え、
 --    .env の SUPABASE_URL / SUPABASE_ANON_KEY に設定する。
@@ -19,8 +23,8 @@
 --
 -- 個人情報の方針:
 --   このスキーマは、氏名・住所・病歴などお客様を特定できる情報を保存する
---   前提で設計していない。raw_content・article_content には、匿名化した
---   接客事例・気づきのみを入力すること。
+--   前提で設計していない。将来、顧客管理を行う場合は別テーブルとして設計し、
+--   アクセス制御と保管期間を改めて定めること。
 
 create extension if not exists pgcrypto;
 
@@ -48,101 +52,6 @@ as $$
     where email = (auth.jwt() ->> 'email')
   );
 $$;
-
--- ============================================================
--- articles: 記事（接客事例・気づき → 原稿 → 承認 → 公開）
--- ============================================================
-create table if not exists articles (
-  id uuid primary key default gen_random_uuid(),
-
-  title text not null default '',
-  raw_content text not null default '',       -- 洋子さんが入力した原文・メモ
-  article_content text not null default '',   -- ホームページ用に整えた本文（HTML可）
-  excerpt text not null default '',           -- 一覧・OGP用の要約
-
-  target_audience text,                       -- 例: 子育て中の保護者 / 大人の靴でお悩みの方
-  category text not null default 'other'
-    check (category in ('children', 'adult', 'foot-problems', 'insoles', 'shoe-wearing', 'seasonal', 'other')),
-  tags text[] not null default '{}',
-
-  status text not null default 'idea'
-    check (status in ('idea', 'draft', 'review', 'approved', 'published', 'archived')),
-  source_type text,                           -- 例: 接客事例 / 気づき / 季節ネタ / その他
-
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  approved_at timestamptz,
-  published_at timestamptz,
-
-  -- 媒体別の投稿文（コピーして手動投稿する。自動投稿はしない）
-  note_version text,
-  facebook_version text,
-  instagram_version text,
-  x_version text,
-  line_version text,
-
-  seo_title text,
-  seo_description text,
-  slug text unique,
-  featured_image text,
-  related_service text,                       -- 例: pricing.html / insoles.html など関連ページ
-  call_to_action text,                        -- 例: line / reservation / services / children / insoles
-
-  source_id text unique                       -- ChatGPT履歴取り込み時の会話ID（重複取り込み防止用。手入力の記事はnullのまま）
-);
-
-create index if not exists articles_status_idx on articles (status);
-create index if not exists articles_category_idx on articles (category);
-create index if not exists articles_published_at_idx on articles (published_at desc);
-create index if not exists articles_source_id_idx on articles (source_id);
-
-create or replace function set_updated_at()
-returns trigger
-language plpgsql
-as $$
-begin
-  new.updated_at = now();
-  return new;
-end;
-$$;
-
-drop trigger if exists articles_set_updated_at on articles;
-create trigger articles_set_updated_at
-  before update on articles
-  for each row execute function set_updated_at();
-
-alter table articles enable row level security;
-
-drop policy if exists "public can read published articles" on articles;
-create policy "public can read published articles"
-  on articles for select
-  to anon
-  using (status = 'published');
-
-drop policy if exists "admins can read all articles" on articles;
-create policy "admins can read all articles"
-  on articles for select
-  to authenticated
-  using (is_admin());
-
-drop policy if exists "admins can insert articles" on articles;
-create policy "admins can insert articles"
-  on articles for insert
-  to authenticated
-  with check (is_admin());
-
-drop policy if exists "admins can update articles" on articles;
-create policy "admins can update articles"
-  on articles for update
-  to authenticated
-  using (is_admin())
-  with check (is_admin());
-
-drop policy if exists "admins can delete articles" on articles;
-create policy "admins can delete articles"
-  on articles for delete
-  to authenticated
-  using (is_admin());
 
 -- ============================================================
 -- site_settings: オンライン相談の公開/非公開・料金など（1行のみ）
@@ -193,7 +102,6 @@ create table if not exists pdf_products (
   payment_url text,                           -- 将来、決済サービスのリンクを設定する欄
   display_order int not null default 0,
   version_label text not null default '',     -- 例: 2026年7月版 / v1.0（更新のたびに変える）
-  article_ids uuid[] not null default '{}',   -- このガイドに収録する記事（articles.id）
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -255,9 +163,11 @@ create policy "admins can read events"
 -- 既に一度schema.sqlを実行済みのプロジェクトでは、このブロックだけを
 -- 追加でSQL Editorに貼り付けて実行すれば最新の状態になる。
 -- ============================================================
-alter table articles add column if not exists source_id text;
-create unique index if not exists articles_source_id_key on articles (source_id);
-create index if not exists articles_source_id_idx on articles (source_id);
-
 alter table pdf_products add column if not exists version_label text not null default '';
-alter table pdf_products add column if not exists article_ids uuid[] not null default '{}';
+
+-- 記事はSupabaseで管理しなくなったため（content/articles/*.md へ移行）、
+-- articles テーブルと pdf_products.article_ids は使われていない。
+-- 以前のバージョンをセットアップ済みで、中身を残す必要がなければ、
+-- 次の2行を実行して削除できる（実行は任意。消すと元に戻せない）。
+--   drop table if exists articles;
+--   alter table pdf_products drop column if exists article_ids;
