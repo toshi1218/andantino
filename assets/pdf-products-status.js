@@ -22,7 +22,10 @@
       : "";
     const lineMessage = encodeURIComponent(product.line_message || `「${product.name}」について教えてください。`);
     const lineHref = `https://line.me/R/ti/p/@680mdoos`;
-    return `<article class="product-card"><div class="product-card__media">${image}</div><div class="product-card__body"><span class="status-badge ${badgeClass}">${badgeLabel}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description || "")}</p><span class="product-card__price">${price}</span><a class="outline-button" href="${lineHref}" data-line-message="${escapeHtml(lineMessage)}" target="_blank" rel="noopener">LINEで問い合わせる</a></div></article>`;
+    const version = product.version_label
+      ? `<span class="product-card__version">${escapeHtml(product.version_label)}</span>`
+      : "";
+    return `<article class="product-card"><div class="product-card__media">${image}</div><div class="product-card__body"><span class="status-badge ${badgeClass}">${badgeLabel}</span>${version}<h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description || "")}</p><span class="product-card__price">${price}</span><a class="outline-button" href="${lineHref}" data-line-message="${escapeHtml(lineMessage)}" target="_blank" rel="noopener">LINEで問い合わせる</a></div></article>`;
   }
 
   async function apply() {
@@ -31,7 +34,7 @@
 
     const { data, error } = await client
       .from("pdf_products")
-      .select("name, description, price, sample_image, status, line_message, display_order")
+      .select("name, description, price, sample_image, status, line_message, version_label, display_order")
       .order("display_order", { ascending: true });
 
     if (error || !data || !data.length) return;

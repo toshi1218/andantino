@@ -757,6 +757,8 @@ async function loadSettings() {
 
 /* ===================== 設定（PDF商品） ===================== */
 
+let publishedArticlesForGuides = [];
+
 function initProducts() {
   document.getElementById("new-product-button").addEventListener("click", () => {
     renderProductRow({
@@ -768,16 +770,28 @@ function initProducts() {
       status: "preparing",
       line_message: "",
       display_order: 0,
+      version_label: "",
+      article_ids: [],
     });
   });
 
   loadProducts();
 }
 
+async function loadPublishedArticlesForGuides() {
+  const { data, error } = await client
+    .from("articles")
+    .select("id, title, category")
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
+  publishedArticlesForGuides = error ? [] : data || [];
+}
+
 async function loadProducts() {
   const list = document.getElementById("product-list");
   const statusEl = document.getElementById("product-list-status");
   list.innerHTML = "";
+  await loadPublishedArticlesForGuides();
   const { data, error } = await client.from("pdf_products").select("*").order("display_order", { ascending: true });
   if (error) {
     statusEl.textContent = "PDF商品を読み込めませんでした。";
@@ -802,8 +816,31 @@ function renderProductRow(product) {
   setField("sample_image", product.sample_image);
   setField("status", product.status);
   setField("line_message", product.line_message);
+  setField("version_label", product.version_label);
+
+  const selectedIds = new Set(product.article_ids || []);
+  const emptyNote = node.querySelector("[data-guide-empty]");
+  const articleList = node.querySelector("[data-guide-article-list]");
+  if (publishedArticlesForGuides.length) {
+    emptyNote.hidden = true;
+    for (const article of publishedArticlesForGuides) {
+      const li = document.createElement("li");
+      const label = document.createElement("label");
+      label.className = "admin-guide-articles__item";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = article.id;
+      checkbox.checked = selectedIds.has(article.id);
+      label.append(checkbox, document.createTextNode(` ${article.title}`));
+      li.append(label);
+      articleList.append(li);
+    }
+  } else {
+    emptyNote.hidden = false;
+  }
 
   node.querySelector('[data-action="save"]').addEventListener("click", async () => {
+    const articleIds = [...node.querySelectorAll("[data-guide-article-list] input:checked")].map((el) => el.value);
     const payload = {
       name: node.querySelector('[data-field="name"]').value.trim(),
       description: node.querySelector('[data-field="description"]').value.trim(),
@@ -811,6 +848,8 @@ function renderProductRow(product) {
       sample_image: node.querySelector('[data-field="sample_image"]').value.trim(),
       status: node.querySelector('[data-field="status"]').value,
       line_message: node.querySelector('[data-field="line_message"]').value.trim(),
+      version_label: node.querySelector('[data-field="version_label"]').value.trim(),
+      article_ids: articleIds,
       display_order: product.display_order || 0,
     };
     const statusEl = document.getElementById("product-list-status");
@@ -826,6 +865,14 @@ function renderProductRow(product) {
     }
     node.dataset.id = result.data.id;
     statusEl.textContent = "保存しました。";
+  });
+
+  node.querySelector('[data-action="preview"]').addEventListener("click", () => {
+    if (!node.dataset.id) {
+      document.getElementById("product-list-status").textContent = "プレビューを開く前に、一度「保存」してください。";
+      return;
+    }
+    window.open(`./guide-preview.html?id=${node.dataset.id}`, "_blank", "noopener");
   });
 
   node.querySelector('[data-action="delete"]').addEventListener("click", async () => {

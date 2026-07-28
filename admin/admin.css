@@ -494,3 +494,40 @@ body.admin-page {
     flex-direction: column;
   }
 }
+
+/* ---------- PDF商品：収録記事チェックリスト ---------- */
+.admin-guide-articles {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.admin-guide-articles legend {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal);
+  padding: 0 4px;
+}
+
+.admin-guide-articles__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.admin-guide-articles__item {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--charcoal);
+}
+
+.admin-guide-articles__item input {
+  width: auto;
+}

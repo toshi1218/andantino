@@ -4590,6 +4590,11 @@ body[data-page="404"] main {
   color: var(--accent-dark);
 }
 
+.product-card__version {
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .product-card__body p {
   margin: 0;
   color: var(--charcoal);

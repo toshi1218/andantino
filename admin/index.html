@@ -270,8 +270,15 @@
           </label>
         </div>
         <label>LINE問い合わせ用の定型文<input type="text" data-field="line_message"></label>
+        <label>バージョン表示<input type="text" data-field="version_label" placeholder="例：2026年7月版"></label>
+        <fieldset class="admin-guide-articles">
+          <legend>収録する記事（公開済みの記事から選ぶ）</legend>
+          <p class="admin-note" data-guide-empty>公開済みの記事がまだありません。記事を公開すると、ここから選べるようになります。</p>
+          <ul class="admin-guide-articles__list" data-guide-article-list></ul>
+        </fieldset>
         <div class="admin-editor__actions">
           <button type="button" class="outline-button" data-action="save">保存</button>
+          <button type="button" class="outline-button" data-action="preview">印刷用プレビューを開く</button>
           <button type="button" class="outline-button" data-action="delete">削除</button>
         </div>
       </li>
