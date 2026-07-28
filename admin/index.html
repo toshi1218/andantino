@@ -41,13 +41,43 @@
       <!-- ログイン後のアプリ本体 -->
       <section id="app-view" class="admin-app" hidden>
         <nav class="admin-tabs" aria-label="管理メニュー">
-          <button type="button" class="admin-tabs__button is-active" data-tab="articles">記事</button>
-          <button type="button" class="admin-tabs__button" data-tab="import">ChatGPT履歴の取り込み</button>
+          <button type="button" class="admin-tabs__button is-active" data-tab="articles">記事を書く</button>
+          <button type="button" class="admin-tabs__button" data-tab="import">ChatGPTから取り込む</button>
           <button type="button" class="admin-tabs__button" data-tab="settings">設定</button>
         </nav>
 
         <!-- 記事タブ -->
         <div class="admin-tab-panel" data-tab-panel="articles">
+          <!-- まだ記事が1本もないときだけ出る、最初の案内 -->
+          <section class="admin-panel admin-start" id="start-guide" hidden>
+            <h2>まずは、記事のもとになるメモを用意しましょう</h2>
+            <p class="admin-note">どちらか、やりやすい方からで大丈夫です。</p>
+            <ol class="admin-start__steps">
+              <li>
+                <strong>ChatGPTで話した内容を取り込む</strong>
+                <p>いつも使っているChatGPTから会話を書き出して、その中から記事にしたいものを選びます。</p>
+                <button type="button" class="button" data-go-tab="import">会話を取り込む</button>
+              </li>
+              <li>
+                <strong>思いついたことを直接書く</strong>
+                <p>接客での気づきや、お伝えしたいことを、そのまま書いてもかまいません。</p>
+                <button type="button" class="outline-button" id="start-new-article">その場で書いてみる</button>
+              </li>
+            </ol>
+          </section>
+
+          <section class="admin-panel admin-propose" id="propose-panel" hidden>
+            <div class="admin-propose__head">
+              <div>
+                <h2>次に書く記事を提案してもらう</h2>
+                <p class="admin-note">溜まっているメモをまとめて読んで、いま書くとよいテーマを提案します。提案を選ぶと下書きができます。</p>
+              </div>
+              <button type="button" class="button" id="propose-button">提案してもらう</button>
+            </div>
+            <p class="admin-status" id="propose-status" role="status" aria-live="polite"></p>
+            <ul class="admin-propose-list" id="propose-list"></ul>
+          </section>
+
           <div class="admin-articles">
             <div class="admin-articles__list">
               <div class="admin-articles__list-header">
@@ -258,8 +288,15 @@
           </label>
         </div>
         <label>LINE問い合わせ用の定型文<input type="text" data-field="line_message"></label>
+        <label>バージョン表示<input type="text" data-field="version_label" placeholder="例：2026年7月版"></label>
+        <fieldset class="admin-guide-articles">
+          <legend>収録する記事（公開済みの記事から選ぶ）</legend>
+          <p class="admin-note" data-guide-empty>公開済みの記事がまだありません。記事を公開すると、ここから選べるようになります。</p>
+          <ul class="admin-guide-articles__list" data-guide-article-list></ul>
+        </fieldset>
         <div class="admin-editor__actions">
           <button type="button" class="outline-button" data-action="save">保存</button>
+          <button type="button" class="outline-button" data-action="preview">印刷用プレビューを開く</button>
           <button type="button" class="outline-button" data-action="delete">削除</button>
         </div>
       </li>

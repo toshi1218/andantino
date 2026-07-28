@@ -81,6 +81,7 @@ function setSignedIn(isSignedIn) {
 function initApp() {
   initTabs();
   initArticles();
+  initPropose();
   initImport();
   initSettings();
   initProducts();
@@ -89,13 +90,21 @@ function initApp() {
 function initTabs() {
   const buttons = document.querySelectorAll(".admin-tabs__button");
   const panels = document.querySelectorAll(".admin-tab-panel");
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.toggle("is-active", b === button));
-      panels.forEach((panel) => {
-        panel.hidden = panel.dataset.tabPanel !== button.dataset.tab;
-      });
+
+  const openTab = (tabName) => {
+    buttons.forEach((b) => b.classList.toggle("is-active", b.dataset.tab === tabName));
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.tabPanel !== tabName;
     });
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => openTab(button.dataset.tab));
+  });
+
+  // 「記事を書く」タブの案内から、他のタブへワンタップで移動するためのリンク。
+  document.querySelectorAll("[data-go-tab]").forEach((button) => {
+    button.addEventListener("click", () => openTab(button.dataset.goTab));
   });
 }
 
@@ -104,6 +113,12 @@ function initTabs() {
 const articleState = { items: [], selectedId: null, filter: "" };
 
 function initArticles() {
+  // 絞り込みボタンの元のラベル（「すべて」「アイデア」など）を、件数を
+  // 付け足す前に控えておく。以後はこのラベルに件数を追記するだけにする。
+  document.querySelectorAll("[data-status-filter]").forEach((button) => {
+    button.dataset.label = button.textContent.trim();
+  });
+
   document.querySelectorAll("[data-status-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       document.querySelectorAll("[data-status-filter]").forEach((b) => b.classList.remove("is-active"));
@@ -113,11 +128,13 @@ function initArticles() {
     });
   });
 
-  document.getElementById("new-article-button").addEventListener("click", () => {
+  const openBlankEditor = () => {
     articleState.selectedId = "new";
     fillEditor(blankArticle());
     highlightSelected();
-  });
+  };
+  document.getElementById("new-article-button").addEventListener("click", openBlankEditor);
+  document.getElementById("start-new-article").addEventListener("click", openBlankEditor);
 
   document.getElementById("editor-form").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -186,11 +203,26 @@ async function loadArticles() {
   }
   articleState.items = data || [];
   statusEl.textContent = "";
+
+  // 記事が1本もない、まっさらな状態のときだけ最初の案内を出す。
+  // 1本でもあれば、通常の「提案してもらう」パネルに切り替える。
+  const isBlankSlate = articleState.items.length === 0;
+  document.getElementById("start-guide").hidden = !isBlankSlate;
+  document.getElementById("propose-panel").hidden = isBlankSlate;
+
   renderArticleList();
 }
 
 function renderArticleList() {
   const list = document.getElementById("article-list");
+
+  // 絞り込みボタンに件数を出し、どこに何があるか一目で分かるようにする。
+  document.querySelectorAll("[data-status-filter]").forEach((button) => {
+    const key = button.dataset.statusFilter;
+    const count = key ? articleState.items.filter((a) => a.status === key).length : articleState.items.length;
+    button.textContent = `${button.dataset.label} (${count})`;
+  });
+
   const filtered = articleState.filter
     ? articleState.items.filter((a) => a.status === articleState.filter)
     : articleState.items;
@@ -199,7 +231,9 @@ function renderArticleList() {
   if (!filtered.length) {
     const empty = document.createElement("p");
     empty.className = "admin-note";
-    empty.textContent = "該当する記事はありません。";
+    empty.textContent = articleState.items.length
+      ? "該当する記事はありません。"
+      : "まだ記事がありません。上の案内から始めてください。";
     list.append(empty);
     return;
   }
@@ -415,6 +449,139 @@ function buildTemplates(fields) {
   };
 }
 
+/* ===================== 溜まったメモからのテーマ提案 ===================== */
+
+function initPropose() {
+  document.getElementById("propose-button").addEventListener("click", requestProposals);
+}
+
+async function requestProposals() {
+  const statusEl = document.getElementById("propose-status");
+  const list = document.getElementById("propose-list");
+  list.innerHTML = "";
+  statusEl.textContent = "溜まっているメモを読んでいます…";
+
+  const { data, error } = await client
+    .from("articles")
+    .select("title, raw_content, category")
+    .eq("status", "idea")
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  if (error) {
+    statusEl.textContent = "メモを読み込めませんでした。";
+    return;
+  }
+
+  const notes = (data || []).filter((note) => (note.raw_content || "").trim().length > 20);
+  if (!notes.length) {
+    statusEl.textContent =
+      "提案のもとになるメモがまだありません。「ChatGPT履歴の取り込み」タブから会話を取り込むか、「＋ 新しい記事」でメモを書いてください。";
+    return;
+  }
+
+  statusEl.textContent = `${notes.length}件のメモをもとに考えています…`;
+
+  let themes = null;
+  try {
+    const { data: sessionData } = await client.auth.getSession();
+    const accessToken = sessionData?.session?.access_token;
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
+      body: JSON.stringify({ mode: "propose", notes }),
+    });
+    if (response.ok) {
+      const json = await response.json();
+      if (json && Array.isArray(json.themes) && json.themes.length) themes = json.themes;
+    }
+  } catch {
+    // AI未設定・通信失敗時は下のフォールバックへ。
+  }
+
+  if (themes) {
+    statusEl.textContent = "提案です。内容は必ずご自身で確認してください。";
+    renderProposals(themes);
+    return;
+  }
+
+  // AIが使えない環境でも、どの分野のメモが溜まっているかは示せる。
+  renderProposalFallback(notes, statusEl);
+}
+
+function renderProposalFallback(notes, statusEl) {
+  const counts = new Map();
+  for (const note of notes) {
+    const key = note.category || "other";
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  const summary = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, count]) => `${CATEGORY_LABEL[key] || key} ${count}件`)
+    .join("／");
+
+  statusEl.textContent = `AIの設定がないため、テーマの提案はできません。いま溜まっているメモの内訳：${summary}`;
+  document.getElementById("propose-list").innerHTML = "";
+}
+
+function renderProposals(themes) {
+  const list = document.getElementById("propose-list");
+  list.innerHTML = "";
+
+  themes.forEach((theme, index) => {
+    const li = document.createElement("li");
+    li.className = "admin-propose-item";
+    li.innerHTML = `
+      <div class="admin-propose-item__body">
+        <span class="admin-propose-item__category">${escapeHtml(CATEGORY_LABEL[theme.category] || "その他")}</span>
+        <strong>${escapeHtml(theme.title || "（タイトル案なし）")}</strong>
+        <p class="admin-propose-item__reason">${escapeHtml(theme.reason || "")}</p>
+        <p class="admin-propose-item__summary">${escapeHtml(theme.summary || "")}</p>
+      </div>`;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "outline-button outline-button--small";
+    button.textContent = "この案で下書きを作る";
+    button.addEventListener("click", () => createDraftFromTheme(theme, button));
+    li.append(button);
+    list.append(li);
+  });
+}
+
+async function createDraftFromTheme(theme, button) {
+  const statusEl = document.getElementById("propose-status");
+  button.disabled = true;
+  statusEl.textContent = "下書きを作っています…";
+
+  const allowedCategories = Object.keys(CATEGORY_LABEL);
+  const payload = {
+    title: theme.title || "",
+    category: allowedCategories.includes(theme.category) ? theme.category : "other",
+    target_audience: theme.target_audience || "",
+    raw_content: `【提案されたテーマ】\n${theme.summary || ""}\n\n【提案の理由】\n${theme.reason || ""}\n\n※これは溜まったメモをもとにAIが提案した案です。実際の出来事やお伝えしたいことを書き足してから、「AIで下書きを作る」を押してください。`,
+    status: "draft",
+    source_type: "気づき",
+  };
+
+  const { data, error } = await client.from("articles").insert(payload).select().single();
+  if (error) {
+    statusEl.textContent = `下書きを作れませんでした：${error.message}`;
+    button.disabled = false;
+    return;
+  }
+
+  statusEl.textContent = `「${data.title}」を下書きとして保存しました。下の一覧から開いて続きを書いてください。`;
+  button.textContent = "下書きを作りました";
+  await loadArticles();
+  articleState.selectedId = data.id;
+  fillEditor(data);
+  highlightSelected();
+}
+
 /* ===================== ChatGPT履歴の取り込み ===================== */
 
 const importState = { conversations: [], importedIds: new Set() };
@@ -623,6 +790,8 @@ async function loadSettings() {
 
 /* ===================== 設定（PDF商品） ===================== */
 
+let publishedArticlesForGuides = [];
+
 function initProducts() {
   document.getElementById("new-product-button").addEventListener("click", () => {
     renderProductRow({
@@ -634,16 +803,28 @@ function initProducts() {
       status: "preparing",
       line_message: "",
       display_order: 0,
+      version_label: "",
+      article_ids: [],
     });
   });
 
   loadProducts();
 }
 
+async function loadPublishedArticlesForGuides() {
+  const { data, error } = await client
+    .from("articles")
+    .select("id, title, category")
+    .eq("status", "published")
+    .order("published_at", { ascending: false });
+  publishedArticlesForGuides = error ? [] : data || [];
+}
+
 async function loadProducts() {
   const list = document.getElementById("product-list");
   const statusEl = document.getElementById("product-list-status");
   list.innerHTML = "";
+  await loadPublishedArticlesForGuides();
   const { data, error } = await client.from("pdf_products").select("*").order("display_order", { ascending: true });
   if (error) {
     statusEl.textContent = "PDF商品を読み込めませんでした。";
@@ -668,8 +849,31 @@ function renderProductRow(product) {
   setField("sample_image", product.sample_image);
   setField("status", product.status);
   setField("line_message", product.line_message);
+  setField("version_label", product.version_label);
+
+  const selectedIds = new Set(product.article_ids || []);
+  const emptyNote = node.querySelector("[data-guide-empty]");
+  const articleList = node.querySelector("[data-guide-article-list]");
+  if (publishedArticlesForGuides.length) {
+    emptyNote.hidden = true;
+    for (const article of publishedArticlesForGuides) {
+      const li = document.createElement("li");
+      const label = document.createElement("label");
+      label.className = "admin-guide-articles__item";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = article.id;
+      checkbox.checked = selectedIds.has(article.id);
+      label.append(checkbox, document.createTextNode(` ${article.title}`));
+      li.append(label);
+      articleList.append(li);
+    }
+  } else {
+    emptyNote.hidden = false;
+  }
 
   node.querySelector('[data-action="save"]').addEventListener("click", async () => {
+    const articleIds = [...node.querySelectorAll("[data-guide-article-list] input:checked")].map((el) => el.value);
     const payload = {
       name: node.querySelector('[data-field="name"]').value.trim(),
       description: node.querySelector('[data-field="description"]').value.trim(),
@@ -677,6 +881,8 @@ function renderProductRow(product) {
       sample_image: node.querySelector('[data-field="sample_image"]').value.trim(),
       status: node.querySelector('[data-field="status"]').value,
       line_message: node.querySelector('[data-field="line_message"]').value.trim(),
+      version_label: node.querySelector('[data-field="version_label"]').value.trim(),
+      article_ids: articleIds,
       display_order: product.display_order || 0,
     };
     const statusEl = document.getElementById("product-list-status");
@@ -692,6 +898,14 @@ function renderProductRow(product) {
     }
     node.dataset.id = result.data.id;
     statusEl.textContent = "保存しました。";
+  });
+
+  node.querySelector('[data-action="preview"]').addEventListener("click", () => {
+    if (!node.dataset.id) {
+      document.getElementById("product-list-status").textContent = "プレビューを開く前に、一度「保存」してください。";
+      return;
+    }
+    window.open(`./guide-preview.html?id=${node.dataset.id}`, "_blank", "noopener");
   });
 
   node.querySelector('[data-action="delete"]').addEventListener("click", async () => {

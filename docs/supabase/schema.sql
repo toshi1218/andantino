@@ -192,6 +192,8 @@ create table if not exists pdf_products (
   line_message text not null default '',      -- LINEで問い合わせる際の定型文
   payment_url text,                           -- 将来、決済サービスのリンクを設定する欄
   display_order int not null default 0,
+  version_label text not null default '',     -- 例: 2026年7月版 / v1.0（更新のたびに変える）
+  article_ids uuid[] not null default '{}',   -- このガイドに収録する記事（articles.id）
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -256,3 +258,6 @@ create policy "admins can read events"
 alter table articles add column if not exists source_id text;
 create unique index if not exists articles_source_id_key on articles (source_id);
 create index if not exists articles_source_id_idx on articles (source_id);
+
+alter table pdf_products add column if not exists version_label text not null default '';
+alter table pdf_products add column if not exists article_ids uuid[] not null default '{}';

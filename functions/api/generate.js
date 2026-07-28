@@ -20,6 +20,33 @@ const SYSTEM_PROMPT = `あなたはANDANTINO（和歌山の靴・インソール
 - 出力は説明を付けず、次のJSON形式のみで返す。
 {"article_content":"HTMLの見出し(h2)と段落(p)で構成した本文","excerpt":"80字程度の要約","note_version":"note用の長文","facebook_version":"Facebook用の投稿文","instagram_version":"Instagram用の投稿文とハッシュタグ","x_version":"140字以内のX用短文","line_version":"公式LINE配信用の文章","seo_title":"30字程度のSEOタイトル","seo_description":"120字程度のSEO説明文"}`;
 
+// 「溜まったメモをまとめて見て、次に書くテーマを提案する」モード用。
+// 記事1本を書く上のプロンプトとは目的が違うため、別のプロンプトにしている。
+const SYSTEM_PROMPT_PROPOSE = `あなたはANDANTINO（和歌山の靴・インソール専門店）の記事づくりを手伝うアシスタントです。
+店主・五十嵐洋子さんが最近ChatGPTで話した内容や、接客での気づきのメモをまとめて渡します。
+その中から、お客様の役に立ち、ご来店やご相談につながりやすい記事のテーマを3〜5件提案してください。
+
+必ず守ること。
+- 渡されたメモに実際に書かれている話題から選ぶ。メモにない話題を作らない。
+- 医療的な診断・治療・効果を保証すると読める表現は使わない。
+- お客様の氏名・住所・病歴など個人が特定できる情報は書かない。
+- 過度に営業的な表現、AIが書いたような大げさな表現、不安を煽る表現は避ける。
+- 季節や時期に合う話題があれば優先する。
+- categoryは children / adult / foot-problems / insoles / shoe-wearing / seasonal / other のいずれか。
+- 出力は説明を付けず、次のJSON形式のみで返す。
+{"themes":[{"title":"記事タイトル案","reason":"なぜ今この記事がよいか（1〜2文）","category":"children","target_audience":"想定読者","summary":"どんな内容を書くか（2〜3文）"}]}`;
+
+function buildProposePrompt(notes) {
+  const body = notes
+    .map((note, index) => {
+      const title = note.title || "（無題）";
+      const text = (note.raw_content || "").slice(0, 800);
+      return `--- メモ${index + 1}: ${title} ---\n${text}`;
+    })
+    .join("\n\n");
+  return `最近たまっているメモは次の通りです。\n\n${body}`;
+}
+
 function buildUserPrompt(input) {
   const lines = [
     `タイトル案: ${input.title || "（未定）"}`,
@@ -34,7 +61,7 @@ function buildUserPrompt(input) {
   return lines.join("\n");
 }
 
-async function callAnthropic(env, prompt) {
+async function callAnthropic(env, prompt, systemPrompt) {
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -45,7 +72,7 @@ async function callAnthropic(env, prompt) {
     body: JSON.stringify({
       model: env.AI_MODEL || "claude-haiku-4-5",
       max_tokens: 1200,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -54,7 +81,7 @@ async function callAnthropic(env, prompt) {
   return json.content?.[0]?.text || "";
 }
 
-async function callOpenAI(env, prompt) {
+async function callOpenAI(env, prompt, systemPrompt) {
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -64,7 +91,7 @@ async function callOpenAI(env, prompt) {
     body: JSON.stringify({
       model: env.AI_MODEL || "gpt-4o-mini",
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: prompt },
       ],
     }),
@@ -121,11 +148,22 @@ export async function onRequestPost(context) {
     return new Response("Invalid request body", { status: 400 });
   }
 
-  const prompt = buildUserPrompt(input);
+  // mode: "propose" は「溜まったメモから次に書くテーマを提案する」用。
+  // 省略時は従来どおり、記事1本分の下書きを作る。
+  const isPropose = input.mode === "propose";
+  if (isPropose && (!Array.isArray(input.notes) || !input.notes.length)) {
+    return new Response("No notes to propose from", { status: 400 });
+  }
+
+  const systemPrompt = isPropose ? SYSTEM_PROMPT_PROPOSE : SYSTEM_PROMPT;
+  const prompt = isPropose ? buildProposePrompt(input.notes.slice(0, 20)) : buildUserPrompt(input);
   const provider = (env.AI_PROVIDER || "anthropic").toLowerCase();
 
   try {
-    const text = provider === "openai" ? await callOpenAI(env, prompt) : await callAnthropic(env, prompt);
+    const text =
+      provider === "openai"
+        ? await callOpenAI(env, prompt, systemPrompt)
+        : await callAnthropic(env, prompt, systemPrompt);
     const parsed = extractJson(text);
     if (!parsed) return Response.json({ configured: false });
     return Response.json(parsed);
