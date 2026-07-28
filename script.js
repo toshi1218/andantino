@@ -27,8 +27,10 @@ const fullMenuMarkup = `
       <strong>取扱商品・サービス</strong>
       <a href="./products.html"><img src="./assets/paramount-pumps.webp" width="60" height="60" loading="lazy" alt=""><span>取扱商品</span></a>
       <a href="./dymoco-insole.html"><img src="./assets/product-dymoco-insole.webp" width="60" height="60" loading="lazy" alt=""><span>オーダーインソール（ディモコ）</span></a>
-      <a href="./seminars.html"><img src="./assets/legacy-seminar.webp" width="60" height="60" loading="lazy" alt=""><span>足育・靴選びセミナー</span></a>
+      <a href="./seminars.html"><img src="./assets/legacy-seminar.webp" width="60" height="60" loading="lazy" alt=""><span>セミナー・法人向け</span></a>
       <a href="./nordic-walking.html"><img src="./assets/nordic-walking-park.webp" width="60" height="60" loading="lazy" alt=""><span>ノルディックウォーキング</span></a>
+      <a href="./online-consultation.html"><span>オンライン相談</span></a>
+      <a href="./pdf-products.html"><span>デジタル商品（PDF）</span></a>
     </div>
     <div class="nav__group nav__group--knowledge">
       <strong>足と靴の知識</strong>
@@ -36,8 +38,6 @@ const fullMenuMarkup = `
       <a href="./shoe-wearing.html">靴の選び方・履き方</a>
       <a href="./foot-check.html">ご相談の流れ・確認項目</a>
       <a href="./articles.html">お役立ち記事一覧</a>
-      <a href="./online-consultation.html">オンライン相談</a>
-      <a href="./pdf-products.html">デジタル商品（PDF）</a>
     </div>
     <div class="nav__group nav__group--secondary">
       <strong>店舗情報・サイト案内</strong>
@@ -45,7 +45,6 @@ const fullMenuMarkup = `
       <a href="./owner.html">五十嵐洋子について</a>
       <a href="./faq.html">よくある質問</a>
       <a href="./#shop">店舗案内・アクセス</a>
-      <a href="./admin/">管理画面</a>
     </div>
   </div>`;
 
