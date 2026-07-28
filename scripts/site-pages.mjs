@@ -1,5 +1,5 @@
 export const siteUrl = "https://www.andantino-shoes.jp";
-export const lastmod = "2026-07-25";
+export const lastmod = "2026-07-27";
 
 export const pages = [
   { file: "index.html", path: "/", priority: "1.0" },
@@ -34,6 +34,14 @@ export const pages = [
   { file: "foot-check.html", path: "/foot-check.html", priority: "0.8" },
   { file: "nordic-walking.html", path: "/nordic-walking.html", priority: "0.6" },
   { file: "case-studies.html", path: "/case-studies.html", priority: "0.6" },
+  { file: "articles.html", path: "/articles.html", priority: "0.8" },
+  { file: "articles-children.html", path: "/articles-children.html", priority: "0.6" },
+  { file: "articles-adult.html", path: "/articles-adult.html", priority: "0.6" },
+  { file: "articles-foot-problems.html", path: "/articles-foot-problems.html", priority: "0.6" },
+  { file: "articles-insoles.html", path: "/articles-insoles.html", priority: "0.6" },
+  { file: "articles-shoe-wearing.html", path: "/articles-shoe-wearing.html", priority: "0.6" },
+  { file: "online-consultation.html", path: "/online-consultation.html", priority: "0.7" },
+  { file: "pdf-products.html", path: "/pdf-products.html", priority: "0.6" },
   { file: "faq.html", path: "/faq.html", priority: "0.8" },
   { file: "contact.html", path: "/contact.html", priority: "0.9" },
   { file: "news.html", path: "/news.html", priority: "0.6" },
