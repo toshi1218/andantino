@@ -86,12 +86,15 @@ create table if not exists articles (
   slug text unique,
   featured_image text,
   related_service text,                       -- 例: pricing.html / insoles.html など関連ページ
-  call_to_action text                         -- 例: line / reservation / services / children / insoles
+  call_to_action text,                        -- 例: line / reservation / services / children / insoles
+
+  source_id text unique                       -- ChatGPT履歴取り込み時の会話ID（重複取り込み防止用。手入力の記事はnullのまま）
 );
 
 create index if not exists articles_status_idx on articles (status);
 create index if not exists articles_category_idx on articles (category);
 create index if not exists articles_published_at_idx on articles (published_at desc);
+create index if not exists articles_source_id_idx on articles (source_id);
 
 create or replace function set_updated_at()
 returns trigger
@@ -243,3 +246,13 @@ create policy "admins can read events"
 
 -- anon には select/update/delete のポリシーを一切与えないため、
 -- 匿名ユーザーは書き込み専用（自分の投稿した行すら読み返せない）。
+
+-- ============================================================
+-- 追加マイグレーション（このファイルを最初に実行した後に追加された変更）
+-- 新規セットアップでは上のcreate tableに含まれているため実質何もしない。
+-- 既に一度schema.sqlを実行済みのプロジェクトでは、このブロックだけを
+-- 追加でSQL Editorに貼り付けて実行すれば最新の状態になる。
+-- ============================================================
+alter table articles add column if not exists source_id text;
+create unique index if not exists articles_source_id_key on articles (source_id);
+create index if not exists articles_source_id_idx on articles (source_id);

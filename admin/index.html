@@ -42,6 +42,7 @@
       <section id="app-view" class="admin-app" hidden>
         <nav class="admin-tabs" aria-label="管理メニュー">
           <button type="button" class="admin-tabs__button is-active" data-tab="articles">記事</button>
+          <button type="button" class="admin-tabs__button" data-tab="import">ChatGPT履歴の取り込み</button>
           <button type="button" class="admin-tabs__button" data-tab="settings">設定</button>
         </nav>
 
@@ -104,6 +105,7 @@
                     <option value="接客事例">接客事例</option>
                     <option value="気づき">気づき</option>
                     <option value="季節ネタ">季節ネタ</option>
+                    <option value="ChatGPT履歴">ChatGPT履歴</option>
                     <option value="その他">その他</option>
                   </select>
                 </label>
@@ -183,6 +185,34 @@
           </div>
         </div>
 
+        <!-- ChatGPT履歴の取り込みタブ -->
+        <div class="admin-tab-panel" data-tab-panel="import" hidden>
+          <section class="admin-panel">
+            <h2>ChatGPTの会話をアイデアとして取り込む</h2>
+            <p class="admin-note">
+              普段お使いのChatGPTの「設定 → データ管理 → データのエクスポート」から届くファイル（.zip）を、そのままここにアップロードしてください。会話の一覧が出るので、記事の元にしたいものだけ選んで取り込みます。取り込んだものは「アイデア」ステータスとして保存されるだけで、公開はされません。同じ会話を2回取り込んでも重複しません。
+            </p>
+            <div class="admin-import__upload">
+              <input type="file" id="import-file-input" accept=".zip">
+              <button type="button" class="button" id="import-read-button">ファイルを読み込む</button>
+              <p class="admin-status" id="import-read-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div id="import-list-wrapper" hidden>
+              <div class="admin-import__toolbar">
+                <input type="search" id="import-search" placeholder="タイトルで絞り込む">
+                <button type="button" class="outline-button outline-button--small" id="import-select-all">すべて選択</button>
+                <button type="button" class="outline-button outline-button--small" id="import-select-none">すべて解除</button>
+              </div>
+              <ul class="admin-import-list" id="import-list"></ul>
+              <div class="admin-editor__actions">
+                <button type="button" class="button" id="import-submit-button">選択した会話を取り込む</button>
+              </div>
+              <p class="admin-status" id="import-submit-status" role="status" aria-live="polite"></p>
+            </div>
+          </section>
+        </div>
+
         <!-- 設定タブ -->
         <div class="admin-tab-panel" data-tab-panel="settings" hidden>
           <div class="admin-settings">
@@ -236,6 +266,7 @@
     </template>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
     <script src="../assets/supabase-config.js"></script>
     <script src="../assets/andantino-supabase.js"></script>
     <script src="./admin.js"></script>

@@ -81,6 +81,7 @@ function setSignedIn(isSignedIn) {
 function initApp() {
   initTabs();
   initArticles();
+  initImport();
   initSettings();
   initProducts();
 }
@@ -405,6 +406,183 @@ function buildTemplates(fields) {
     seo_title: `${title}｜ANDANTINO`,
     seo_description: gist.slice(0, 120),
   };
+}
+
+/* ===================== ChatGPT履歴の取り込み ===================== */
+
+const importState = { conversations: [], importedIds: new Set() };
+
+function initImport() {
+  document.getElementById("import-read-button").addEventListener("click", readImportFile);
+  document.getElementById("import-select-all").addEventListener("click", () => setAllImportChecks(true));
+  document.getElementById("import-select-none").addEventListener("click", () => setAllImportChecks(false));
+  document.getElementById("import-search").addEventListener("input", renderImportList);
+  document.getElementById("import-submit-button").addEventListener("click", submitImportSelection);
+}
+
+async function readImportFile() {
+  const input = document.getElementById("import-file-input");
+  const statusEl = document.getElementById("import-read-status");
+  const file = input.files && input.files[0];
+  if (!file) {
+    statusEl.textContent = "ファイルを選んでください。";
+    return;
+  }
+  if (typeof JSZip === "undefined") {
+    statusEl.textContent = "ファイルを読み込む準備ができていません。少し待ってからもう一度お試しください。";
+    return;
+  }
+
+  statusEl.textContent = "読み込んでいます…";
+  try {
+    const zip = await JSZip.loadAsync(file);
+    const entry = zip.file("conversations.json");
+    if (!entry) {
+      statusEl.textContent = "このファイルの中に会話データ（conversations.json）が見つかりませんでした。ChatGPTからダウンロードしたエクスポートファイルをそのまま選んでください。";
+      return;
+    }
+    const text = await entry.async("string");
+    const data = JSON.parse(text);
+    importState.conversations = summarizeConversations(data);
+
+    if (!importState.conversations.length) {
+      statusEl.textContent = "取り込める会話が見つかりませんでした。";
+      return;
+    }
+
+    await refreshImportedIds();
+    statusEl.textContent = `${importState.conversations.length}件の会話を読み込みました。取り込みたいものを選んでください。`;
+    document.getElementById("import-list-wrapper").hidden = false;
+    renderImportList();
+  } catch (error) {
+    statusEl.textContent = `ファイルを読み込めませんでした：${error.message}`;
+  }
+}
+
+function extractConversationText(conversation) {
+  const mapping = conversation.mapping || {};
+  let nodeId = conversation.current_node;
+  if (!nodeId || !mapping[nodeId]) {
+    const leaf = Object.values(mapping).find((node) => node && (!node.children || node.children.length === 0));
+    nodeId = leaf && leaf.id;
+  }
+
+  const chain = [];
+  const seen = new Set();
+  while (nodeId && mapping[nodeId] && !seen.has(nodeId)) {
+    seen.add(nodeId);
+    chain.push(nodeId);
+    nodeId = mapping[nodeId].parent;
+  }
+  chain.reverse();
+
+  const lines = [];
+  for (const id of chain) {
+    const message = mapping[id] && mapping[id].message;
+    if (!message) continue;
+    const role = message.author && message.author.role;
+    if (role !== "user" && role !== "assistant") continue;
+    const content = message.content;
+    if (!content || content.content_type !== "text") continue;
+    const text = (content.parts || []).filter((part) => typeof part === "string").join("\n").trim();
+    if (!text) continue;
+    lines.push(`【${role === "user" ? "五十嵐" : "ChatGPT"}】\n${text}`);
+  }
+  return lines.join("\n\n");
+}
+
+function summarizeConversations(data) {
+  if (!Array.isArray(data)) return [];
+  return data
+    .map((conversation, index) => {
+      const text = extractConversationText(conversation);
+      return {
+        sourceId: conversation.id || conversation.conversation_id || `conv-${index}`,
+        title: conversation.title || "（無題の会話）",
+        createdAt: conversation.create_time ? new Date(conversation.create_time * 1000) : null,
+        text,
+      };
+    })
+    .filter((conversation) => conversation.text && conversation.text.length > 20)
+    .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+}
+
+async function refreshImportedIds() {
+  const ids = importState.conversations.map((conversation) => conversation.sourceId);
+  importState.importedIds = new Set();
+  for (let i = 0; i < ids.length; i += 100) {
+    const chunk = ids.slice(i, i + 100);
+    const { data, error } = await client.from("articles").select("source_id").in("source_id", chunk);
+    if (error) continue;
+    for (const row of data || []) {
+      if (row.source_id) importState.importedIds.add(row.source_id);
+    }
+  }
+}
+
+function setAllImportChecks(checked) {
+  document.querySelectorAll("#import-list input[type='checkbox']:not(:disabled)").forEach((checkbox) => {
+    checkbox.checked = checked;
+  });
+}
+
+function renderImportList() {
+  const list = document.getElementById("import-list");
+  const query = document.getElementById("import-search").value.trim().toLowerCase();
+  list.innerHTML = "";
+
+  const filtered = importState.conversations.filter((conversation) =>
+    !query || conversation.title.toLowerCase().includes(query)
+  );
+
+  for (const conversation of filtered) {
+    const isImported = importState.importedIds.has(conversation.sourceId);
+    const li = document.createElement("li");
+    li.className = `admin-import-item${isImported ? " admin-import-item--imported" : ""}`;
+    const dateLabel = conversation.createdAt ? conversation.createdAt.toLocaleDateString("ja-JP") : "";
+    li.innerHTML = `
+      <input type="checkbox" data-source-id="${escapeHtml(conversation.sourceId)}" ${isImported ? "disabled" : ""}>
+      <div class="admin-import-item__body">
+        <span class="admin-import-item__title">${escapeHtml(conversation.title)}</span>
+        <span class="admin-import-item__meta">${dateLabel}${isImported ? "／取り込み済み" : ""}</span>
+        <span class="admin-import-item__snippet">${escapeHtml(conversation.text.slice(0, 140))}</span>
+      </div>`;
+    list.append(li);
+  }
+}
+
+async function submitImportSelection() {
+  const statusEl = document.getElementById("import-submit-status");
+  const checked = [...document.querySelectorAll("#import-list input[type='checkbox']:checked")];
+  if (!checked.length) {
+    statusEl.textContent = "取り込む会話を選んでください。";
+    return;
+  }
+
+  const selectedIds = new Set(checked.map((checkbox) => checkbox.dataset.sourceId));
+  const rows = importState.conversations
+    .filter((conversation) => selectedIds.has(conversation.sourceId))
+    .map((conversation) => ({
+      title: conversation.title,
+      raw_content: conversation.text,
+      status: "idea",
+      category: "other",
+      source_type: "ChatGPT履歴",
+      source_id: conversation.sourceId,
+    }));
+
+  statusEl.textContent = "取り込んでいます…";
+  let importedCount = 0;
+  for (let i = 0; i < rows.length; i += 50) {
+    const chunk = rows.slice(i, i + 50);
+    const { error } = await client.from("articles").insert(chunk);
+    if (!error) importedCount += chunk.length;
+  }
+
+  statusEl.textContent = `${importedCount}件を「アイデア」として取り込みました。「記事」タブから確認してください。`;
+  await refreshImportedIds();
+  renderImportList();
+  await loadArticles();
 }
 
 /* ===================== 設定（オンライン相談） ===================== */
