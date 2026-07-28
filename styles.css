@@ -4642,3 +4642,26 @@ body[data-page="404"] main {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- トップページ：管理画面ログイン導線 ---------- */
+.admin-login-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.admin-login-link:hover,
+.admin-login-link:focus-visible {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+@media (max-width: 1100px) {
+  .admin-login-link {
+    display: none;
+  }
+}
