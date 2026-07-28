@@ -3,6 +3,6 @@
 // anon key は公開されても問題ない設計のキーで、実際のアクセス制御は
 // docs/supabase/schema.sql のRLS（行単位セキュリティ）が担います。
 window.ANDANTINO_SUPABASE = {
-  url: null,
-  anonKey: null,
+  url: "https://fajwyfkvmajyqfatscml.supabase.co",
+  anonKey: "sb_publishable_P4nBpbW_yciVT8jmwfr4TQ_Ls7kI6uz",
 };
