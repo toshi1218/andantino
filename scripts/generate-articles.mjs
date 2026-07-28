@@ -43,6 +43,15 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
+// 記事詳細ページは /articles/{slug}.html に出力されるため、管理画面で
+// 「./assets/foo.webp」「/assets/foo.webp」のように入力された画像パスを
+// 1階層上へ辿る形（../assets/foo.webp）へ直す。外部URLはそのまま使う。
+function toArticleAssetPath(value) {
+  if (!value) return value;
+  if (/^(?:https?:)?\/\//i.test(value) || value.startsWith("data:")) return value;
+  return `../${value.replace(/^\.\//, "").replace(/^\//, "")}`;
+}
+
 function formatDate(isoDate) {
   const date = new Date(isoDate);
   const display = new Intl.DateTimeFormat("ja-JP", {
@@ -79,7 +88,7 @@ function renderArticlePage(article, robotsMeta) {
   const dates = formatDate(article.published_at || article.updated_at || article.created_at);
   const modified = formatDate(article.updated_at || article.published_at || article.created_at);
   const heroImage = article.featured_image
-    ? `<div class="container"><figure class="article-hero-photo"><img src="${escapeHtml(article.featured_image)}" width="1000" height="800" loading="eager" fetchpriority="high" alt="${escapeHtml(article.title)}"></figure></div>`
+    ? `<div class="container"><figure class="article-hero-photo"><img src="${escapeHtml(toArticleAssetPath(article.featured_image))}" width="1000" height="800" loading="eager" fetchpriority="high" alt="${escapeHtml(article.title)}"></figure></div>`
     : "";
 
   const breadcrumbItems = [
@@ -262,7 +271,19 @@ async function main() {
     return;
   }
 
-  const validArticles = articles.filter((article) => article.slug);
+  // slugはそのままファイル名になるため、半角英数とハイフンだけに限定する。
+  // 「../index」のような値でリポジトリ内の別ファイルを上書きさせない。
+  const validArticles = [];
+  for (const article of articles) {
+    if (!article.slug) continue;
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(article.slug)) {
+      console.warn(
+        `generate-articles: skipped "${article.title}" — slug "${article.slug}" must use lowercase letters, numbers and hyphens only.`
+      );
+      continue;
+    }
+    validArticles.push(article);
+  }
   const robotsMeta = await detectRobotsMeta();
 
   await mkdir(articlesDirUrl, { recursive: true });

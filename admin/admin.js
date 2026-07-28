@@ -309,6 +309,13 @@ async function saveArticle(nextStatus) {
     return;
   }
 
+  // slugはそのままファイル名になるため、半角小文字英数とハイフンだけに限定する。
+  if (fields.slug && !/^[a-z0-9][a-z0-9-]*$/.test(fields.slug)) {
+    statusEl.textContent =
+      "「URL」は半角の小文字英数字とハイフンだけで入力してください（例：summer-break-shoe-size-check）。";
+    return;
+  }
+
   const payload = { ...fields, status: targetStatus };
   if (targetStatus === "approved" && currentStatus !== "approved") payload.approved_at = new Date().toISOString();
   if (targetStatus === "published" && currentStatus !== "published") payload.published_at = new Date().toISOString();

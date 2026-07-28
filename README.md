@@ -79,7 +79,7 @@ git add news.html && git commit -m "お知らせを更新" && git push
 2. Authentication > Providers で Email を有効にし、Authentication > Settings で新規登録を無効にする。
 3. Authentication > Users で、洋子さん（および必要な家族）のログインアカウントを作成する。
 4. 作成したメールアドレスを `admin_users` テーブルへ登録する（SQL Editorで `insert into admin_users (email) values ('...');`）。ここに登録されていないアカウントは、ログインできても記事の保存・公開はできない。
-5. Project Settings > API から Project URL と anon public key を取得し、`.env` の `SUPABASE_URL` / `SUPABASE_ANON_KEY` に設定する。Cloudflare Pages側にも同じ値を Production / Preview 両方の環境変数として設定する（`npm run build` を実行するローカル環境用）。
+5. Project Settings > API から Project URL と anon public key（新しいUIでは publishable key）を取得し、`.env` の `SUPABASE_URL` / `SUPABASE_ANON_KEY` に設定する。`npm run articles:sync` などのコマンドはこの `.env` の値を使う。
 6. `npm run cms:config` を実行し、`assets/supabase-config.js` を生成してコミットする（anon keyは公開されても問題ない設計のキーで、実際のアクセス制御はSupabaseのRLSが担う）。
 
 管理画面は `https://<公開ドメイン>/admin/` からアクセスする。ログインには、手順3で作成したメールアドレス・パスワードを使う。
@@ -91,6 +91,9 @@ Cloudflare Pages Functions（`functions/api/generate.js`）を使い、AIプロ�
 - `AI_PROVIDER`（`anthropic` または `openai`）
 - `AI_API_KEY`
 - `AI_MODEL`（省略可）
+- `SUPABASE_URL` / `SUPABASE_ANON_KEY`（**AI機能を使う場合は必須**）
+
+`SUPABASE_URL` / `SUPABASE_ANON_KEY` は、この関数が「呼び出してきたのが管理画面にログイン中の本人か」を確認するために使う。設定されていない場合、関数は確認できないものとしてすべてのリクエストを拒否する（誰でも呼び出せてAPI利用料が発生する状態を作らないため）。拒否された場合、管理画面は自動的にテンプレート表示へ切り替わるので、画面が壊れることはない。
 
 ### ChatGPT履歴の取り込み
 
