@@ -59,7 +59,7 @@ $$;
 create table if not exists site_settings (
   id smallint primary key default 1 check (id = 1),
   online_consultation_enabled boolean not null default false,
-  online_consultation_price text not null default '8,800円（税込・30分）',
+  online_consultation_price text not null default '6,600円（税込・30分）',
   online_consultation_duration_minutes int not null default 30,
   online_consultation_note text not null default '',
   updated_at timestamptz not null default now()

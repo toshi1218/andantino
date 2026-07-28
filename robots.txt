@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+# チェックリストPDFは公式LINEにご登録いただいた方へお渡しする特典のため、
+# 検索結果から直接たどり着けないようにしている（ファイル自体はLINEでの配布に使う）。
+Disallow: /assets/downloads/
 
 User-agent: OAI-SearchBot
 Allow: /
