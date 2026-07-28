@@ -27,7 +27,7 @@ const fullMenuMarkup = `
       <strong>取扱商品・サービス</strong>
       <a href="./products.html"><img src="./assets/paramount-pumps.webp" width="60" height="60" loading="lazy" alt=""><span>取扱商品</span></a>
       <a href="./dymoco-insole.html"><img src="./assets/product-dymoco-insole.webp" width="60" height="60" loading="lazy" alt=""><span>オーダーインソール（ディモコ）</span></a>
-      <a href="./seminars.html"><img src="./assets/legacy-seminar.webp" width="60" height="60" loading="lazy" alt=""><span>足育・靴選びセミナー</span></a>
+      <a href="./seminars.html"><img src="./assets/legacy-seminar.webp" width="60" height="60" loading="lazy" alt=""><span>セミナー・法人向け</span></a>
       <a href="./nordic-walking.html"><img src="./assets/nordic-walking-park.webp" width="60" height="60" loading="lazy" alt=""><span>ノルディックウォーキング</span></a>
     </div>
     <div class="nav__group nav__group--knowledge">
