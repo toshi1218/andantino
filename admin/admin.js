@@ -90,13 +90,21 @@ function initApp() {
 function initTabs() {
   const buttons = document.querySelectorAll(".admin-tabs__button");
   const panels = document.querySelectorAll(".admin-tab-panel");
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      buttons.forEach((b) => b.classList.toggle("is-active", b === button));
-      panels.forEach((panel) => {
-        panel.hidden = panel.dataset.tabPanel !== button.dataset.tab;
-      });
+
+  const openTab = (tabName) => {
+    buttons.forEach((b) => b.classList.toggle("is-active", b.dataset.tab === tabName));
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.tabPanel !== tabName;
     });
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => openTab(button.dataset.tab));
+  });
+
+  // 「記事を書く」タブの案内から、他のタブへワンタップで移動するためのリンク。
+  document.querySelectorAll("[data-go-tab]").forEach((button) => {
+    button.addEventListener("click", () => openTab(button.dataset.goTab));
   });
 }
 
@@ -105,6 +113,12 @@ function initTabs() {
 const articleState = { items: [], selectedId: null, filter: "" };
 
 function initArticles() {
+  // 絞り込みボタンの元のラベル（「すべて」「アイデア」など）を、件数を
+  // 付け足す前に控えておく。以後はこのラベルに件数を追記するだけにする。
+  document.querySelectorAll("[data-status-filter]").forEach((button) => {
+    button.dataset.label = button.textContent.trim();
+  });
+
   document.querySelectorAll("[data-status-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       document.querySelectorAll("[data-status-filter]").forEach((b) => b.classList.remove("is-active"));
@@ -114,11 +128,13 @@ function initArticles() {
     });
   });
 
-  document.getElementById("new-article-button").addEventListener("click", () => {
+  const openBlankEditor = () => {
     articleState.selectedId = "new";
     fillEditor(blankArticle());
     highlightSelected();
-  });
+  };
+  document.getElementById("new-article-button").addEventListener("click", openBlankEditor);
+  document.getElementById("start-new-article").addEventListener("click", openBlankEditor);
 
   document.getElementById("editor-form").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -187,11 +203,26 @@ async function loadArticles() {
   }
   articleState.items = data || [];
   statusEl.textContent = "";
+
+  // 記事が1本もない、まっさらな状態のときだけ最初の案内を出す。
+  // 1本でもあれば、通常の「提案してもらう」パネルに切り替える。
+  const isBlankSlate = articleState.items.length === 0;
+  document.getElementById("start-guide").hidden = !isBlankSlate;
+  document.getElementById("propose-panel").hidden = isBlankSlate;
+
   renderArticleList();
 }
 
 function renderArticleList() {
   const list = document.getElementById("article-list");
+
+  // 絞り込みボタンに件数を出し、どこに何があるか一目で分かるようにする。
+  document.querySelectorAll("[data-status-filter]").forEach((button) => {
+    const key = button.dataset.statusFilter;
+    const count = key ? articleState.items.filter((a) => a.status === key).length : articleState.items.length;
+    button.textContent = `${button.dataset.label} (${count})`;
+  });
+
   const filtered = articleState.filter
     ? articleState.items.filter((a) => a.status === articleState.filter)
     : articleState.items;
@@ -200,7 +231,9 @@ function renderArticleList() {
   if (!filtered.length) {
     const empty = document.createElement("p");
     empty.className = "admin-note";
-    empty.textContent = "該当する記事はありません。";
+    empty.textContent = articleState.items.length
+      ? "該当する記事はありません。"
+      : "まだ記事がありません。上の案内から始めてください。";
     list.append(empty);
     return;
   }

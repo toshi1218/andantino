@@ -531,3 +531,50 @@ body.admin-page {
 .admin-guide-articles__item input {
   width: auto;
 }
+
+/* ---------- 最初の案内（記事0件のとき） ---------- */
+.admin-start {
+  margin-bottom: 20px;
+}
+
+.admin-start__steps {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-start__steps li {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cream-2);
+}
+
+.admin-start__steps strong {
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.admin-start__steps p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--charcoal);
+}
+
+.admin-start__steps .button,
+.admin-start__steps .outline-button {
+  justify-self: start;
+}
+
+@media (max-width: 640px) {
+  .admin-start__steps {
+    grid-template-columns: 1fr;
+  }
+}
