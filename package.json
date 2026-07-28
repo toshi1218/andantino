@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/generate-news.mjs && node scripts/generate-supabase-config.mjs && node scripts/generate-articles.mjs && node scripts/generate-sitemap.mjs && node scripts/audit-site.mjs",
-    "validate": "node --check script.js && node --check admin/admin.js && node --check functions/api/generate.js && node scripts/audit-site.mjs",
+    "validate": "node --check script.js && node --check admin/admin.js && node --check scripts/lib/content.mjs && node scripts/audit-site.mjs",
     "news:sync": "node scripts/generate-news.mjs",
     "cms:config": "node scripts/generate-supabase-config.mjs",
     "articles:sync": "node scripts/generate-articles.mjs",

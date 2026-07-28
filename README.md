@@ -59,73 +59,52 @@ git add news.html && git commit -m "お知らせを更新" && git push
 
 環境変数が未設定のままローカルで実行すると `generate-news.mjs` は警告を出して既存の `news.html` をそのまま残し、コマンド自体は失敗しません。
 
-## お役立ち記事CMS・管理画面（Supabase）
+## お役立ち記事（content/articles/）
 
-洋子さんが接客での気づきを入力し、内容を確認・承認した記事だけをサイトに公開する仕組みです。**承認なしの自動公開・自動SNS投稿はありません。**
+記事の元データは、リポジトリ内の `content/articles/*.md` です。外部サービスには保存しません。1ファイル＝1記事で、ファイル名がそのままURLになります。
 
-運用の流れ（1回あたり5〜10分想定）:
+```
+content/articles/shingakki-kodomo-kutsu-check.md
+  ↓  npm run build
+articles/shingakki-kodomo-kutsu-check.html
+  ＋ 一覧ページ6種・sitemap-articles.xml を自動更新
+```
 
-1. 洋子さんが管理画面（`/admin/`）にログインし、「＋ 新しい記事」から出来事・気づきを入力する（`idea` → `draft`）。
-2. 「AIで下書きを作る／テンプレートを表示」を押すと、本文案とnote・Facebook・Instagram・X・公式LINE用の文章案が入る（AI未設定の環境では、媒体別テンプレートが自動的に表示される）。
-3. 洋子さんが内容を読み、必要な箇所を書き直す。
-4. 「確認待ちにする」→「承認する」→「公開する」の順にボタンを押す（`review` → `approved` → `published`）。公開にはSEO設定欄の「URL」入力が必要。
-5. 開発担当者が `npm run articles:sync` を実行し、生成された記事ページ・一覧ページの差分をコミット・プッシュする（`news:sync` と同じ「手元で生成してコミット」方式）。
+### 運用の流れ
 
-各媒体の投稿文は、テキストエリア横の「コピー」ボタンでコピーし、各サービスへ手動で貼り付けます。自動投稿機能はありません。
+洋子さんは、普段どおりChatGPTで記事を書き、そのままChatGPT（Codex）に「この記事をサイトに載せて」と伝えます。Codexが記事ファイルを追加し、`npm run build` を実行して、コミット・プッシュします。Cloudflare Pagesが自動でデプロイするため、**開発担当者の作業は発生しません。**
 
-### セットアップ
+Codex向けの作業手順は `AGENTS.md` に書かれています。記事の書式、frontmatterの項目、使えるMarkdown記法、触ってはいけない箇所はすべてそちらを参照してください。
 
-1. [Supabase](https://supabase.com) でプロジェクトを作成し、`docs/supabase/schema.sql` の内容をSQL Editorで実行する（テーブル・RLSポリシーが一括で作成される）。
+手元で記事を追加する場合も同じです。
+
+```bash
+# content/articles/ に .md ファイルを置いてから
+npm run build
+```
+
+### 下書きにする
+
+frontmatter に `draft: true` を書くと生成対象から外れます。公開済みの記事に後から `draft: true` を足して `npm run build` すると、生成済みのHTML・一覧・sitemapから自動的に取り除かれます。
+
+### 安全網
+
+- `npm run build` には `scripts/audit-site.mjs` のサイト監査（78項目）が含まれ、見出し階層の誤り・メタ情報の重複・リンク切れ・sitemapの不整合があると失敗します。
+- GitHub Actions（`.github/workflows/validate.yml`）が、push時に同じ監査を実行します。さらに、記事ファイルだけ更新して `npm run build` を忘れた場合も検出します。
+- 記事ページのHTML構造・SEOタグ・パンくず・構造化データは、すべて `scripts/generate-articles.mjs` が生成します。記事ファイル側の書き方が多少ぶれても、サイト全体の規約は保たれます。
+
+### 管理画面（Supabase）について
+
+`/admin/` に残っているのは、**オンライン相談の受付設定**と**PDF商品の管理**だけです。記事の追加・編集機能は持っていません。
+
+セットアップ:
+
+1. [Supabase](https://supabase.com) でプロジェクトを作成し、`docs/supabase/schema.sql` の内容をSQL Editorで実行する。
 2. Authentication > Providers で Email を有効にし、Authentication > Settings で新規登録を無効にする。
 3. Authentication > Users で、洋子さん（および必要な家族）のログインアカウントを作成する。
-4. 作成したメールアドレスを `admin_users` テーブルへ登録する（SQL Editorで `insert into admin_users (email) values ('...');`）。ここに登録されていないアカウントは、ログインできても記事の保存・公開はできない。
-5. Project Settings > API から Project URL と anon public key（新しいUIでは publishable key）を取得し、`.env` の `SUPABASE_URL` / `SUPABASE_ANON_KEY` に設定する。`npm run articles:sync` などのコマンドはこの `.env` の値を使う。
-6. `npm run cms:config` を実行し、`assets/supabase-config.js` を生成してコミットする（anon keyは公開されても問題ない設計のキーで、実際のアクセス制御はSupabaseのRLSが担う）。
-
-管理画面は `https://<公開ドメイン>/admin/` からアクセスする。ログインには、手順3で作成したメールアドレス・パスワードを使う。
-
-### AIによる下書き作成（任意）
-
-Cloudflare Pages Functions（`functions/api/generate.js`）を使い、AIプロバイダの秘密鍵はサーバー側の環境変数にのみ置く。Cloudflare Pagesダッシュボードの Settings > Environment variables で以下を設定すると有効になる（未設定なら管理画面は自動的にテンプレート表示に切り替わる）。
-
-- `AI_PROVIDER`（`anthropic` または `openai`）
-- `AI_API_KEY`
-- `AI_MODEL`（省略可）
-- `SUPABASE_URL` / `SUPABASE_ANON_KEY`（**AI機能を使う場合は必須**）
-
-`SUPABASE_URL` / `SUPABASE_ANON_KEY` は、この関数が「呼び出してきたのが管理画面にログイン中の本人か」を確認するために使う。設定されていない場合、関数は確認できないものとしてすべてのリクエストを拒否する（誰でも呼び出せてAPI利用料が発生する状態を作らないため）。拒否された場合、管理画面は自動的にテンプレート表示へ切り替わるので、画面が壊れることはない。
-
-### 溜まったメモからのテーマ提案
-
-「記事」タブの上部にある「提案してもらう」を押すと、`status: idea` のメモ（ChatGPT履歴から取り込んだ会話や、手で書いたメモ）を最大20件まとめてAIへ渡し、いま書くとよい記事のテーマを3〜5件提案する。提案の「この案で下書きを作る」を押すと `status: draft` の記事が作られ、そのままエディタで続きを書ける。
-
-- 提案されたテーマがそのまま公開されることはない。必ず下書きとして保存され、通常どおり洋子さんの確認・承認・公開を経る。
-- AI未設定（`AI_API_KEY` なし）の場合は提案できないため、代わりに「どの分野のメモが何件溜まっているか」の内訳だけを表示する。
-- 本文が20文字以下の短いメモは、提案の材料から自動的に除外する（雑談などで提案の精度が落ちるのを防ぐため）。
-
-### ChatGPT履歴の取り込み
-
-洋子さんが普段使っているChatGPTの使い方は一切変えず、記事のアイデア出しの負担だけを減らすための機能。
-
-1. ChatGPT（chatgpt.com）の「設定 → データ管理 → データのエクスポート」から、会話履歴一式（.zip）をダウンロードする（メールで届く）。
-2. 管理画面の「ChatGPT履歴の取り込み」タブを開き、そのzipファイルをそのままアップロードして「ファイルを読み込む」を押す。
-3. 会話の一覧（タイトル・日付・内容の一部）がチェックボックス付きで表示されるので、記事の元にしたいものだけ選ぶ。
-4. 「選択した会話を取り込む」を押すと、選んだものが `status: idea` の記事候補としてSupabaseへ保存される。
-
-ファイルの解析はすべてブラウザ内で行われ、サーバーやコマンド実行は不要。取り込みは会話ごとのID（`source_id`）で重複防止されるため、同じエクスポートファイルを何度アップロードしても二重に登録されない。取り込んだだけでは記事は完成しないため、通常の記事編集と同じく「記事」タブから内容を確認・編集し、承認・公開のフローに乗せる。
-
-### 記事をまとめたPDFガイドの作り方
-
-記事がある程度公開されたら、それらをまとめて「ファーストシューズの選び方 完全ガイド」のようなPDF商品にできる。
-
-1. 管理画面の「設定」タブ → PDF商品で、商品を作成（または既存の商品を選ぶ）。
-2. 「バージョン表示」に `2026年7月版` のような版数・年月を入れる。新しい知見が増えて内容を更新したら、ここも書き換える（更新日時は保存時に自動で記録される）。
-3. 「収録する記事」から、含めたい公開済みの記事にチェックを入れて保存する。
-4. 「印刷用プレビューを開く」を押すと、収録記事を1つにまとめた原稿（目次・各記事本文・オンライン相談への案内つき）が新しいタブで開く。
-5. ブラウザの印刷機能で「PDFとして保存」し、そのファイルをこの商品のPDFとして使う（購入者へは引き続きLINEなどで手動送付する。決済・自動配布は行わない）。
-6. 内容を更新したいときは、収録記事のチェックを見直し、バージョン表示を書き換えて、同じ手順でPDFを作り直す。
-
-印刷用プレビュー（`admin/guide-preview.html`）は管理画面にログインしている人だけが開ける。収録記事の全文をサイト上に無料公開するものではない。
+4. 作成したメールアドレスを `admin_users` テーブルへ登録する（SQL Editorで `insert into admin_users (email) values ('...');`）。
+5. Project Settings > API から Project URL と anon public key を取得し、`.env` の `SUPABASE_URL` / `SUPABASE_ANON_KEY` に設定する。
+6. `npm run cms:config` を実行し、`assets/supabase-config.js` を生成してコミットする（anon keyは公開されても問題ない設計のキーで、アクセス制御はSupabaseのRLSが担う）。
 
 ### オンライン相談・PDF商品の公開設定
 
@@ -142,12 +121,25 @@ Cloudflare Pages Functions（`functions/api/generate.js`）を使い、AIプロ�
 ## Cloudflare Pages
 
 - Production branch: `main`
-- Build command: `exit 0`（**ビルドは実行しない**。`npm run build` 等の生成物はすべて手元で作りコミットする運用）
+- Build command: `exit 0`（**ビルドは実行しない**。`npm run build` の生成物はすべてコミットして配信する運用）
 - Build output directory: `.`（リポジトリ直下をそのまま配信するため、公開してよいファイルだけをルートに置く。`docs/` や `scripts/` などサイトの一部でないものは `_redirects` で塞いでいる）
 - Canonical/custom domain: `www.andantino-shoes.jp`
 - Preview domain: `andantino.pages.dev`
 
-Cloudflare PagesのGit連携で配信する静的サイトです。`functions/api/generate.js` のみ、管理画面のAI下書き作成用にCloudflare Pages Functionsを使用します（ファイルベースルーティングのため `wrangler.toml` は不要）。これ以外のページ・導線はすべて静的HTMLで、デプロイ時のビルドは行いません。`AI_API_KEY` を設定しない限りこの関数は `{ configured: false }` を返すだけで、サイトの他の部分には影響しません。
+Cloudflare PagesのGit連携で配信する静的サイトです。サーバー側で動くコードはありません。記事ページを含むすべてのHTMLは、コミット済みの静的ファイルをそのまま配信します。
+
+### 本公開までの手順
+
+現在は全ページ `noindex,nofollow,nosnippet` の状態です（`npm run indexing:staging`）。独自ドメイン `www.andantino-shoes.jp` は旧サイトの制作会社が管理しているため、**ドメインを移管してから公開します。**
+
+サイト内の `<link rel="canonical">` はすべて `https://www.andantino-shoes.jp/` を指しています。このままプレビュードメイン（`andantino.pages.dev`）をインデックス可にすると、検索エンジンに対して「正式版は別ドメインにある」と宣言することになり、旧サイト側へ評価が渡ります。**プレビュードメインでの先行公開は行いません。**
+
+1. 旧サイトの制作会社に、ドメインの登録者名義・レジストラ・認証コード（AuthCode）の発行可否を確認する。
+2. 洋子さん名義のレジストラ口座を用意し、ドメインを移管する（DNSの向き先変更だけでは、ドメインの主導権が相手に残ります）。
+3. Cloudflareにドメインを接続する。
+4. `npm run indexing:live` を実行し、差分をコミット・プッシュする（全ページとCloudflareのHTTPヘッダーのrobots設定が一括で切り替わります）。
+5. Google Search Consoleに登録し、`sitemap.xml` を送信する。
+6. 旧サイトのURLからの301リダイレクトを確認する（「旧サイト移行」の表を参照）。
 
 ## 旧サイト移行
 

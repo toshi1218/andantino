@@ -39,234 +39,36 @@
       </section>
 
       <!-- ログイン後のアプリ本体 -->
+      <!-- ログイン後のアプリ本体 -->
       <section id="app-view" class="admin-app" hidden>
-        <nav class="admin-tabs" aria-label="管理メニュー">
-          <button type="button" class="admin-tabs__button is-active" data-tab="articles">記事を書く</button>
-          <button type="button" class="admin-tabs__button" data-tab="import">ChatGPTから取り込む</button>
-          <button type="button" class="admin-tabs__button" data-tab="settings">設定</button>
-        </nav>
+        <section class="admin-panel admin-notice">
+          <h2>記事の追加・修正について</h2>
+          <p class="admin-note">
+            記事は、この画面ではなくChatGPTから追加します。ChatGPTに記事を作ってもらったあと、そのまま「この記事をサイトに載せて」と伝えてください。公開までChatGPTが行います。この画面では、オンライン相談の受付設定とPDF商品の管理だけを行います。
+          </p>
+        </section>
 
-        <!-- 記事タブ -->
-        <div class="admin-tab-panel" data-tab-panel="articles">
-          <!-- まだ記事が1本もないときだけ出る、最初の案内 -->
-          <section class="admin-panel admin-start" id="start-guide" hidden>
-            <h2>まずは、記事のもとになるメモを用意しましょう</h2>
-            <p class="admin-note">どちらか、やりやすい方からで大丈夫です。</p>
-            <ol class="admin-start__steps">
-              <li>
-                <strong>ChatGPTで話した内容を取り込む</strong>
-                <p>いつも使っているChatGPTから会話を書き出して、その中から記事にしたいものを選びます。</p>
-                <button type="button" class="button" data-go-tab="import">会話を取り込む</button>
-              </li>
-              <li>
-                <strong>思いついたことを直接書く</strong>
-                <p>接客での気づきや、お伝えしたいことを、そのまま書いてもかまいません。</p>
-                <button type="button" class="outline-button" id="start-new-article">その場で書いてみる</button>
-              </li>
-            </ol>
-          </section>
-
-          <section class="admin-panel admin-propose" id="propose-panel" hidden>
-            <div class="admin-propose__head">
-              <div>
-                <h2>次に書く記事を提案してもらう</h2>
-                <p class="admin-note">溜まっているメモをまとめて読んで、いま書くとよいテーマを提案します。提案を選ぶと下書きができます。</p>
-              </div>
-              <button type="button" class="button" id="propose-button">提案してもらう</button>
-            </div>
-            <p class="admin-status" id="propose-status" role="status" aria-live="polite"></p>
-            <ul class="admin-propose-list" id="propose-list"></ul>
-          </section>
-
-          <div class="admin-articles">
-            <div class="admin-articles__list">
-              <div class="admin-articles__list-header">
-                <h2>記事一覧</h2>
-                <button type="button" class="button button--small" id="new-article-button">＋ 新しい記事</button>
-              </div>
-              <div class="admin-status-filter" role="tablist" aria-label="ステータスで絞り込み">
-                <button type="button" data-status-filter="" class="is-active">すべて</button>
-                <button type="button" data-status-filter="idea">アイデア</button>
-                <button type="button" data-status-filter="draft">下書き</button>
-                <button type="button" data-status-filter="review">確認中</button>
-                <button type="button" data-status-filter="approved">承認済み</button>
-                <button type="button" data-status-filter="published">公開中</button>
-                <button type="button" data-status-filter="archived">非公開</button>
-              </div>
-              <ul class="admin-article-list" id="article-list"></ul>
-              <p class="admin-status" id="article-list-status" role="status" aria-live="polite"></p>
-            </div>
-
-            <div class="admin-articles__editor" id="editor-empty">
-              <p class="admin-note">左の一覧から記事を選ぶか、「＋ 新しい記事」を押してください。</p>
-            </div>
-
-            <form class="admin-articles__editor" id="editor-form" hidden>
-              <div class="admin-editor__row">
-                <span class="status-pill" id="editor-status-pill">idea</span>
-                <span class="admin-note" id="editor-meta"></span>
-              </div>
-
-              <label>記事タイトル<input type="text" id="field-title" required></label>
-
-              <label>元になった出来事・メモ（原文）
-                <textarea id="field-raw-content" rows="5" placeholder="接客での気づきや出来事を、思いつくままに書いてください。お客様のお名前や個人が特定できる内容は書かないでください。"></textarea>
-              </label>
-
-              <div class="admin-editor__grid">
-                <label>対象読者
-                  <input type="text" id="field-target-audience" placeholder="例：小学生の保護者">
-                </label>
-                <label>テーマ・カテゴリ
-                  <select id="field-category">
-                    <option value="children">子どもの靴</option>
-                    <option value="adult">大人の靴</option>
-                    <option value="foot-problems">外反母趾・足の悩み</option>
-                    <option value="insoles">インソール</option>
-                    <option value="shoe-wearing">靴の履き方・選び方</option>
-                    <option value="seasonal">季節の話題</option>
-                    <option value="other">その他</option>
-                  </select>
-                </label>
-              </div>
-              <div class="admin-editor__grid">
-                <label>出来事の種類
-                  <select id="field-source-type">
-                    <option value="接客事例">接客事例</option>
-                    <option value="気づき">気づき</option>
-                    <option value="季節ネタ">季節ネタ</option>
-                    <option value="ChatGPT履歴">ChatGPT履歴</option>
-                    <option value="その他">その他</option>
-                  </select>
-                </label>
-                <label>タグ（カンマ区切り）
-                  <input type="text" id="field-tags" placeholder="例：ファーストシューズ, サイズ確認">
-                </label>
-              </div>
-
-              <div class="admin-generate">
-                <button type="button" class="outline-button" id="generate-button">AIで下書きを作る／テンプレートを表示</button>
-                <span class="admin-note" id="generate-status"></span>
-              </div>
-
-              <label>ホームページ用 本文（HTML可）
-                <textarea id="field-article-content" rows="8"></textarea>
-              </label>
-              <label>一覧・SNS用の要約
-                <textarea id="field-excerpt" rows="2"></textarea>
-              </label>
-
-              <fieldset class="admin-platforms">
-                <legend>媒体別の投稿文（コピーして手動投稿してください）</legend>
-                <div class="admin-platform">
-                  <label for="field-note">note用</label>
-                  <textarea id="field-note" rows="4"></textarea>
-                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-note">コピー</button>
-                </div>
-                <div class="admin-platform">
-                  <label for="field-facebook">Facebook用</label>
-                  <textarea id="field-facebook" rows="4"></textarea>
-                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-facebook">コピー</button>
-                </div>
-                <div class="admin-platform">
-                  <label for="field-instagram">Instagram用</label>
-                  <textarea id="field-instagram" rows="4"></textarea>
-                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-instagram">コピー</button>
-                </div>
-                <div class="admin-platform">
-                  <label for="field-x">X用</label>
-                  <textarea id="field-x" rows="3"></textarea>
-                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-x">コピー</button>
-                </div>
-                <div class="admin-platform">
-                  <label for="field-line">公式LINE用</label>
-                  <textarea id="field-line" rows="4"></textarea>
-                  <button type="button" class="outline-button outline-button--small" data-copy-field="field-line">コピー</button>
-                </div>
-              </fieldset>
-
-              <details class="admin-seo">
-                <summary>SEO・公開設定（任意）</summary>
-                <label>URL（半角小文字の英数字とハイフン）<input type="text" id="field-slug" pattern="[a-z0-9][a-z0-9\-]*" placeholder="例：summer-break-shoe-size-check"></label>
-                <label>SEOタイトル<input type="text" id="field-seo-title"></label>
-                <label>SEO説明文<textarea id="field-seo-description" rows="2"></textarea></label>
-                <label>アイキャッチ画像URL<input type="text" id="field-featured-image" placeholder="./assets/....webp"></label>
-                <label>関連ページ<input type="text" id="field-related-service" placeholder="例：childrens-shoes.html"></label>
-                <label>記事末尾のご案内（CTA）
-                  <select id="field-cta">
-                    <option value="line">公式LINEで相談</option>
-                    <option value="reservation">来店予約</option>
-                    <option value="services">サービス内容を見る</option>
-                    <option value="children">子どもの靴相談を見る</option>
-                    <option value="insoles">インソール相談を見る</option>
-                  </select>
-                </label>
-              </details>
-
-              <div class="admin-editor__actions">
-                <button type="submit" class="button">下書きを保存</button>
-                <button type="button" class="outline-button" data-set-status="review">確認待ちにする</button>
-                <button type="button" class="outline-button" data-set-status="approved">承認する</button>
-                <button type="button" class="button" data-set-status="published">公開する</button>
-                <button type="button" class="outline-button" data-set-status="archived">非公開にする</button>
-              </div>
-              <p class="admin-status" id="editor-status" role="status" aria-live="polite"></p>
-            </form>
-          </div>
-        </div>
-
-        <!-- ChatGPT履歴の取り込みタブ -->
-        <div class="admin-tab-panel" data-tab-panel="import" hidden>
+        <div class="admin-settings">
           <section class="admin-panel">
-            <h2>ChatGPTの会話をアイデアとして取り込む</h2>
-            <p class="admin-note">
-              普段お使いのChatGPTの「設定 → データ管理 → データのエクスポート」から届くファイル（.zip）を、そのままここにアップロードしてください。会話の一覧が出るので、記事の元にしたいものだけ選んで取り込みます。取り込んだものは「アイデア」ステータスとして保存されるだけで、公開はされません。同じ会話を2回取り込んでも重複しません。
-            </p>
-            <div class="admin-import__upload">
-              <input type="file" id="import-file-input" accept=".zip">
-              <button type="button" class="button" id="import-read-button">ファイルを読み込む</button>
-              <p class="admin-status" id="import-read-status" role="status" aria-live="polite"></p>
-            </div>
-
-            <div id="import-list-wrapper" hidden>
-              <div class="admin-import__toolbar">
-                <input type="search" id="import-search" placeholder="タイトルで絞り込む">
-                <button type="button" class="outline-button outline-button--small" id="import-select-all">すべて選択</button>
-                <button type="button" class="outline-button outline-button--small" id="import-select-none">すべて解除</button>
-              </div>
-              <ul class="admin-import-list" id="import-list"></ul>
-              <div class="admin-editor__actions">
-                <button type="button" class="button" id="import-submit-button">選択した会話を取り込む</button>
-              </div>
-              <p class="admin-status" id="import-submit-status" role="status" aria-live="polite"></p>
-            </div>
+            <h2>オンライン相談の公開設定</h2>
+            <form id="settings-form">
+              <label class="admin-checkbox"><input type="checkbox" id="settings-enabled"> 受付を有効にする</label>
+              <label>料金表示<input type="text" id="settings-price"></label>
+              <label>所要時間（分）<input type="number" id="settings-duration" min="10" max="120" step="5"></label>
+              <label>受付状況の一言メモ<textarea id="settings-note" rows="2"></textarea></label>
+              <button class="button" type="submit">設定を保存</button>
+              <p class="admin-status" id="settings-status" role="status" aria-live="polite"></p>
+            </form>
           </section>
-        </div>
 
-        <!-- 設定タブ -->
-        <div class="admin-tab-panel" data-tab-panel="settings" hidden>
-          <div class="admin-settings">
-            <section class="admin-panel">
-              <h2>オンライン相談の公開設定</h2>
-              <form id="settings-form">
-                <label class="admin-checkbox"><input type="checkbox" id="settings-enabled"> 受付を有効にする</label>
-                <label>料金表示<input type="text" id="settings-price"></label>
-                <label>所要時間（分）<input type="number" id="settings-duration" min="10" max="120" step="5"></label>
-                <label>受付状況の一言メモ<textarea id="settings-note" rows="2"></textarea></label>
-                <button class="button" type="submit">設定を保存</button>
-                <p class="admin-status" id="settings-status" role="status" aria-live="polite"></p>
-              </form>
-            </section>
-
-            <section class="admin-panel">
-              <div class="admin-articles__list-header">
-                <h2>PDF商品</h2>
-                <button type="button" class="button button--small" id="new-product-button">＋ 商品を追加</button>
-              </div>
-              <ul class="admin-product-list" id="product-list"></ul>
-              <p class="admin-status" id="product-list-status" role="status" aria-live="polite"></p>
-            </section>
-          </div>
+          <section class="admin-panel">
+            <div class="admin-articles__list-header">
+              <h2>PDF商品</h2>
+              <button type="button" class="button button--small" id="new-product-button">＋ 商品を追加</button>
+            </div>
+            <ul class="admin-product-list" id="product-list"></ul>
+            <p class="admin-status" id="product-list-status" role="status" aria-live="polite"></p>
+          </section>
         </div>
       </section>
     </main>
@@ -289,21 +91,14 @@
         </div>
         <label>LINE問い合わせ用の定型文<input type="text" data-field="line_message"></label>
         <label>バージョン表示<input type="text" data-field="version_label" placeholder="例：2026年7月版"></label>
-        <fieldset class="admin-guide-articles">
-          <legend>収録する記事（公開済みの記事から選ぶ）</legend>
-          <p class="admin-note" data-guide-empty>公開済みの記事がまだありません。記事を公開すると、ここから選べるようになります。</p>
-          <ul class="admin-guide-articles__list" data-guide-article-list></ul>
-        </fieldset>
         <div class="admin-editor__actions">
           <button type="button" class="outline-button" data-action="save">保存</button>
-          <button type="button" class="outline-button" data-action="preview">印刷用プレビューを開く</button>
           <button type="button" class="outline-button" data-action="delete">削除</button>
         </div>
       </li>
     </template>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
     <script src="../assets/supabase-config.js"></script>
     <script src="../assets/andantino-supabase.js"></script>
     <script src="./admin.js"></script>

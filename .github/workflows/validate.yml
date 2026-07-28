@@ -1,0 +1,37 @@
+# サイトの規約チェックを自動実行する。
+#
+# AIエージェント（Codex）が記事を追加したとき、手元で `npm run build` を
+# 実行し忘れても、ここで止まるようにするための安全網。
+# 監査に失敗した内容が main に入らないようにする。
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # サイト監査（メタ情報・見出し階層・内部リンク・sitemapの整合など）
+      - name: サイト監査
+        run: npm run validate
+
+      # 記事ファイルから生成されるHTMLが、コミットされている内容と一致するか確認する。
+      # 記事ファイルだけ更新して `npm run build` を忘れた場合に、ここで検出する。
+      - name: 生成物がコミット漏れしていないか確認
+        run: |
+          npm run articles:sync
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::記事ファイルの変更に対して生成物が更新されていません。手元で 'npm run build' を実行し、差分をコミットしてください。"
+            git --no-pager diff --stat
+            exit 1
+          fi
