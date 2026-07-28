@@ -298,12 +298,19 @@ a {
 .header__actions {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 18px;
+}
+
+.header__actions .button {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .phone-link {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   line-height: 1.25;
   color: var(--teal);
 }
@@ -359,47 +366,6 @@ a {
   color: var(--accent);
   font-size: 9px;
   font-weight: 700;
-}
-
-.header__primary {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-left: 12px;
-}
-
-.header__primary a {
-  position: relative;
-  white-space: nowrap;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--charcoal);
-  text-decoration: none;
-  padding: 6px 2px;
-  transition: color 160ms ease;
-}
-
-.header__primary a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms ease;
-}
-
-.header__primary a:hover,
-.header__primary a:focus-visible {
-  color: var(--accent);
-}
-
-.header__primary a:hover::after,
-.header__primary a:focus-visible::after {
-  transform: scaleX(1);
 }
 
 .menu-button {
@@ -1272,54 +1238,6 @@ a.button[href^="https://line.me/"] .button__icon {
   color: var(--teal);
 }
 
-.fees__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.fee {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 20px 22px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--paper);
-}
-
-.fee span {
-  color: var(--charcoal);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.fee strong {
-  color: var(--teal);
-  font-family: var(--serif);
-  font-size: 22px;
-  white-space: nowrap;
-}
-
-.fee--range {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.fee--range strong {
-  font-size: 19px;
-}
-
-.fees__note {
-  margin: -14px 0 26px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.9;
-}
-
 .footer {
   padding: 62px 0 30px;
   background: var(--cream-2);
@@ -1451,10 +1369,6 @@ body.menu-open .back-to-top {
   .nav__group {
     padding-inline: 0;
     border-left: 0;
-  }
-
-  .header__primary {
-    display: none;
   }
 
   .phone-link {
@@ -3912,8 +3826,7 @@ body.menu-open .back-to-top {
   background: rgba(60, 123, 134, 0.1);
 }
 
-.nav__group a[aria-current="page"],
-.header__primary a[aria-current="page"] {
+.nav__group a[aria-current="page"] {
   color: var(--accent-dark);
   background: rgba(60, 123, 134, 0.1);
   box-shadow: inset 3px 0 0 var(--accent);
@@ -4315,7 +4228,6 @@ body[data-page="404"] main {
   .header__actions,
   .phone-link,
   .header .nav,
-  .header__primary,
   .info-header nav:not(.breadcrumb),
   .quicknav,
   .mobile-actions,
@@ -4381,8 +4293,7 @@ body[data-page="404"] main {
   .callout,
   .policy-table,
   tr,
-  .fact-list > div,
-  .fee {
+  .fact-list > div {
     break-inside: avoid;
   }
 
@@ -4650,6 +4561,7 @@ body[data-page="404"] main {
 
 /* ---------- トップページ：管理画面ログイン導線 ---------- */
 .admin-login-link {
+  flex-shrink: 0;
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
