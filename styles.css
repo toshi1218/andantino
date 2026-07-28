@@ -291,6 +291,7 @@ a {
 }
 
 .nav__group--offerings a span {
+  min-width: 0;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -467,6 +468,7 @@ a {
   letter-spacing: 0.02em;
   line-height: 1.48;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .hero h1 {
@@ -1772,6 +1774,7 @@ body.menu-open .back-to-top {
   font-size: clamp(40px, 5vw, 66px);
   line-height: 1.42;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .info-hero p {
@@ -1844,6 +1847,7 @@ body.menu-open .back-to-top {
   font-size: clamp(30px, 3vw, 43px);
   line-height: 1.5;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .info-content p {
@@ -2290,6 +2294,7 @@ body.menu-open .back-to-top {
   line-height: 1.5;
   list-style: none;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .faq-list summary::-webkit-details-marker {
@@ -2354,6 +2359,7 @@ body.menu-open .back-to-top {
   line-height: 1.5;
   list-style: none;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .case-details summary::-webkit-details-marker {
@@ -2828,6 +2834,7 @@ body.menu-open .back-to-top {
   font-weight: 600;
   line-height: 1.45;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .article-hero p {
@@ -2946,6 +2953,7 @@ body.menu-open .back-to-top {
   font-size: clamp(23px, 2.5vw, 32px);
   line-height: 1.55;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .author-note p {
@@ -2979,6 +2987,7 @@ body.menu-open .back-to-top {
   font-family: var(--serif);
   font-size: clamp(27px, 3vw, 38px);
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .guide-path p {
@@ -3039,6 +3048,7 @@ body.menu-open .back-to-top {
   font-family: var(--serif);
   font-size: 22px;
   text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 .prose p,
@@ -4559,26 +4569,3 @@ body[data-page="404"] main {
   }
 }
 
-/* ---------- トップページ：管理画面ログイン導線 ---------- */
-.admin-login-link {
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 8px 14px;
-  white-space: nowrap;
-}
-
-.admin-login-link:hover,
-.admin-login-link:focus-visible {
-  color: var(--teal);
-  border-color: var(--teal);
-}
-
-@media (max-width: 1100px) {
-  .admin-login-link {
-    display: none;
-  }
-}

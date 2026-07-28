@@ -45,7 +45,6 @@ const fullMenuMarkup = `
       <a href="./owner.html">五十嵐洋子について</a>
       <a href="./faq.html">よくある質問</a>
       <a href="./#shop">店舗案内・アクセス</a>
-      <a href="./admin/">管理画面</a>
     </div>
   </div>`;
 
