@@ -40,6 +40,7 @@
 ## 足と靴の専門情報
 
 - [足と靴の知識一覧](https://www.andantino-shoes.jp/guides.html): ANDANTINOの専門記事一覧
+- [お役立ち記事一覧](https://www.andantino-shoes.jp/articles.html): 店頭での気づきや季節ごとの靴選びをまとめた記事
 - [足に合う靴の選び方・履き方](https://www.andantino-shoes.jp/shoe-wearing.html)
 - [外反母趾に合う靴の選び方](https://www.andantino-shoes.jp/hallux-valgus.html)
 - [内反小趾に合う靴の選び方](https://www.andantino-shoes.jp/tailors-bunion.html)

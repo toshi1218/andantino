@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { writeFile, readFile } from "node:fs/promises";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
@@ -16,8 +16,27 @@ window.ANDANTINO_SUPABASE = {
 `;
 }
 
+// 既に設定値が書き込まれているかを見る。
+// .env を持たない環境（他の作業者・AIエージェント・CI）で `npm run build` が
+// 走ったときに、設定済みのファイルを null で上書きしてしまうと、
+// 管理画面とアクセス計測が本番で動かなくなる。そのため上書きしない。
+async function isAlreadyConfigured() {
+  try {
+    const current = await readFile(configFile, "utf8");
+    return !/url:\s*null/.test(current);
+  } catch {
+    return false;
+  }
+}
+
 async function main() {
   if (!supabaseUrl || !supabaseAnonKey) {
+    if (await isAlreadyConfigured()) {
+      console.log(
+        "generate-supabase-config: SUPABASE_URL / SUPABASE_ANON_KEY is not set — keeping the existing configured assets/supabase-config.js."
+      );
+      return;
+    }
     console.log(
       "generate-supabase-config: SUPABASE_URL / SUPABASE_ANON_KEY is not set — writing an unconfigured assets/supabase-config.js."
     );
