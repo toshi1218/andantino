@@ -48,6 +48,18 @@
 
         <!-- 記事タブ -->
         <div class="admin-tab-panel" data-tab-panel="articles">
+          <section class="admin-panel admin-propose">
+            <div class="admin-propose__head">
+              <div>
+                <h2>溜まったメモから記事のテーマを提案してもらう</h2>
+                <p class="admin-note">「アイデア」に溜まっているメモをまとめて読んで、いま書くとよい記事のテーマを提案します。提案を選ぶと下書きが作られるので、内容を確認・修正してから公開してください。</p>
+              </div>
+              <button type="button" class="button" id="propose-button">提案してもらう</button>
+            </div>
+            <p class="admin-status" id="propose-status" role="status" aria-live="polite"></p>
+            <ul class="admin-propose-list" id="propose-list"></ul>
+          </section>
+
           <div class="admin-articles">
             <div class="admin-articles__list">
               <div class="admin-articles__list-header">

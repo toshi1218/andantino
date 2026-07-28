@@ -413,3 +413,84 @@ body.admin-page {
 .admin-import-item--imported {
   opacity: 0.55;
 }
+
+/* ---------- 溜まったメモからのテーマ提案 ---------- */
+.admin-propose {
+  margin-bottom: 20px;
+}
+
+.admin-propose__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-propose__head h2 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.admin-propose__head .button {
+  flex-shrink: 0;
+}
+
+.admin-propose-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.admin-propose-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cream-2);
+}
+
+.admin-propose-item__body {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-propose-item__category {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.admin-propose-item strong {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--teal);
+}
+
+.admin-propose-item__reason,
+.admin-propose-item__summary {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--charcoal);
+}
+
+.admin-propose-item__reason {
+  color: var(--muted);
+}
+
+.admin-propose-item .outline-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .admin-propose__head,
+  .admin-propose-item {
+    flex-direction: column;
+  }
+}

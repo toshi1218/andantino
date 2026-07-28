@@ -81,6 +81,7 @@ function setSignedIn(isSignedIn) {
 function initApp() {
   initTabs();
   initArticles();
+  initPropose();
   initImport();
   initSettings();
   initProducts();
@@ -413,6 +414,139 @@ function buildTemplates(fields) {
     seo_title: `${title}｜ANDANTINO`,
     seo_description: gist.slice(0, 120),
   };
+}
+
+/* ===================== 溜まったメモからのテーマ提案 ===================== */
+
+function initPropose() {
+  document.getElementById("propose-button").addEventListener("click", requestProposals);
+}
+
+async function requestProposals() {
+  const statusEl = document.getElementById("propose-status");
+  const list = document.getElementById("propose-list");
+  list.innerHTML = "";
+  statusEl.textContent = "溜まっているメモを読んでいます…";
+
+  const { data, error } = await client
+    .from("articles")
+    .select("title, raw_content, category")
+    .eq("status", "idea")
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  if (error) {
+    statusEl.textContent = "メモを読み込めませんでした。";
+    return;
+  }
+
+  const notes = (data || []).filter((note) => (note.raw_content || "").trim().length > 20);
+  if (!notes.length) {
+    statusEl.textContent =
+      "提案のもとになるメモがまだありません。「ChatGPT履歴の取り込み」タブから会話を取り込むか、「＋ 新しい記事」でメモを書いてください。";
+    return;
+  }
+
+  statusEl.textContent = `${notes.length}件のメモをもとに考えています…`;
+
+  let themes = null;
+  try {
+    const { data: sessionData } = await client.auth.getSession();
+    const accessToken = sessionData?.session?.access_token;
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
+      body: JSON.stringify({ mode: "propose", notes }),
+    });
+    if (response.ok) {
+      const json = await response.json();
+      if (json && Array.isArray(json.themes) && json.themes.length) themes = json.themes;
+    }
+  } catch {
+    // AI未設定・通信失敗時は下のフォールバックへ。
+  }
+
+  if (themes) {
+    statusEl.textContent = "提案です。内容は必ずご自身で確認してください。";
+    renderProposals(themes);
+    return;
+  }
+
+  // AIが使えない環境でも、どの分野のメモが溜まっているかは示せる。
+  renderProposalFallback(notes, statusEl);
+}
+
+function renderProposalFallback(notes, statusEl) {
+  const counts = new Map();
+  for (const note of notes) {
+    const key = note.category || "other";
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  const summary = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([key, count]) => `${CATEGORY_LABEL[key] || key} ${count}件`)
+    .join("／");
+
+  statusEl.textContent = `AIの設定がないため、テーマの提案はできません。いま溜まっているメモの内訳：${summary}`;
+  document.getElementById("propose-list").innerHTML = "";
+}
+
+function renderProposals(themes) {
+  const list = document.getElementById("propose-list");
+  list.innerHTML = "";
+
+  themes.forEach((theme, index) => {
+    const li = document.createElement("li");
+    li.className = "admin-propose-item";
+    li.innerHTML = `
+      <div class="admin-propose-item__body">
+        <span class="admin-propose-item__category">${escapeHtml(CATEGORY_LABEL[theme.category] || "その他")}</span>
+        <strong>${escapeHtml(theme.title || "（タイトル案なし）")}</strong>
+        <p class="admin-propose-item__reason">${escapeHtml(theme.reason || "")}</p>
+        <p class="admin-propose-item__summary">${escapeHtml(theme.summary || "")}</p>
+      </div>`;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "outline-button outline-button--small";
+    button.textContent = "この案で下書きを作る";
+    button.addEventListener("click", () => createDraftFromTheme(theme, button));
+    li.append(button);
+    list.append(li);
+  });
+}
+
+async function createDraftFromTheme(theme, button) {
+  const statusEl = document.getElementById("propose-status");
+  button.disabled = true;
+  statusEl.textContent = "下書きを作っています…";
+
+  const allowedCategories = Object.keys(CATEGORY_LABEL);
+  const payload = {
+    title: theme.title || "",
+    category: allowedCategories.includes(theme.category) ? theme.category : "other",
+    target_audience: theme.target_audience || "",
+    raw_content: `【提案されたテーマ】\n${theme.summary || ""}\n\n【提案の理由】\n${theme.reason || ""}\n\n※これは溜まったメモをもとにAIが提案した案です。実際の出来事やお伝えしたいことを書き足してから、「AIで下書きを作る」を押してください。`,
+    status: "draft",
+    source_type: "気づき",
+  };
+
+  const { data, error } = await client.from("articles").insert(payload).select().single();
+  if (error) {
+    statusEl.textContent = `下書きを作れませんでした：${error.message}`;
+    button.disabled = false;
+    return;
+  }
+
+  statusEl.textContent = `「${data.title}」を下書きとして保存しました。下の一覧から開いて続きを書いてください。`;
+  button.textContent = "下書きを作りました";
+  await loadArticles();
+  articleState.selectedId = data.id;
+  fillEditor(data);
+  highlightSelected();
 }
 
 /* ===================== ChatGPT履歴の取り込み ===================== */
