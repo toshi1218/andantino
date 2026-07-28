@@ -1,20 +1,19 @@
-// お役立ち記事CMS（Supabase）の「公開済み」記事を取得し、
-// 記事詳細ページ・記事一覧・カテゴリ別一覧・sitemap-articles.xml を静的生成する。
+// content/articles/*.md を読み込み、記事詳細ページ・記事一覧・
+// カテゴリ別一覧・sitemap-articles.xml を静的生成する。
 //
-// generate-news.mjs と同じ方針: 環境変数が未設定、または通信に失敗した場合は
-// 警告を出すだけで既存のファイルをそのまま残し、コマンド自体は失敗させない。
+// 記事の元データはリポジトリ内のMarkdownファイルであり、外部サービスには依存しない。
+// 1ファイル＝1記事、ファイル名がそのままURL（/articles/{ファイル名}.html）になる。
+// frontmatter に draft: true と書かれた記事は生成対象から外れる。
 //
-// 承認フローとの関係: このスクリプトは Supabase 上で status = 'published' の
-// 記事だけを取得する（RLSにより匿名キーでもそれ以外は取得できない）。
-// つまり「公開」ボタンを押した記事だけが、このコマンドの実行と手動コミットを経て
-// はじめてサイトに反映される。自動公開・自動デプロイは行わない。
+// 生成されるHTMLの構造・SEOタグ・パンくず・構造化データはすべてこのスクリプトが
+// 決めるため、記事ファイル側の書き方が多少ぶれても、サイト全体の規約は保たれる。
 import { readFile, writeFile, mkdir, readdir, rm } from "node:fs/promises";
 import { siteUrl, lastmod } from "./site-pages.mjs";
+import { parseFrontMatter, markdownToHtml, deriveExcerpt } from "./lib/content.mjs";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 const root = new URL("../", import.meta.url);
 const articlesDirUrl = new URL("../articles/", import.meta.url);
+const contentDirUrl = new URL("../content/articles/", import.meta.url);
 const lineUrl = "https://line.me/R/ti/p/@680mdoos";
 
 const CATEGORY_META = {
@@ -250,40 +249,72 @@ async function injectMarker(fileName, marker, html) {
   await writeFile(fileUrl, updated, "utf8");
 }
 
-async function main() {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.log(
-      "generate-articles: SUPABASE_URL / SUPABASE_ANON_KEY is not set — skipping article generation, keeping existing pages."
-    );
-    return;
-  }
-
-  const url = `${supabaseUrl}/rest/v1/articles?select=*&status=eq.published&order=published_at.desc`;
-  let articles;
+// content/articles/*.md を1件ずつ読み、記事オブジェクトへ変換する。
+// 問題のあるファイルは、コマンド全体を失敗させずにスキップして警告を出す
+// （1本の記事の書き損じで、サイト全体の生成が止まらないようにするため）。
+async function loadArticles() {
+  let fileNames;
   try {
-    const response = await fetch(url, {
-      headers: { apikey: supabaseAnonKey, Authorization: `Bearer ${supabaseAnonKey}` },
-    });
-    if (!response.ok) throw new Error(`Supabase responded with ${response.status}`);
-    articles = await response.json();
-  } catch (error) {
-    console.warn(`generate-articles: failed to fetch from Supabase (${error.message}) — keeping existing pages.`);
-    return;
+    fileNames = (await readdir(contentDirUrl)).filter((file) => file.endsWith(".md"));
+  } catch {
+    console.log("generate-articles: content/articles/ が見つかりません — 記事なしとして扱います。");
+    return [];
   }
 
-  // slugはそのままファイル名になるため、半角英数とハイフンだけに限定する。
-  // 「../index」のような値でリポジトリ内の別ファイルを上書きさせない。
-  const validArticles = [];
-  for (const article of articles) {
-    if (!article.slug) continue;
-    if (!/^[a-z0-9][a-z0-9-]*$/.test(article.slug)) {
+  const articles = [];
+  for (const fileName of fileNames.sort()) {
+    // ファイル名がそのままURLになるため、半角英数とハイフンだけに限定する。
+    // 「../index.md」のような名前でリポジトリ内の別ファイルを上書きさせない。
+    const slug = fileName.replace(/\.md$/, "");
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
       console.warn(
-        `generate-articles: skipped "${article.title}" — slug "${article.slug}" must use lowercase letters, numbers and hyphens only.`
+        `generate-articles: ${fileName} をスキップしました — ファイル名は半角小文字・数字・ハイフンだけで付けてください。`
       );
       continue;
     }
-    validArticles.push(article);
+
+    const raw = await readFile(new URL(fileName, contentDirUrl), "utf8");
+    const { meta, body } = parseFrontMatter(raw);
+
+    if (String(meta.draft).toLowerCase() === "true") continue;
+
+    if (!meta.title) {
+      console.warn(`generate-articles: ${fileName} をスキップしました — title が書かれていません。`);
+      continue;
+    }
+    if (!body.trim()) {
+      console.warn(`generate-articles: ${fileName} をスキップしました — 本文が空です。`);
+      continue;
+    }
+    if (meta.category && !CATEGORY_META[meta.category]) {
+      console.warn(
+        `generate-articles: ${fileName} の category「${meta.category}」は未対応です — other として扱います。`
+      );
+    }
+
+    const publishedAt = meta.published_at || lastmod;
+    articles.push({
+      slug,
+      title: meta.title,
+      category: CATEGORY_META[meta.category] ? meta.category : "other",
+      excerpt: meta.excerpt || deriveExcerpt(body),
+      seo_title: meta.seo_title || "",
+      seo_description: meta.seo_description || "",
+      featured_image: meta.featured_image || "",
+      call_to_action: meta.call_to_action || "line",
+      article_content: markdownToHtml(body),
+      published_at: publishedAt,
+      updated_at: meta.updated_at || publishedAt,
+      created_at: publishedAt,
+    });
   }
+
+  // 新しい記事が先頭に来るようにする（一覧ページの並び順）。
+  return articles.sort((a, b) => String(b.published_at).localeCompare(String(a.published_at)));
+}
+
+async function main() {
+  const validArticles = await loadArticles();
   const robotsMeta = await detectRobotsMeta();
 
   await mkdir(articlesDirUrl, { recursive: true });
