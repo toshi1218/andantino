@@ -45,6 +45,7 @@ const fullMenuMarkup = `
       <a href="./owner.html">五十嵐洋子について</a>
       <a href="./faq.html">よくある質問</a>
       <a href="./#shop">店舗案内・アクセス</a>
+      <a href="./admin/">管理画面</a>
     </div>
   </div>`;
 
@@ -65,7 +66,11 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
   navigation.className = "nav";
   navigation.id = "global-nav";
   navigation.setAttribute("aria-label", "全ページメニュー");
-  navigation.innerHTML = fullMenuMarkup;
+  // /articles/{slug}.html のようにルートより1階層深いページでは、
+  // 共通メニューの "./" 始まりのリンクを "../" に補正する。
+  navigation.innerHTML = currentPath.startsWith("/articles/")
+    ? fullMenuMarkup.replace(/="\.\//g, '="../')
+    : fullMenuMarkup;
   infoHeader.append(navigation);
 }
 
