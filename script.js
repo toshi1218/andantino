@@ -11,7 +11,7 @@ const fullMenuMarkup = `
       <a href="./childrens-shoes.html">子どもの靴選び</a>
       <a href="./insoles.html">インソール</a>
       <a href="./pricing.html">料金</a>
-      <a href="./contact.html">ご予約・ご相談</a>
+      <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
     </div>
     <div class="nav__group nav__group--knowledge">
       <strong>詳しく知る</strong>
@@ -58,9 +58,7 @@ if (infoHeader && !infoHeader.querySelector(".menu-button")) {
 }
 
 const existingNavigation = document.querySelector(".nav#global-nav");
-if (existingNavigation) {
-  existingNavigation.innerHTML = resolveMenuMarkup();
-}
+if (existingNavigation) existingNavigation.innerHTML = resolveMenuMarkup();
 
 if (infoHeader && !document.querySelector(".mobile-actions")) {
   document.body.insertAdjacentHTML(
@@ -106,8 +104,7 @@ const addLineGuide = (target, headingLevel = "h2") => {
     </div>
     <div class="line-guide__template" id="line-guide-template">相談内容を選んでください。</div>
     <p class="line-guide__status" id="line-guide-status" aria-live="polite"></p>
-    <p><a class="button" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINEを開く</a></p>
-  `;
+    <p><a class="button" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">公式LINEを開く</a></p>`;
   target.insertAdjacentElement("afterend", guide);
 
   guide.querySelectorAll("[data-line-template]").forEach((button) => {
@@ -126,9 +123,7 @@ const addLineGuide = (target, headingLevel = "h2") => {
   });
 };
 
-if (pageName === "home") {
-  addLineGuide(document.querySelector(".hero"), "h2");
-}
+if (pageName === "home") addLineGuide(document.querySelector(".hero"), "h2");
 if (pageName === "contact") {
   const contactLead = document.querySelector("main .section-heading, main header, main > section:first-of-type");
   addLineGuide(contactLead, "h2");
@@ -159,26 +154,18 @@ if (!document.querySelector(".back-to-top")) {
   backToTop.setAttribute("aria-label", "ページの一番上に戻る");
   backToTop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="6 11 12 5 18 11"></polyline></svg>';
   document.body.append(backToTop);
-
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let ticking = false;
-
   const syncVisibility = () => {
     backToTop.classList.toggle("is-visible", window.scrollY > 480);
     ticking = false;
   };
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(syncVisibility);
-    },
-    { passive: true }
-  );
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(syncVisibility);
+  }, { passive: true });
   syncVisibility();
-
   backToTop.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
   });
@@ -187,10 +174,7 @@ if (!document.querySelector(".back-to-top")) {
 const normalizePath = (href) => {
   const url = new URL(href, window.location.href);
   if (url.origin !== window.location.origin || url.hash) return "";
-  const normalized = url.pathname
-    .replace(/\/index\.html$/, "/")
-    .replace(/\.html$/, "")
-    .replace(/\/+$/, "");
+  const normalized = url.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "").replace(/\/+$/, "");
   return normalized || "/";
 };
 
@@ -206,55 +190,39 @@ const mobileMenuMedia = window.matchMedia("(max-width: 520px)");
 let resetMenuGroups = () => {};
 
 if (navigation) {
-  const collapsibleGroups = [
-    ...navigation.querySelectorAll(".nav__group:not(.nav__group--priority)"),
-  ].map((group, index) => {
+  const collapsibleGroups = [...navigation.querySelectorAll(".nav__group:not(.nav__group--priority)")].map((group, index) => {
     const heading = group.querySelector(":scope > strong");
     const links = [...group.querySelectorAll(":scope > a")];
     const panel = document.createElement("div");
     const button = document.createElement("button");
     const panelId = `nav-group-${index + 1}`;
-
     panel.className = "nav__group-links";
     panel.id = panelId;
     links.forEach((link) => panel.append(link));
-
     button.className = "nav__group-toggle";
     button.type = "button";
     button.setAttribute("aria-controls", panelId);
     button.innerHTML = `<span>${heading?.textContent || "メニュー"}</span><span class="nav__group-chevron" aria-hidden="true"></span>`;
-
     heading?.replaceWith(button);
     group.append(panel);
-
     const setOpen = (isOpen) => {
       button.setAttribute("aria-expanded", String(isOpen));
       panel.hidden = !isOpen;
     };
-
-    button.addEventListener("click", () => {
-      setOpen(button.getAttribute("aria-expanded") !== "true");
-    });
-
+    button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
     return { setOpen };
   });
-
-  const syncMenuGroups = () => {
-    collapsibleGroups.forEach(({ setOpen }) => setOpen(!mobileMenuMedia.matches));
-  };
-
+  const syncMenuGroups = () => collapsibleGroups.forEach(({ setOpen }) => setOpen(!mobileMenuMedia.matches));
   resetMenuGroups = () => {
     if (!mobileMenuMedia.matches) return;
     collapsibleGroups.forEach(({ setOpen }) => setOpen(false));
   };
-
   syncMenuGroups();
   mobileMenuMedia.addEventListener?.("change", syncMenuGroups);
 }
 
 if (menuButton && navigation) {
   const menuLabel = menuButton.querySelector(".sr-only");
-
   const setMenuState = (isOpen, returnFocus = false) => {
     if (isOpen) resetMenuGroups();
     menuButton.setAttribute("aria-expanded", String(isOpen));
@@ -263,20 +231,11 @@ if (menuButton && navigation) {
     if (menuLabel) menuLabel.textContent = isOpen ? "メニューを閉じる" : "メニューを開く";
     if (!isOpen && returnFocus) menuButton.focus();
   };
-
-  menuButton.addEventListener("click", () => {
-    setMenuState(menuButton.getAttribute("aria-expanded") !== "true");
-  });
-
-  navigation.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => setMenuState(false));
-  });
-
+  menuButton.addEventListener("click", () => setMenuState(menuButton.getAttribute("aria-expanded") !== "true"));
+  navigation.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenuState(false)));
   navigation.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") return;
-    const focusable = [
-      ...navigation.querySelectorAll("a[href], button:not([disabled])"),
-    ].filter((element) => element.getClientRects().length);
+    const focusable = [...navigation.querySelectorAll("a[href], button:not([disabled])")].filter((element) => element.getClientRects().length);
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -288,13 +247,9 @@ if (menuButton && navigation) {
       first.focus();
     }
   });
-
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && navigation.classList.contains("is-open")) {
-      setMenuState(false, true);
-    }
+    if (event.key === "Escape" && navigation.classList.contains("is-open")) setMenuState(false, true);
   });
-
   document.addEventListener("click", (event) => {
     if (!navigation.classList.contains("is-open")) return;
     if (navigation.contains(event.target) || menuButton.contains(event.target)) return;
@@ -320,7 +275,6 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
   const target = document.querySelector(button.dataset.copyTarget);
   const status = document.querySelector(`#${button.getAttribute("aria-describedby")}`);
   if (!target) return;
-
   button.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(target.textContent.trim());
@@ -338,17 +292,14 @@ document.querySelectorAll("[data-copy-target]").forEach((button) => {
 });
 
 const inquiryForm = document.querySelector("#inquiry-form-el");
-
 if (inquiryForm) {
   const statusEl = inquiryForm.querySelector(".inquiry-form__status");
   const successPanel = document.querySelector("#inquiry-form-success");
   const submitButton = inquiryForm.querySelector('button[type="submit"]');
-
   inquiryForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (submitButton) submitButton.disabled = true;
     if (statusEl) statusEl.textContent = "送信しています…";
-
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -356,14 +307,11 @@ if (inquiryForm) {
         body: JSON.stringify(Object.fromEntries(new FormData(inquiryForm))),
       });
       const result = await response.json();
-
       if (response.ok && result.success) {
         inquiryForm.hidden = true;
         if (successPanel) successPanel.hidden = false;
         successPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        throw new Error(result.message || "submission failed");
-      }
+      } else throw new Error(result.message || "submission failed");
     } catch {
       if (statusEl) statusEl.textContent = "送信できませんでした。お手数ですが、公式LINEまたはお電話でご連絡ください。";
       if (submitButton) submitButton.disabled = false;
@@ -372,33 +320,19 @@ if (inquiryForm) {
 }
 
 const tocLinks = [...document.querySelectorAll('.article-toc a[href^="#"]')];
-
 if (tocLinks.length) {
-  const observedSections = tocLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
+  const observedSections = tocLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
   const setCurrentSection = (id) => {
     tocLinks.forEach((link) => {
       const isCurrent = link.getAttribute("href") === `#${id}`;
-      if (isCurrent) {
-        link.setAttribute("aria-current", "location");
-      } else {
-        link.removeAttribute("aria-current");
-      }
+      if (isCurrent) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
     });
   };
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      if (visible[0]) setCurrentSection(visible[0].target.id);
-    },
-    { rootMargin: "-18% 0px -68% 0px", threshold: 0 }
-  );
-
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    if (visible[0]) setCurrentSection(visible[0].target.id);
+  }, { rootMargin: "-18% 0px -68% 0px", threshold: 0 });
   observedSections.forEach((section) => observer.observe(section));
   setCurrentSection(observedSections[0]?.id);
 }
@@ -406,46 +340,22 @@ if (tocLinks.length) {
 (function () {
   const config = window.ANDANTINO_SUPABASE || {};
   if (!config.url || !config.anonKey) return;
-
   const endpoint = `${config.url}/rest/v1/analytics_events`;
-  const headers = {
-    apikey: config.anonKey,
-    Authorization: `Bearer ${config.anonKey}`,
-    "Content-Type": "application/json",
-    Prefer: "return=minimal",
-  };
-
+  const headers = { apikey: config.anonKey, Authorization: `Bearer ${config.anonKey}`, "Content-Type": "application/json", Prefer: "return=minimal" };
   function sendEvent(eventType, meta) {
-    const payload = JSON.stringify({
-      event_type: eventType,
-      page_path: window.location.pathname,
-      meta: meta || {},
-    });
+    const payload = JSON.stringify({ event_type: eventType, page_path: window.location.pathname, meta: meta || {} });
     fetch(endpoint, { method: "POST", headers, body: payload, keepalive: true }).catch(() => {});
   }
-
   const path = window.location.pathname;
-  if (/\/articles\/[^/]+\.html$/.test(path)) {
-    sendEvent("article_view");
-  } else if (/\/online-consultation\.html$/.test(path)) {
-    sendEvent("consultation_view");
-  } else if (/\/pdf-products\.html$/.test(path)) {
-    sendEvent("pdf_view");
-  }
-
+  if (/\/articles\/[^/]+\.html$/.test(path)) sendEvent("article_view");
+  else if (/\/online-consultation\.html$/.test(path)) sendEvent("consultation_view");
+  else if (/\/pdf-products\.html$/.test(path)) sendEvent("pdf_view");
   document.addEventListener("click", (event) => {
     const link = event.target.closest("a[href]");
     if (!link) return;
     const href = link.getAttribute("href");
-    if (/^https:\/\/line\.me\//.test(href)) {
-      sendEvent("line_click", { href });
-    } else if (/contact\.html(?:[?#]|$)/.test(href)) {
-      sendEvent("reservation_click", { href });
-    } else if (
-      /^https:\/\/(www\.)?(facebook|instagram|youtube|note|x|twitter)\.com\//.test(href) ||
-      /^https:\/\/blog\.livedoor\.jp\//.test(href)
-    ) {
-      sendEvent("sns_click", { href });
-    }
+    if (/^https:\/\/line\.me\//.test(href)) sendEvent("line_click", { href });
+    else if (/contact\.html(?:[?#]|$)/.test(href)) sendEvent("reservation_click", { href });
+    else if (/^https:\/\/(www\.)?(facebook|instagram|youtube|note|x|twitter)\.com\//.test(href) || /^https:\/\/blog\.livedoor\.jp\//.test(href)) sendEvent("sns_click", { href });
   });
 })();
