@@ -1,0 +1,98 @@
+name: cleanup-public-copy-once
+
+on:
+  push:
+    branches: [scan-and-clean-public-copy]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: scan-and-clean-public-copy
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Remove internal-only public copy
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pricing = Path('pricing.html')
+          text = pricing.read_text()
+          old = '料金確認日：2026年7月21日。内容・材料・外注費により変わる場合があるため、ご予約・ご注文前に最新料金をご確認ください。靴本体の価格帯と総額のモデルケースは、仕入・仕様により変動するため目安としてご覧ください。'
+          new = '内容・材料・外注費により料金が変わる場合があります。ご予約・ご注文前に最新料金をご確認ください。靴本体の価格帯と総額のモデルケースは、仕入れや仕様により変動するため、目安としてご覧ください。'
+          if old not in text:
+              raise SystemExit('pricing notice not found')
+          pricing.write_text(text.replace(old, new))
+
+          index = Path('index.html')
+          text = index.read_text()
+          admin = '              <a href="./admin/">管理画面（スタッフ用）</a>\n'
+          if admin not in text:
+              raise SystemExit('admin menu link not found')
+          index.write_text(text.replace(admin, ''))
+
+          audit = Path('scripts/audit-public-copy.mjs')
+          audit.write_text(r'''import { readFile } from "node:fs/promises";
+          import { pages } from "./site-pages.mjs";
+
+          const root = new URL("../", import.meta.url);
+          const patterns = [
+            { label: "料金確認日", regex: /料金確認日/g },
+            { label: "社内確認日", regex: /社内確認日/g },
+            { label: "スタッフ用管理画面", regex: /管理画面（スタッフ用）/g },
+            { label: "開発ツール名", regex: /(?:ChatGPT|Codex|Claude Code|Cloud Code|GitHub|Cloudflare|Supabase|microCMS)/gi },
+            { label: "開発作業用語", regex: /(?:リポジトリ|コミット|プルリクエスト)/g },
+          ];
+
+          const toVisibleText = (html) =>
+            html
+              .replace(/<!--[\s\S]*?-->/g, " ")
+              .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+              .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+              .replace(/<[^>]+>/g, " ")
+              .replace(/&nbsp;|&#160;/g, " ")
+              .replace(/\s+/g, " ")
+              .trim();
+
+          const findings = [];
+          for (const page of pages) {
+            const html = await readFile(new URL(page.file, root), "utf8");
+            const visibleText = toVisibleText(html);
+            for (const { label, regex } of patterns) {
+              regex.lastIndex = 0;
+              for (const match of visibleText.matchAll(regex)) {
+                const start = Math.max(0, match.index - 55);
+                const end = Math.min(visibleText.length, match.index + match[0].length + 80);
+                findings.push(`${page.file}: ${label}: ${visibleText.slice(start, end)}`);
+              }
+            }
+          }
+
+          if (findings.length) {
+            console.error(`Public copy audit found ${findings.length} internal-only phrase(s):`);
+            for (const finding of findings) console.error(`- ${finding}`);
+            process.exit(1);
+          }
+
+          console.log("Public copy audit passed.");
+          ''')
+
+          Path('INTERNAL_COPY_AUDIT.md').unlink(missing_ok=True)
+          Path('.github/workflows/cleanup-public-copy-once.yml').unlink()
+          PY
+      - name: Validate
+        run: npm run validate
+      - name: Commit cleanup
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add pricing.html index.html scripts/audit-public-copy.mjs INTERNAL_COPY_AUDIT.md .github/workflows/cleanup-public-copy-once.yml
+          git commit -m "公開ページから内部向け文言を削除する"
+          git push origin HEAD:scan-and-clean-public-copy
