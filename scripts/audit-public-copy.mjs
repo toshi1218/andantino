@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { pages } from "./site-pages.mjs";
 
+// HTMLのソースコードではなく、お客様が画面上で読む本文だけを監査する。
 const root = new URL("../", import.meta.url);
 const patterns = [
   { label: "料金確認日", regex: /料金確認日/g },
