@@ -24,7 +24,7 @@
 ```
 content/articles/shingakki-kodomo-kutsu-check.md
   ↓
-https://www.andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check.html
+https://www.andantino-shoes.jp/articles/shingakki-kodomo-kutsu
 ```
 
 - 半角小文字・数字・ハイフンのみ（日本語・大文字・アンダースコアは不可）
@@ -100,13 +100,13 @@ call_to_action: children
 
 **太字**
 
-[サイト内リンク](../childrens-shoes.html)
+[サイト内リンク](../childrens-shoes)
 [外部リンク](https://example.com/)
 ```
 
 **見出しは必ず `##`（h2）から始めてください。** ページのタイトルがすでに `<h1>` になっているため、本文に `#`（h1）を書くと見出しの階層が飛び、サイト監査でエラーになります（`#` と書いた場合は自動的に h2 に直されます）。
 
-サイト内リンクは `../` から始めます（記事ページは `/articles/` の中にあるため）。
+サイト内リンクは `../` から始めます（記事ページは `/articles/` の中にあるため）。**拡張子 `.html` は付けません**（公開URLが拡張子なしのため）。`../childrens-shoes.html` のように書いても、生成時に自動で `.html` が外れます。
 
 ### 記事を修正・削除するとき
 

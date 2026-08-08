@@ -1,13 +1,47 @@
-# 旧サイト（.php）からの301
+# 旧サイト（ファイズ制作・PHP版）から新サイトへの301リダイレクト。
+#
+# 対応表の根拠と、旧URLをどう洗い出したかは docs/URL_MIGRATION_MAP.md を参照。
+# 変更したら `npm run validate`（対応表の静的チェック）と、
+# 独自ドメイン切替後に `npm run redirects:verify`（実際の301確認）を実行する。
+#
+# Cloudflare Pages は上から順に評価し、最初に一致した行を使う。
+# クエリ文字列（?eid=… など）は照合に使われず、転送先へそのまま引き継がれる。
+
+# --- ホスト統一（www以外 → www）-------------------------------------------
+# canonical・sitemap・robots.txt はすべて www 付きに統一しているため、
+# apexドメインに来たアクセスは先にwwwへ寄せる。パス単位の規則より前に置かないと、
+# apex側でも本文が配信されて重複コンテンツになる。
+https://andantino-shoes.jp/* https://www.andantino-shoes.jp/:splat 301
+
+# --- 旧サイトの実ページ ----------------------------------------------------
 /index.php / 301
-/about.php /about.html 301
-/selection.php /adult-shoes.html 301
-/childrenshoes.php /childrens-shoes.html 301
-/product.php /products.html 301
-/insole.php /insoles.html 301
-/seminar.php /seminars.html 301
-/contact.php /contact.html 301
-/dimoco-insole.html /dymoco-insole.html 301
+/about.php /about 301
+/selection.php /adult-shoes 301
+/childrenshoes.php /childrens-shoes 301
+/insole.php /insoles 301
+/product.php /products 301
+/seminar.php /seminars 301
+/contact.php /contact 301
+/torihiki.php /legal 301
+
+# --- 旧サイトの新着情報 ----------------------------------------------------
+# /entry.php?eid=… の中身は取扱商品の紹介（ケンプランター、パラマウント、
+# フィンコンフォート、あゆみシューズなど）なので、内容が最も近いのは取扱商品ページ。
+# Cloudflare Pages はクエリ文字列で振り分けられないため、eid単位の細分化はしない。
+/entry.php /products 301
+/entry_list.php /news 301
+# 旧サイトが配信していたブログのRSS。記事本体は公式Livedoorブログにあり、
+# 新サイト側で最も近いのはお知らせページ（外部リンク集からブログへ辿れる）。
+/rss.php /news 301
+
+# --- 旧サイトのテンプレート断片 --------------------------------------------
+# 単独ページではないが旧sitemap.xmlに載っていたため、インデックス済みの可能性がある。
+/common.php / 301
+/head.php / 301
+/contactbnr.php /contact 301
+
+# --- 新サイト内の表記ゆれ --------------------------------------------------
+/dimoco-insole.html /dymoco-insole 301
 
 # 配信しないファイル
 # Cloudflare Pages の Build output directory が "." のため、

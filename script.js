@@ -7,27 +7,27 @@ const fullMenuMarkup = `
   <div class="container nav__panel nav__panel--simple">
     <div class="nav__group nav__group--priority">
       <strong>ご相談内容</strong>
-      <a href="./adult-shoes.html">大人の靴選び</a>
-      <a href="./childrens-shoes.html">子どもの靴選び</a>
-      <a href="./insoles.html">インソール</a>
-      <a href="./pricing.html">料金</a>
-      <a href="./contact.html">ご予約・ご相談・お問い合わせ</a>
+      <a href="./adult-shoes">大人の靴選び</a>
+      <a href="./childrens-shoes">子どもの靴選び</a>
+      <a href="./insoles">インソール</a>
+      <a href="./pricing">料金</a>
+      <a href="./contact">ご予約・ご相談・お問い合わせ</a>
     </div>
     <div class="nav__group nav__group--knowledge">
       <strong>詳しく知る</strong>
-      <a href="./case-studies.html">ご相談事例</a>
-      <a href="./foot-problems.html">足のお悩みから探す</a>
-      <a href="./products.html">取扱商品</a>
-      <a href="./articles.html">お役立ち記事</a>
-      <a href="./faq.html">よくある質問</a>
+      <a href="./case-studies">ご相談事例</a>
+      <a href="./foot-problems">足のお悩みから探す</a>
+      <a href="./products">取扱商品</a>
+      <a href="./articles">お役立ち記事</a>
+      <a href="./faq">よくある質問</a>
     </div>
     <div class="nav__group nav__group--secondary">
       <strong>店舗・その他</strong>
-      <a href="./about.html">店舗概要・アクセス</a>
-      <a href="./owner.html">五十嵐洋子について</a>
-      <a href="./seminars.html">セミナー・法人向け</a>
-      <a href="./online-consultation.html">オンライン相談</a>
-      <a href="./pdf-products.html">デジタル商品</a>
+      <a href="./about">店舗概要・アクセス</a>
+      <a href="./owner">五十嵐洋子について</a>
+      <a href="./seminars">セミナー・法人向け</a>
+      <a href="./online-consultation">オンライン相談</a>
+      <a href="./pdf-products">デジタル商品</a>
     </div>
   </div>`;
 

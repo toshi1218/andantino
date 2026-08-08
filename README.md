@@ -66,7 +66,7 @@ git add news.html && git commit -m "お知らせを更新" && git push
 ```
 content/articles/shingakki-kodomo-kutsu-check.md
   ↓  npm run build
-articles/shingakki-kodomo-kutsu-check.html
+articles/shingakki-kodomo-kutsu-check.html（公開URLは /articles/shingakki-kodomo-kutsu）
   ＋ 一覧ページ6種・sitemap-articles.xml を自動更新
 ```
 
@@ -124,6 +124,7 @@ frontmatter に `draft: true` を書くと生成対象から外れます。公�
 - Build command: `exit 0`（**ビルドは実行しない**。`npm run build` の生成物はすべてコミットして配信する運用）
 - Build output directory: `.`（リポジトリ直下をそのまま配信するため、公開してよいファイルだけをルートに置く。`docs/` や `scripts/` などサイトの一部でないものは `_redirects` で塞いでいる）
 - Canonical/custom domain: `www.andantino-shoes.jp`
+- 公開URLは**拡張子なし**（`about.html` は `/about` として配信されます）。Cloudflare Pagesが `.html` 付きURLを拡張子なしへ308で寄せるため、canonical・og:url・sitemap・内部リンク・301の転送先はすべて拡張子なしに統一しています。詳しくは `docs/URL_MIGRATION_MAP.md`
 - Preview domain: `andantino.pages.dev`
 
 Cloudflare PagesのGit連携で配信する静的サイトです。サーバー側で動くコードはありません。記事ページを含むすべてのHTMLは、コミット済みの静的ファイルをそのまま配信します。
@@ -134,27 +135,32 @@ Cloudflare PagesのGit連携で配信する静的サイトです。サーバー�
 
 サイト内の `<link rel="canonical">` はすべて `https://www.andantino-shoes.jp/` を指しています。このままプレビュードメイン（`andantino.pages.dev`）をインデックス可にすると、検索エンジンに対して「正式版は別ドメインにある」と宣言することになり、旧サイト側へ評価が渡ります。**プレビュードメインでの先行公開は行いません。**
 
-1. 旧サイトの制作会社に、ドメインの登録者名義・レジストラ・認証コード（AuthCode）の発行可否を確認する。
-2. 洋子さん名義のレジストラ口座を用意し、ドメインを移管する（DNSの向き先変更だけでは、ドメインの主導権が相手に残ります）。
-3. Cloudflareにドメインを接続する。
-4. `npm run indexing:live` を実行し、差分をコミット・プッシュする（全ページとCloudflareのHTTPヘッダーのrobots設定が一括で切り替わります）。
-5. Google Search Consoleに登録し、`sitemap.xml` を送信する。
-6. 旧サイトのURLからの301リダイレクトを確認する（「旧サイト移行」の表を参照）。
+手順の全体像は次のとおりです。**各段階のチェック項目は `docs/LAUNCH_CHECKLIST.md` にあります。順番を入れ替えないでください。**
+
+1. ドメイン移管の完了を確認する（この時点ではDNSを変更しない）。
+2. `andantino.pages.dev` で表示・導線・PageSpeedを最終確認する。
+3. `npm run redirects:verify -- https://andantino.pages.dev` で301を確認する。
+4. Cloudflare Pagesへ `www.andantino-shoes.jp` と apex を Custom Domain として追加する。
+5. Value-DomainのネームサーバーをCloudflareへ切り替える（ここが本番切替）。
+6. 本番ドメインで表示・HTTPS・301・導線を確認する（`npm run redirects:verify`）。
+7. **ここではじめて** `npm run indexing:live` を実行し、差分をコミット・プッシュする（全ページのrobots metaとCloudflareのHTTPヘッダーが一括で切り替わります）。
+8. Google Search Console・Bing Webmaster Toolsへ登録し、`sitemap.xml` を送信する。`npm run indexnow:submit` も実行する。
+9. Googleビジネスプロフィールなど外部サービスのURLを更新し、旧サイトを整理する。
 
 ## 旧サイト移行
 
-| 旧URL | 新URL |
-|---|---|
-| `/index.php` | `/` |
-| `/about.php` | `/about.html`、`/owner.html`、`/links.html` |
-| `/selection.php` | `/adult-shoes.html` |
-| `/childrenshoes.php` | `/childrens-shoes.html` |
-| `/product.php` | `/products.html` |
-| `/insole.php` | `/insoles.html`、`/pricing.html` |
-| `/seminar.php` | `/seminars.html` |
-| `/contact.php` | `/contact.html`、`/privacy.html`、`/legal.html` |
+旧サイト（ファイズ制作のPHP版）の全URLと、新サイトのどのページへ301するか、
+そう決めた理由は **`docs/URL_MIGRATION_MAP.md`** にまとめています。
+実装は `_redirects`、静的チェックは `npm run validate`、本番での実測確認は
+`npm run redirects:verify` が担当します。
 
-旧URLから代表ページへの301は `_redirects` で維持します。公開後はSearch Consoleへ `sitemap.xml` を送信し、本番で301・robots・sitemap・構造化データを確認してください。
+主な対応は `/about.php` → `/about`、`/selection.php` → `/adult-shoes`、
+`/childrenshoes.php` → `/childrens-shoes`、`/insole.php` → `/insoles`、
+`/product.php` → `/products`、`/entry.php` → `/products`、`/torihiki.php` → `/legal` です。
+内容が対応するページがある限り、トップへまとめずに該当ページへ送っています。
+
+Jimdoの旧サイトと公式Livedoorブログは別ドメインのため301の対象外です。
+扱いは同じ資料の「自分のドメインの外にあるもの」を参照してください。
 
 旧公式サイトから再利用した人物・商品・セミナー写真の移行元は `docs/ASSET_SOURCES.md` に記録しています。
 

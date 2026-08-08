@@ -25,7 +25,7 @@ for (const agent of ["OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "Perpl
 if (!robotsTxt.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
   errors.push("robots.txt: canonical sitemap URL is missing");
 }
-for (const path of ["/about.html", "/owner.html", "/pricing.html", "/contact.html", "/guides.html"]) {
+for (const path of ["/about", "/owner", "/pricing", "/contact", "/guides"]) {
   if (!llmsTxt.includes(`${siteUrl}${path}`)) errors.push(`llms.txt: core page is missing: ${path}`);
 }
 if (!llmsTxt.includes("医療機関ではなく、診断・治療・処方は行いません")) {
@@ -34,6 +34,15 @@ if (!llmsTxt.includes("医療機関ではなく、診断・治療・処方は行
 
 function fail(file, message) {
   errors.push(`${file}: ${message}`);
+}
+
+// 公開URLは拡張子なし（/about）で、実体は about.html。Cloudflare Pagesが
+// /about.html を /about へ308で寄せるため、canonicalも内部リンクも拡張子なしに
+// 統一している。リポジトリ内のファイルを確認するときだけ .html を補う。
+function resolveAsset(href) {
+  const path = href.replace(/^\.\//, "").replace(/^\//, "");
+  if (!path || path.endsWith("/")) return `${path}index.html`;
+  return /\.[a-z0-9]+$/i.test(path) ? path : `${path}.html`;
 }
 
 function attributes(tag) {
@@ -152,7 +161,7 @@ for (const page of pages) {
     }
     if (objectTypes.includes("Article")) {
       if (!object.author) fail(page.file, "Article JSON-LD is missing author");
-      if (!/<p\b[^>]*class=["'][^"']*article-byline[^"']*["'][^>]*>[\s\S]*?<a\b[^>]*href=["']\.\/owner\.html["'][^>]*>[^<]*五十嵐洋子[^<]*<\/a>/i.test(html)) {
+      if (!/<p\b[^>]*class=["'][^"']*article-byline[^"']*["'][^>]*>[\s\S]*?<a\b[^>]*href=["']\.\/owner["'][^>]*>[^<]*五十嵐洋子[^<]*<\/a>/i.test(html)) {
         fail(page.file, "Article must visibly identify and link its expert");
       }
       if (object.dateModified) {
@@ -230,9 +239,8 @@ for (const page of pages) {
     if (/^(?:https?:|tel:|mailto:|#)/.test(href)) continue;
     const clean = href.split("#")[0].split("?")[0];
     if (!clean || clean === "./" || clean === ".") continue;
-    const target = clean.replace(/^\.\//, "").replace(/^\//, "");
     try {
-      await access(new URL(target, root));
+      await access(new URL(resolveAsset(clean), root));
     } catch {
       fail(page.file, `broken internal link: ${href}`);
     }
@@ -336,6 +344,17 @@ for (const agent of ["OAI-SearchBot", "ChatGPT-User", "GPTBot", "ClaudeBot", "Pe
   if (!robots.includes(`User-agent: ${agent}`)) fail("robots.txt", `missing explicit ${agent} rule`);
 }
 if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) fail("robots.txt", "missing absolute sitemap URL");
+
+// 空のsitemapを案内するとSearch Consoleがエラーを出す。記事の有無と案内行を一致させる。
+const articleSitemap = await readFile(new URL("sitemap-articles.xml", root), "utf8");
+const hasArticleUrls = articleSitemap.includes("<loc>");
+const articleSitemapLine = `Sitemap: ${siteUrl}/sitemap-articles.xml`;
+if (hasArticleUrls && !robots.includes(articleSitemapLine)) {
+  fail("robots.txt", "articles exist but sitemap-articles.xml is not announced");
+}
+if (!hasArticleUrls && robots.includes(articleSitemapLine)) {
+  fail("robots.txt", "sitemap-articles.xml is empty and must not be announced");
+}
 if (/^Disallow:\s*\/$/m.test(robots)) fail("robots.txt", "site-wide Disallow would prevent crawlers from seeing noindex");
 
 const robotHeaderMatches = [...headers.matchAll(/^\s*X-Robots-Tag:/gm)];
@@ -344,13 +363,71 @@ if (!isStaging && robotHeaderMatches.length) fail("_headers", "unexpected X-Robo
 
 const notFound = await readFile(new URL("404.html", root), "utf8");
 if (meta(notFound, "name", "robots") !== stagingRobots) fail("404.html", `robots meta must be ${stagingRobots}`);
-for (const requiredMarkup of ["info-header", "info-footer", '<script src="./script.js"']) {
+// 404ページは /articles/xxx のような深い階層でも配信されるため、相対リンクだと
+// リンク先が階層ごとずれる。ルート相対（/guides）で書く必要がある。
+if (/(?:href|src)="\.\//.test(notFound)) fail("404.html", "links must be root-relative so they work at any depth");
+for (const requiredMarkup of ["info-header", "info-footer", '<script src="/script.js"']) {
   if (!notFound.includes(requiredMarkup)) fail("404.html", `missing shared shell markup: ${requiredMarkup}`);
 }
 
+// 旧サイト（ファイズ制作のPHP版）から新サイトへの301対応表。
+// 旧URLの洗い出し方法と、どうしてこの転送先なのかは docs/URL_MIGRATION_MAP.md にまとめている。
+// 対応表が壊れるとSEO評価と既存の被リンクを失うため、ここで固定する。
 const redirects = await readFile(new URL("_redirects", root), "utf8");
-for (const oldPath of ["/index.php", "/about.php", "/selection.php", "/childrenshoes.php", "/product.php", "/insole.php", "/seminar.php", "/contact.php"]) {
-  if (!redirects.includes(oldPath)) fail("_redirects", `missing legacy redirect for ${oldPath}`);
+const redirectRules = new Map(
+  redirects
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => line.split(/\s+/))
+    .filter(([, , code]) => code === "301")
+    .map(([from, to]) => [from, to])
+);
+const legacyRedirects = {
+  "/index.php": "/",
+  "/about.php": "/about",
+  "/selection.php": "/adult-shoes",
+  "/childrenshoes.php": "/childrens-shoes",
+  "/insole.php": "/insoles",
+  "/product.php": "/products",
+  "/seminar.php": "/seminars",
+  "/contact.php": "/contact",
+  "/torihiki.php": "/legal",
+  "/entry.php": "/products",
+  "/entry_list.php": "/news",
+  "/rss.php": "/news",
+  "/common.php": "/",
+  "/head.php": "/",
+  "/contactbnr.php": "/contact"
+};
+for (const [oldPath, newPath] of Object.entries(legacyRedirects)) {
+  const actual = redirectRules.get(oldPath);
+  if (!actual) fail("_redirects", `missing legacy redirect for ${oldPath}`);
+  else if (actual !== newPath) fail("_redirects", `${oldPath} must redirect to ${newPath}, found ${actual}`);
+}
+
+// apexドメインをwwwへ寄せる規則。canonicalがwww付きのため、これが無いと
+// 同じ内容が2つのホストで配信される。パス単位の規則より前にある必要がある。
+const hostRule = "https://andantino-shoes.jp/*";
+const hostTarget = `${siteUrl}/:splat`;
+if (redirectRules.get(hostRule) !== hostTarget) {
+  fail("_redirects", `apex domain must redirect to ${hostTarget}`);
+} else {
+  const ruleOrder = [...redirectRules.keys()];
+  if (ruleOrder.indexOf(hostRule) !== 0) fail("_redirects", "the apex-to-www rule must be the first redirect");
+}
+
+// 301の転送先が実在するページであることを確認する。転送先を消したり
+// 改名したりすると、旧URLからの流入が404に落ちる。
+const sitePaths = new Set(pages.map((page) => page.path));
+for (const [from, to] of redirectRules) {
+  if (!to.startsWith("/") || to.includes(":")) continue;
+  if (sitePaths.has(to)) continue;
+  try {
+    await access(new URL(resolveAsset(to), root));
+  } catch {
+    fail("_redirects", `redirect target does not exist: ${from} → ${to}`);
+  }
 }
 
 if (errors.length) {
