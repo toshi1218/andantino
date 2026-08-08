@@ -104,6 +104,12 @@ Cloudflare Pagesは `/about.html` へのアクセスを `/about` へ308リダイ
 |---|---|
 | `https://andantino-shoes.jp/*` → `https://www.andantino-shoes.jp/:splat` | canonicalがwww付きのため、apexドメインをwwwへ寄せる。**パス単位の規則より前に置く必要があります**（後ろに置くとapex側でも本文が配信され、重複コンテンツになります） |
 | `/dimoco-insole.html` → `/dymoco-insole` | 新サイト内の綴り違い対策 |
+
+apexの規則は、Cloudflare Pagesのカスタムドメインに `andantino-shoes.jp` を追加して
+はじめて働きます。DNS切替後に `https://andantino-shoes.jp/` がwwwへ301されない場合は、
+Cloudflareダッシュボードの **Rules → Redirect Rules** で
+「Hostname equals `andantino-shoes.jp`」→「Dynamic: `concat("https://www.andantino-shoes.jp", http.request.uri.path)`、301」
+を作れば同じ結果になります。
 | `/docs/*` `/scripts/*` `/package.json` など | サイトの一部でないファイルを配信しない |
 
 ---
