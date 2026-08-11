@@ -1,5 +1,7 @@
-# 旧サイト（.php）からの301
+# 旧サイト（ファイズ制作版）からの301
+# 旧URLごとに内容が最も近い新ページへ1対1で転送する。
 /index.php / 301
+/index.html / 301
 /about.php /about.html 301
 /selection.php /adult-shoes.html 301
 /childrenshoes.php /childrens-shoes.html 301
