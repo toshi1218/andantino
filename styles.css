@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Klee+One:wght@500&family=Noto+Sans+JP:wght@400;500;700&display=swap");
 
 :root {
   --cream: #fff9f2;
@@ -20,8 +20,8 @@
   --shadow-sm: 0 8px 24px rgba(69, 50, 36, 0.07);
   --shadow-md: 0 14px 38px rgba(69, 50, 36, 0.09);
   --brand-serif: Georgia, "Times New Roman", "Yu Mincho", serif;
-  --serif: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
-  --sans: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  --serif: "Klee One", "Yu Gothic", Meiryo, sans-serif;
+  --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
 }
 
 * {
