@@ -1,0 +1,38 @@
+name: Go live on apex domain
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-live-metadata:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build generated content
+        run: npm run build
+      - name: Normalize canonical host to apex
+        run: node scripts/prepare-live-release.mjs
+      - name: Enable indexing for production
+        run: npm run indexing:live
+      - name: Validate production site
+        run: npm run validate
+      - name: Commit live release metadata
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git diff --cached --quiet || git commit -m "Go live on andantino-shoes.jp"
+          git push origin HEAD:main
