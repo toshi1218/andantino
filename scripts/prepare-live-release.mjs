@@ -1,74 +1,35 @@
 import { readFile, writeFile, readdir } from "node:fs/promises";
+import { extname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = new URL("../", import.meta.url);
+const root = fileURLToPath(new URL("../", import.meta.url));
 const OLD_HOST = "https://www.andantino-shoes.jp";
 const NEW_HOST = "https://andantino-shoes.jp";
+const allowedExtensions = new Set([".html", ".xml", ".txt", ".mjs", ".js", ".json", ".md"]);
+const ignoredDirectories = new Set([".git", "node_modules"]);
 
-const textTargets = [
-  "index.html",
-  "about.html",
-  "owner.html",
-  "adult-shoes.html",
-  "childrens-shoes.html",
-  "products.html",
-  "insoles.html",
-  "pricing.html",
-  "seminars.html",
-  "for-professionals.html",
-  "guides.html",
-  "shoe-wearing.html",
-  "foot-problems.html",
-  "hallux-valgus.html",
-  "tailors-bunion.html",
-  "foot-arch.html",
-  "leg-length-discrepancy.html",
-  "knee-pain.html",
-  "foot-check.html",
-  "nordic-walking.html",
-  "case-studies.html",
-  "articles.html",
-  "articles-children.html",
-  "articles-adult.html",
-  "articles-foot-problems.html",
-  "articles-insoles.html",
-  "articles-shoe-wearing.html",
-  "online-consultation.html",
-  "pdf-products.html",
-  "faq.html",
-  "contact.html",
-  "news.html",
-  "links.html",
-  "privacy.html",
-  "terms.html",
-  "legal.html",
-  "404.html",
-  "sitemap.xml",
-  "robots.txt",
-  "llms.txt",
-  "scripts/site-pages.mjs"
-];
+async function walk(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (!ignoredDirectories.has(entry.name)) files.push(...await walk(full));
+      continue;
+    }
+    if (allowedExtensions.has(extname(entry.name))) files.push(full);
+  }
+  return files;
+}
 
-for (const file of textTargets) {
-  const url = new URL(file, root);
-  try {
-    const current = await readFile(url, "utf8");
-    const next = current.split(OLD_HOST).join(NEW_HOST);
-    if (next !== current) await writeFile(url, next);
-  } catch {
-    // Optional/generated files may not exist yet.
+let changed = 0;
+for (const file of await walk(root)) {
+  const current = await readFile(file, "utf8");
+  const next = current.split(OLD_HOST).join(NEW_HOST);
+  if (next !== current) {
+    await writeFile(file, next);
+    changed += 1;
   }
 }
 
-try {
-  const articleFiles = (await readdir(new URL("articles/", root))).filter((file) => file.endsWith(".html"));
-  for (const file of articleFiles) {
-    const url = new URL(`articles/${file}`, root);
-    const current = await readFile(url, "utf8");
-    const next = current.split(OLD_HOST).join(NEW_HOST);
-    if (next !== current) await writeFile(url, next);
-  }
-} catch {
-  // No generated article directory yet.
-}
-
-console.log(`Canonical host normalized: ${OLD_HOST} -> ${NEW_HOST}`);
+console.log(`Canonical host normalized in ${changed} file(s): ${OLD_HOST} -> ${NEW_HOST}`);
