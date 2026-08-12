@@ -1,0 +1,43 @@
+name: patch-unify-header
+
+on:
+  push:
+    branches:
+      - fix/unify-header-actions
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/unify-header-actions
+          fetch-depth: 0
+      - name: Normalize header actions across information pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('script.js')
+          text = p.read_text()
+          marker = 'const infoHeader = document.querySelector(".info-header");\n\n'
+          insert = '''const infoHeader = document.querySelector(".info-header");\n\nif (infoHeader) {\n  const headerInner = infoHeader.querySelector(".info-header__inner");\n  const quickNav = headerInner ? [...headerInner.children].find((element) => element.tagName === "NAV") : null;\n  if (quickNav) {\n    quickNav.className = "header__actions info-header__actions";\n    quickNav.setAttribute("aria-label", "ご予約・ご相談");\n    quickNav.innerHTML = `\n      <a class="header__phone info-header__phone" href="tel:0734947110">\n        <small>お電話でご相談</small>\n        <strong>073-494-7110</strong>\n      </a>\n      <a class="button button--small" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a>`;\n  }\n}\n\n'''
+          if marker not in text:
+              raise SystemExit('marker not found')
+          text = text.replace(marker, insert, 1)
+          p.write_text(text)
+          PY
+      - name: Remove temporary workflow
+        run: rm .github/workflows/patch-unify-header.yml
+      - name: Validate
+        run: npm run validate
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js .github/workflows/patch-unify-header.yml
+          git commit -m "全ページのヘッダー導線を統一"
+          git push origin HEAD:fix/unify-header-actions
