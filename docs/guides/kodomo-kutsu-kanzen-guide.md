@@ -388,7 +388,7 @@ ANDANTINOで行うのは**靴選びのための計測と観察**であり、診�
 
 公式LINE：https://line.me/R/ti/p/@680mdoos
 お電話：073-494-7110
-ウェブサイト：https://www.andantino-shoes.jp/
+ウェブサイト：https://andantino-shoes.jp/
 
 ---
 

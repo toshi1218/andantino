@@ -3,7 +3,7 @@ import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const OLD_HOST = "https://www.andantino-shoes.jp";
+const OLD_HOST = "https://andantino-shoes.jp";
 const NEW_HOST = "https://andantino-shoes.jp";
 const allowedExtensions = new Set([".html", ".xml", ".txt", ".mjs", ".js", ".json", ".md"]);
 const ignoredDirectories = new Set([".git", "node_modules"]);

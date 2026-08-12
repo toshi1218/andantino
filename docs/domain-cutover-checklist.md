@@ -34,7 +34,7 @@
 5. 本番表示に問題がないことを確認してから `npm run indexing:live` を実行する。
 6. `npm run validate` を再実行し、変更をコミットしてCloudflareへ再デプロイする。
 7. 本番レスポンスから `X-Robots-Tag: noindex` が消えていること、HTMLのrobots metaが `index,follow` になっていることを確認する。
-8. `sitemap.xml` とcanonicalが `https://www.andantino-shoes.jp` の正規URLを指していることを確認する。
+8. `sitemap.xml` とcanonicalが `https://andantino-shoes.jp` の正規URLを指していることを確認する。
 
 ## 公開後
 
@@ -49,7 +49,7 @@
 
 1. 公開URLを一覧化する。
 2. Jimdo側で外部URLへの301が利用できる場合は、内容が最も近い新サイトURLへ個別転送する。
-3. 外部301が利用できない場合は、各ページに公式サイト移転案内と `https://www.andantino-shoes.jp/` への明確なリンクを掲載する。
+3. 外部301が利用できない場合は、各ページに公式サイト移転案内と `https://andantino-shoes.jp/` への明確なリンクを掲載する。
 4. 検索結果・被リンク・アクセスの移行を確認した後に非公開または削除する。
 
 JimdoのURLはCloudflare側の `_redirects` では制御できないため、Jimdo管理画面側での作業が必要。

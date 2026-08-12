@@ -91,30 +91,30 @@ ANDANTINOは靴の専門店であり、医療機関ではありません。病�
 
 ## 公式サイト内ページ
 
-- https://www.andantino-shoes.jp/
-- https://www.andantino-shoes.jp/about.html
-- https://www.andantino-shoes.jp/owner.html
-- https://www.andantino-shoes.jp/adult-shoes.html
-- https://www.andantino-shoes.jp/childrens-shoes.html
-- https://www.andantino-shoes.jp/products.html
-- https://www.andantino-shoes.jp/insoles.html
-- https://www.andantino-shoes.jp/pricing.html
-- https://www.andantino-shoes.jp/seminars.html
-- https://www.andantino-shoes.jp/guides.html
-- https://www.andantino-shoes.jp/shoe-wearing.html
-- https://www.andantino-shoes.jp/foot-problems.html
-- https://www.andantino-shoes.jp/hallux-valgus.html
-- https://www.andantino-shoes.jp/tailors-bunion.html
-- https://www.andantino-shoes.jp/foot-arch.html
-- https://www.andantino-shoes.jp/leg-length-discrepancy.html
-- https://www.andantino-shoes.jp/knee-pain.html
-- https://www.andantino-shoes.jp/foot-check.html
-- https://www.andantino-shoes.jp/faq.html
-- https://www.andantino-shoes.jp/contact.html
-- https://www.andantino-shoes.jp/links.html
-- https://www.andantino-shoes.jp/privacy.html
-- https://www.andantino-shoes.jp/terms.html
-- https://www.andantino-shoes.jp/legal.html
+- https://andantino-shoes.jp/
+- https://andantino-shoes.jp/about.html
+- https://andantino-shoes.jp/owner.html
+- https://andantino-shoes.jp/adult-shoes.html
+- https://andantino-shoes.jp/childrens-shoes.html
+- https://andantino-shoes.jp/products.html
+- https://andantino-shoes.jp/insoles.html
+- https://andantino-shoes.jp/pricing.html
+- https://andantino-shoes.jp/seminars.html
+- https://andantino-shoes.jp/guides.html
+- https://andantino-shoes.jp/shoe-wearing.html
+- https://andantino-shoes.jp/foot-problems.html
+- https://andantino-shoes.jp/hallux-valgus.html
+- https://andantino-shoes.jp/tailors-bunion.html
+- https://andantino-shoes.jp/foot-arch.html
+- https://andantino-shoes.jp/leg-length-discrepancy.html
+- https://andantino-shoes.jp/knee-pain.html
+- https://andantino-shoes.jp/foot-check.html
+- https://andantino-shoes.jp/faq.html
+- https://andantino-shoes.jp/contact.html
+- https://andantino-shoes.jp/links.html
+- https://andantino-shoes.jp/privacy.html
+- https://andantino-shoes.jp/terms.html
+- https://andantino-shoes.jp/legal.html
 
 ## 公式外部リンク
 

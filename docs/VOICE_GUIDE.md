@@ -46,16 +46,16 @@
 
 ## 主な一次情報
 
-- [旧公式サイト「ANDANTINOについて」](https://www.andantino-shoes.jp/about.php)
-- [旧公式サイト トップページ](https://www.andantino-shoes.jp/)
+- [旧公式サイト「ANDANTINOについて」](https://andantino-shoes.jp/about.php)
+- [旧公式サイト トップページ](https://andantino-shoes.jp/)
 - [公式ブログ「あなたの足は元気ですか」](https://blog.livedoor.jp/andantino7110/archives/1798375.html)
 - [公式ブログ「上履きの比較 その3」](https://blog.livedoor.jp/andantino7110/archives/1978808.html)
 - [公式ブログ「フラウプラッツ訪問記」](https://blog.livedoor.jp/andantino7110/archives/1919333.html)
 - [公式ブログ「外反母趾と自然療法フットケア」](https://blog.livedoor.jp/andantino7110/archives/1771620.html)
 - [公式ブログ「アフガニスタンへ義足を送る」](https://blog.livedoor.jp/andantino7110/archives/1179447.html)
-- [旧公式サイト「30代からはじめる靴選び」](https://www.andantino-shoes.jp/selection.php)
-- [旧公式サイト「子どもの足育と靴」](https://www.andantino-shoes.jp/childrenshoes.php)
-- [旧公式サイト「インソール作製・料金」](https://www.andantino-shoes.jp/insole.php)
+- [旧公式サイト「30代からはじめる靴選び」](https://andantino-shoes.jp/selection.php)
+- [旧公式サイト「子どもの足育と靴」](https://andantino-shoes.jp/childrenshoes.php)
+- [旧公式サイト「インソール作製・料金」](https://andantino-shoes.jp/insole.php)
 - [公式Facebookページ](https://www.facebook.com/andantino.foot/)
 - [公式Facebook「自分の足で歩きたい方に寄り添う店」](https://www.facebook.com/andantino.foot/posts/1403848761536482/)
 - [公式Facebook「ケンプランターのパンプス」](https://www.facebook.com/andantino.foot/posts/1528384309082926/)

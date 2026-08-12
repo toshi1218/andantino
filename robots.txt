@@ -50,5 +50,5 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://www.andantino-shoes.jp/sitemap.xml
-Sitemap: https://www.andantino-shoes.jp/sitemap-articles.xml
+Sitemap: https://andantino-shoes.jp/sitemap.xml
+Sitemap: https://andantino-shoes.jp/sitemap-articles.xml

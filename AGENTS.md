@@ -2,7 +2,7 @@
 
 このファイルは、ChatGPT（Codex）などのAIエージェントがこのリポジトリを操作するときの指示書です。
 
-このサイトはCloudflare Pagesで公開されている静的サイトです。`main` ブランチに入った内容が、そのまま本番サイト（https://www.andantino-shoes.jp/ ）になります。
+このサイトはCloudflare Pagesで公開されている静的サイトです。`main` ブランチに入った内容が、そのまま本番サイト（https://andantino-shoes.jp/ ）になります。
 
 ## いちばん多い作業：記事を1本追加する
 
@@ -24,7 +24,7 @@
 ```
 content/articles/shingakki-kodomo-kutsu-check.md
   ↓
-https://www.andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check.html
+https://andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check.html
 ```
 
 - 半角小文字・数字・ハイフンのみ（日本語・大文字・アンダースコアは不可）

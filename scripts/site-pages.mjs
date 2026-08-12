@@ -1,4 +1,4 @@
-export const siteUrl = "https://www.andantino-shoes.jp";
+export const siteUrl = "https://andantino-shoes.jp";
 export const lastmod = "2026-07-27";
 
 export const pages = [
