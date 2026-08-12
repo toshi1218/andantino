@@ -38,6 +38,21 @@ const resolveMenuMarkup = () =>
 
 const infoHeader = document.querySelector(".info-header");
 
+if (infoHeader) {
+  const headerInner = infoHeader.querySelector(".info-header__inner");
+  const quickNav = headerInner ? [...headerInner.children].find((element) => element.tagName === "NAV") : null;
+  if (quickNav) {
+    quickNav.className = "header__actions info-header__actions";
+    quickNav.setAttribute("aria-label", "ご予約・ご相談");
+    quickNav.innerHTML = `
+      <a class="header__phone info-header__phone" href="tel:0734947110">
+        <small>お電話でご相談</small>
+        <strong>073-494-7110</strong>
+      </a>
+      <a class="button button--small" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">LINEでご予約・ご相談</a>`;
+  }
+}
+
 if (infoHeader && !infoHeader.querySelector(".menu-button")) {
   const headerInner = infoHeader.querySelector(".info-header__inner");
   const quickNav = [...headerInner.children].find((element) => element.tagName === "NAV");
