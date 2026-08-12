@@ -956,17 +956,9 @@ a {
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
-.service-card--raised {
-  transform: translateY(-24px);
-}
-
 .service-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow);
-}
-
-.service-card--raised:hover {
-  transform: translateY(-32px);
 }
 
 .service-card__media {
@@ -1539,14 +1531,6 @@ body.menu-open .back-to-top {
 
   .services__grid {
     grid-template-columns: 1fr;
-  }
-
-  .service-card--raised {
-    transform: none;
-  }
-
-  .service-card--raised:hover {
-    transform: translateY(-8px);
   }
 
   .consult__panel {
