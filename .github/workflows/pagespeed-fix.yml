@@ -1,10 +1,10 @@
 name: Apply PageSpeed fixes
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - fix/pagespeed-mobile-20260807
-      - main
 
 permissions:
   contents: write
