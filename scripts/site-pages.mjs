@@ -1,5 +1,5 @@
 export const siteUrl = "https://andantino-shoes.jp";
-export const lastmod = "2026-07-27";
+export const lastmod = "2026-08-13";
 
 export const pages = [
   { file: "index.html", path: "/", priority: "1.0" },
