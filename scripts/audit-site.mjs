@@ -1,4 +1,4 @@
-import { readFile, access } from "node:fs/promises";
+import { readFile, access, readdir } from "node:fs/promises";
 import { pages, siteUrl } from "./site-pages.mjs";
 
 const root = new URL("../", import.meta.url);
@@ -66,6 +66,33 @@ function collectObjects(value, objects = []) {
   if (!Array.isArray(value)) objects.push(value);
   for (const child of Object.values(value)) collectObjects(child, objects);
   return objects;
+}
+
+function hasValidImageSignature(file, data) {
+  const extension = file.slice(file.lastIndexOf(".")).toLowerCase();
+  if (extension === ".webp") {
+    return data.length >= 12 && data.toString("ascii", 0, 4) === "RIFF" && data.toString("ascii", 8, 12) === "WEBP";
+  }
+  if (extension === ".png") return data.subarray(0, 8).toString("hex") === "89504e470d0a1a0a";
+  if (extension === ".jpg" || extension === ".jpeg") {
+    return data.length >= 3 && data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff;
+  }
+  if (extension === ".gif") return /^GIF8[79]a$/.test(data.toString("ascii", 0, 6));
+  if (extension === ".ico") return data.subarray(0, 4).toString("hex") === "00000100";
+  return true;
+}
+
+async function auditImageDirectory(directory, relativeDirectory) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const relativePath = `${relativeDirectory}/${entry.name}`;
+    if (entry.isDirectory()) {
+      await auditImageDirectory(new URL(`${entry.name}/`, directory), relativePath);
+      continue;
+    }
+    if (!/\.(?:webp|png|jpe?g|gif|ico)$/i.test(entry.name)) continue;
+    const data = await readFile(new URL(entry.name, directory));
+    if (!hasValidImageSignature(relativePath, data)) fail(relativePath, "invalid image signature; file is corrupt or mislabeled");
+  }
 }
 
 for (const page of pages) {
@@ -238,6 +265,8 @@ for (const page of pages) {
     }
   }
 }
+
+await auditImageDirectory(new URL("assets/", root), "assets");
 
 for (const [file, id] of referencedEntityIds) {
   if (!definedEntityIds.has(id)) fail(file, `JSON-LD references an undefined internal entity: ${id}`);
