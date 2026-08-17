@@ -200,6 +200,7 @@ function renderArticlePage(article, robotsMeta) {
           <a href="https://www.instagram.com/yoko1367/" target="_blank" rel="noopener">Instagram（個人）</a>
           <a href="https://www.youtube.com/@andantino7110" target="_blank" rel="noopener">YouTube</a>
           <a href="https://blog.livedoor.jp/andantino7110/" target="_blank" rel="noopener">公式ブログ</a>
+          <a href="https://note.com/andantino_foot" target="_blank" rel="noopener">note</a>
         </span>
       </div>
     </footer>
