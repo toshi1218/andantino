@@ -8,14 +8,16 @@ const headersText = await readFile(new URL("_headers", root), "utf8");
 const requiredRedirects = new Map([
   ["/index.php", "/"],
   ["/index.html", "/"],
-  ["/about.php", "/about.html"],
-  ["/selection.php", "/adult-shoes.html"],
-  ["/childrenshoes.php", "/childrens-shoes.html"],
-  ["/product.php", "/products.html"],
-  ["/insole.php", "/insoles.html"],
-  ["/seminar.php", "/seminars.html"],
-  ["/contact.php", "/contact.html"],
-  ["/dimoco-insole.html", "/dymoco-insole.html"]
+  ["/about.php", "/about"],
+  ["/selection.php", "/adult-shoes"],
+  ["/childrenshoes.php", "/childrens-shoes"],
+  ["/product.php", "/products"],
+  ["/insole.php", "/insoles"],
+  ["/seminar.php", "/seminars"],
+  ["/contact.php", "/contact"],
+  ["/dimoco-insole.html", "/dymoco-insole"],
+  ["/entry.php", "/products"],
+  ["/entry_list.php", "/news"]
 ]);
 
 const redirectLines = redirectsText
@@ -57,6 +59,9 @@ for (const page of pages) {
   const canonical = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["']/i)?.[1];
   if (canonical !== expectedCanonical) {
     errors.push(`${page.file}: canonical expected ${expectedCanonical}, got ${canonical ?? "missing"}`);
+  }
+  if (canonical?.endsWith(".html")) {
+    errors.push(`${page.file}: canonical must use the extensionless public URL`);
   }
   if (!/<meta\s+name=["']robots["']\s+content=["'][^"']+["']/i.test(html)) {
     errors.push(`${page.file}: robots meta missing`);

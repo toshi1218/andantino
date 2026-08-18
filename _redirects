@@ -2,14 +2,16 @@
 # 旧URLごとに内容が最も近い新ページへ1対1で転送する。
 /index.php / 301
 /index.html / 301
-/about.php /about.html 301
-/selection.php /adult-shoes.html 301
-/childrenshoes.php /childrens-shoes.html 301
-/product.php /products.html 301
-/insole.php /insoles.html 301
-/seminar.php /seminars.html 301
-/contact.php /contact.html 301
-/dimoco-insole.html /dymoco-insole.html 301
+/about.php /about 301
+/selection.php /adult-shoes 301
+/childrenshoes.php /childrens-shoes 301
+/product.php /products 301
+/insole.php /insoles 301
+/seminar.php /seminars 301
+/contact.php /contact 301
+/dimoco-insole.html /dymoco-insole 301
+/entry.php /products 301
+/entry_list.php /news 301
 
 # 配信しないファイル
 # Cloudflare Pages の Build output directory が "." のため、

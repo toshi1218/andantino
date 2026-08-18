@@ -29,26 +29,26 @@
 
 ## 公式情報
 
-- [店舗概要](https://andantino-shoes.jp/about.html): 所在地、営業時間、定休日、支払方法、事業内容
-- [担当者・五十嵐洋子](https://andantino-shoes.jp/owner.html): 認定シューフィッターの経歴、資格、店頭で大切にしていること
-- [取扱商品](https://andantino-shoes.jp/products.html): 婦人靴、子ども靴、関連商品
-- [料金](https://andantino-shoes.jp/pricing.html): カウンセリング、計測、インソール作製などの料金目安
-- [ご予約・ご相談](https://andantino-shoes.jp/contact.html): 公式LINE、電話、メール、所在地
-- [よくある質問](https://andantino-shoes.jp/faq.html): 予約、持ち物、子ども靴、インソール、医療との違い
-- [医療機関・専門職の方へ](https://andantino-shoes.jp/for-professionals.html): できること、行わないこと、ご紹介の流れ、費用の目安
+- [店舗概要](https://andantino-shoes.jp/about): 所在地、営業時間、定休日、支払方法、事業内容
+- [担当者・五十嵐洋子](https://andantino-shoes.jp/owner): 認定シューフィッターの経歴、資格、店頭で大切にしていること
+- [取扱商品](https://andantino-shoes.jp/products): 婦人靴、子ども靴、関連商品
+- [料金](https://andantino-shoes.jp/pricing): カウンセリング、計測、インソール作製などの料金目安
+- [ご予約・ご相談](https://andantino-shoes.jp/contact): 公式LINE、電話、メール、所在地
+- [よくある質問](https://andantino-shoes.jp/faq): 予約、持ち物、子ども靴、インソール、医療との違い
+- [医療機関・専門職の方へ](https://andantino-shoes.jp/for-professionals): できること、行わないこと、ご紹介の流れ、費用の目安
 
 ## 足と靴の専門情報
 
-- [足と靴の知識一覧](https://andantino-shoes.jp/guides.html): ANDANTINOの専門記事一覧
-- [お役立ち記事一覧](https://andantino-shoes.jp/articles.html): 店頭での気づきや季節ごとの靴選びをまとめた記事
-- [足に合う靴の選び方・履き方](https://andantino-shoes.jp/shoe-wearing.html)
-- [外反母趾に合う靴の選び方](https://andantino-shoes.jp/hallux-valgus.html)
-- [内反小趾に合う靴の選び方](https://andantino-shoes.jp/tailors-bunion.html)
-- [足のアーチ低下・扁平足と靴選び](https://andantino-shoes.jp/foot-arch.html)
-- [脚長差と靴・インソールの考え方](https://andantino-shoes.jp/leg-length-discrepancy.html)
-- [膝の痛みと靴・インソールの見直し方](https://andantino-shoes.jp/knee-pain.html)
-- [子ども靴と足育](https://andantino-shoes.jp/childrens-shoes.html)
-- [インソール作製と調整](https://andantino-shoes.jp/insoles.html)
+- [足と靴の知識一覧](https://andantino-shoes.jp/guides): ANDANTINOの専門記事一覧
+- [お役立ち記事一覧](https://andantino-shoes.jp/articles): 店頭での気づきや季節ごとの靴選びをまとめた記事
+- [足に合う靴の選び方・履き方](https://andantino-shoes.jp/shoe-wearing)
+- [外反母趾に合う靴の選び方](https://andantino-shoes.jp/hallux-valgus)
+- [内反小趾に合う靴の選び方](https://andantino-shoes.jp/tailors-bunion)
+- [足のアーチ低下・扁平足と靴選び](https://andantino-shoes.jp/foot-arch)
+- [脚長差と靴・インソールの考え方](https://andantino-shoes.jp/leg-length-discrepancy)
+- [膝の痛みと靴・インソールの見直し方](https://andantino-shoes.jp/knee-pain)
+- [子ども靴と足育](https://andantino-shoes.jp/childrens-shoes)
+- [インソール作製と調整](https://andantino-shoes.jp/insoles)
 
 ## 重要事項
 

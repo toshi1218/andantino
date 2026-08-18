@@ -24,7 +24,7 @@
 ```
 content/articles/shingakki-kodomo-kutsu-check.md
   ↓
-https://andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check.html
+https://andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check
 ```
 
 - 半角小文字・数字・ハイフンのみ（日本語・大文字・アンダースコアは不可）
@@ -100,7 +100,7 @@ call_to_action: children
 
 **太字**
 
-[サイト内リンク](../childrens-shoes.html)
+[サイト内リンク](../childrens-shoes)
 [外部リンク](https://example.com/)
 ```
 

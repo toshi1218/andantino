@@ -2,7 +2,7 @@
 // カテゴリ別一覧・sitemap-articles.xml を静的生成する。
 //
 // 記事の元データはリポジトリ内のMarkdownファイルであり、外部サービスには依存しない。
-// 1ファイル＝1記事、ファイル名がそのままURL（/articles/{ファイル名}.html）になる。
+// 1ファイル＝1記事、ファイル名がそのまま公開URL（/articles/{ファイル名}）になる。
 // frontmatter に draft: true と書かれた記事は生成対象から外れる。
 //
 // 生成されるHTMLの構造・SEOタグ・パンくず・構造化データはすべてこのスクリプトが
@@ -28,10 +28,10 @@ const CATEGORY_META = {
 
 const CTA_MAP = {
   line: { label: "LINEでご予約・ご相談", href: lineUrl, external: true },
-  reservation: { label: "ご来店予約はこちら", href: "../contact.html", external: false },
-  services: { label: "サービス内容を見る", href: "../pricing.html", external: false },
-  children: { label: "子どもの靴相談を見る", href: "../childrens-shoes.html", external: false },
-  insoles: { label: "インソール相談を見る", href: "../insoles.html", external: false },
+  reservation: { label: "ご来店予約はこちら", href: "../contact", external: false },
+  services: { label: "サービス内容を見る", href: "../pricing", external: false },
+  children: { label: "子どもの靴相談を見る", href: "../childrens-shoes", external: false },
+  insoles: { label: "インソール相談を見る", href: "../insoles", external: false },
 };
 
 function escapeHtml(value) {
@@ -42,7 +42,7 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-// 記事詳細ページは /articles/{slug}.html に出力されるため、管理画面で
+// 記事詳細ページの実体は /articles/{slug}.html に出力されるため、管理画面で
 // 「./assets/foo.webp」「/assets/foo.webp」のように入力された画像パスを
 // 1階層上へ辿る形（../assets/foo.webp）へ直す。外部URLはそのまま使う。
 function toArticleAssetPath(value) {
@@ -81,7 +81,7 @@ function renderCta(article) {
 
 function renderArticlePage(article, robotsMeta) {
   const category = CATEGORY_META[article.category] || CATEGORY_META.other;
-  const url = `${siteUrl}/articles/${article.slug}.html`;
+  const url = `${siteUrl}/articles/${article.slug}`;
   const title = escapeHtml(article.seo_title || article.title);
   const description = escapeHtml(article.seo_description || article.excerpt || "");
   const dates = formatDate(article.published_at || article.updated_at || article.created_at);
@@ -92,10 +92,10 @@ function renderArticlePage(article, robotsMeta) {
 
   const breadcrumbItems = [
     { name: "トップ", item: `${siteUrl}/` },
-    { name: "お役立ち記事", item: `${siteUrl}/articles.html` },
+    { name: "お役立ち記事", item: `${siteUrl}/articles` },
   ];
   if (category.listFile) {
-    breadcrumbItems.push({ name: category.label, item: `${siteUrl}/${category.listFile}` });
+    breadcrumbItems.push({ name: category.label, item: `${siteUrl}/${category.listFile.replace(/\.html$/, "")}` });
   }
   breadcrumbItems.push({ name: article.title, item: url });
 
@@ -127,7 +127,7 @@ function renderArticlePage(article, robotsMeta) {
         datePublished: dates.datetime,
         dateModified: modified.datetime,
         inLanguage: "ja-JP",
-        author: { "@id": `${siteUrl}/owner.html#yoko-igarashi` },
+        author: { "@id": `${siteUrl}/owner#yoko-igarashi` },
         publisher: { "@id": `${siteUrl}/#store` },
         description: article.excerpt || "",
       },
@@ -151,13 +151,13 @@ function renderArticlePage(article, robotsMeta) {
     <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
   </head>
   <body class="info-page"><a class="skip-link" href="#main">本文へ移動</a>
-    <header class="info-header"><div class="container info-header__inner"><a class="brand" href="../"><span class="brand__name">ANDANTINO</span><span class="brand__tagline">靴とインソールの専門店</span></a><nav aria-label="ページナビゲーション"><a href="../articles.html">お役立ち記事</a><a href="../faq.html">よくある質問</a><a class="button button--small" href="../contact.html">ご予約・ご相談</a></nav></div></header>
+    <header class="info-header"><div class="container info-header__inner"><a class="brand" href="../"><span class="brand__name">ANDANTINO</span><span class="brand__tagline">靴とインソールの専門店</span></a><nav aria-label="ページナビゲーション"><a href="../articles">お役立ち記事</a><a href="../faq">よくある質問</a><a class="button button--small" href="../contact">ご予約・ご相談</a></nav></div></header>
     <nav class="breadcrumb" aria-label="パンくずリスト"><ol class="container">${breadcrumbHtml}</ol></nav>
     <main id="main">
       <section class="article-hero"><div class="container article-hero__inner"><span class="section-kicker">${escapeHtml(category.label)}</span><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.excerpt || "")}</p></div></section>
       ${heroImage}
       <section class="article-body"><div class="container policy-content">
-        <p class="article-byline">担当者：<a href="../owner.html">認定シューフィッター 五十嵐洋子</a> ／ 最終更新：${modified.visible}</p>
+        <p class="article-byline">担当者：<a href="../owner">認定シューフィッター 五十嵐洋子</a> ／ 最終更新：${modified.visible}</p>
         <article class="prose">${article.article_content || ""}</article>
         ${renderCta(article)}
       </div></section>
@@ -174,22 +174,22 @@ function renderArticlePage(article, robotsMeta) {
           <a href="../#children">子どもの足育</a>
           <a href="../#services">インソール</a>
           <a href="../#shop">店舗案内</a>
-          <a href="../about.html">ANDANTINOについて</a>
-          <a href="../owner.html">五十嵐洋子</a>
-          <a href="../faq.html">よくある質問</a>
-          <a href="../guides.html">足と靴の知識</a>
-          <a href="../articles.html">お役立ち記事</a>
-          <a href="../products.html">取扱商品</a>
-          <a href="../seminars.html">セミナー</a>
-          <a href="../online-consultation.html">オンライン相談</a>
-          <a href="../pdf-products.html">デジタル商品</a>
-          <a href="../for-professionals.html">医療機関・専門職の方へ</a>
-          <a href="../contact.html">お問い合わせ</a>
-          <a href="../news.html">お知らせ</a>
-          <a href="../links.html">外部リンク</a>
-          <a href="../privacy.html">プライバシー</a>
-          <a href="../terms.html">利用規約</a>
-          <a href="../legal.html">特定商取引法</a>
+          <a href="../about">ANDANTINOについて</a>
+          <a href="../owner">五十嵐洋子</a>
+          <a href="../faq">よくある質問</a>
+          <a href="../guides">足と靴の知識</a>
+          <a href="../articles">お役立ち記事</a>
+          <a href="../products">取扱商品</a>
+          <a href="../seminars">セミナー</a>
+          <a href="../online-consultation">オンライン相談</a>
+          <a href="../pdf-products">デジタル商品</a>
+          <a href="../for-professionals">医療機関・専門職の方へ</a>
+          <a href="../contact">お問い合わせ</a>
+          <a href="../news">お知らせ</a>
+          <a href="../links">外部リンク</a>
+          <a href="../privacy">プライバシー</a>
+          <a href="../terms">利用規約</a>
+          <a href="../legal">特定商取引法</a>
         </div>
       </div>
       <div class="container footer__bottom">
@@ -221,7 +221,7 @@ function renderListCard(article) {
             <div class="article-card__media">${image}</div>
             <div class="article-card__content">
               <span class="article-card__category">${escapeHtml(category.label)}</span>
-              <h3><a href="./articles/${article.slug}.html">${escapeHtml(article.title)}</a></h3>
+              <h3><a href="./articles/${article.slug}">${escapeHtml(article.title)}</a></h3>
               <p>${escapeHtml(article.excerpt || "")}</p>
               <time datetime="${dates.datetime}">${dates.display}</time>
             </div>
@@ -353,7 +353,7 @@ async function main() {
     .map((article) => {
       const date = (article.updated_at || article.published_at || lastmod).slice(0, 10);
       return `  <url>
-    <loc>${siteUrl}/articles/${article.slug}.html</loc>
+    <loc>${siteUrl}/articles/${article.slug}</loc>
     <lastmod>${date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
