@@ -146,13 +146,15 @@ Cloudflare PagesのGit連携で配信する静的サイトです。サーバー�
 | 旧URL | 新URL |
 |---|---|
 | `/index.php` | `/` |
-| `/about.php` | `/about.html`、`/owner.html`、`/links.html` |
-| `/selection.php` | `/adult-shoes.html` |
-| `/childrenshoes.php` | `/childrens-shoes.html` |
-| `/product.php` | `/products.html` |
-| `/insole.php` | `/insoles.html`、`/pricing.html` |
-| `/seminar.php` | `/seminars.html` |
-| `/contact.php` | `/contact.html`、`/privacy.html`、`/legal.html` |
+| `/about.php` | `/about`、`/owner`、`/links` |
+| `/selection.php` | `/adult-shoes` |
+| `/childrenshoes.php` | `/childrens-shoes` |
+| `/product.php` | `/products` |
+| `/insole.php` | `/insoles`、`/pricing` |
+| `/seminar.php` | `/seminars` |
+| `/contact.php` | `/contact`、`/privacy`、`/legal` |
+| `/entry.php` | `/products` |
+| `/entry_list.php` | `/news` |
 
 旧URLから代表ページへの301は `_redirects` で維持します。公開後はSearch Consoleへ `sitemap.xml` を送信し、本番で301・robots・sitemap・構造化データを確認してください。
 

@@ -22,14 +22,16 @@
 3. 以下の旧URLが301で正しい新URLへ移動することを確認する。
    - `/index.php` → `/`
    - `/index.html` → `/`
-   - `/about.php` → `/about.html`
-   - `/selection.php` → `/adult-shoes.html`
-   - `/childrenshoes.php` → `/childrens-shoes.html`
-   - `/product.php` → `/products.html`
-   - `/insole.php` → `/insoles.html`
-   - `/seminar.php` → `/seminars.html`
-   - `/contact.php` → `/contact.html`
-   - `/dimoco-insole.html` → `/dymoco-insole.html`
+   - `/about.php` → `/about`
+   - `/selection.php` → `/adult-shoes`
+   - `/childrenshoes.php` → `/childrens-shoes`
+   - `/product.php` → `/products`
+   - `/insole.php` → `/insoles`
+   - `/seminar.php` → `/seminars`
+   - `/contact.php` → `/contact`
+   - `/dimoco-insole.html` → `/dymoco-insole`
+   - `/entry.php` → `/products`
+   - `/entry_list.php` → `/news`
 4. 404、リダイレクトループ、HTTP→HTTPS、www/非wwwの統一を確認する。
 5. 本番表示に問題がないことを確認してから `npm run indexing:live` を実行する。
 6. `npm run validate` を再実行し、変更をコミットしてCloudflareへ再デプロイする。

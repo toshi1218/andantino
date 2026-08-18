@@ -25,7 +25,7 @@ for (const agent of ["OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "Perpl
 if (!robotsTxt.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
   errors.push("robots.txt: canonical sitemap URL is missing");
 }
-for (const path of ["/about.html", "/owner.html", "/pricing.html", "/contact.html", "/guides.html"]) {
+for (const path of ["/about", "/owner", "/pricing", "/contact", "/guides"]) {
   if (!llmsTxt.includes(`${siteUrl}${path}`)) errors.push(`llms.txt: core page is missing: ${path}`);
 }
 if (!llmsTxt.includes("医療機関ではなく、診断・治療・処方は行いません")) {
@@ -98,6 +98,8 @@ async function auditImageDirectory(directory, relativeDirectory) {
 for (const page of pages) {
   const html = await readFile(new URL(page.file, root), "utf8");
   const expectedUrl = `${siteUrl}${page.path}`;
+
+  if (page.path !== "/" && page.path.endsWith(".html")) fail(page.file, "public page path must be extensionless");
 
   if (!/<html\s+lang=["']ja["']/i.test(html)) fail(page.file, "html lang must be ja");
 
@@ -179,7 +181,7 @@ for (const page of pages) {
     }
     if (objectTypes.includes("Article")) {
       if (!object.author) fail(page.file, "Article JSON-LD is missing author");
-      if (!/<p\b[^>]*class=["'][^"']*article-byline[^"']*["'][^>]*>[\s\S]*?<a\b[^>]*href=["']\.\/owner\.html["'][^>]*>[^<]*五十嵐洋子[^<]*<\/a>/i.test(html)) {
+      if (!/<p\b[^>]*class=["'][^"']*article-byline[^"']*["'][^>]*>[\s\S]*?<a\b[^>]*href=["']\.\/owner["'][^>]*>[^<]*五十嵐洋子[^<]*<\/a>/i.test(html)) {
         fail(page.file, "Article must visibly identify and link its expert");
       }
       if (object.dateModified) {
@@ -257,11 +259,18 @@ for (const page of pages) {
     if (/^(?:https?:|tel:|mailto:|#)/.test(href)) continue;
     const clean = href.split("#")[0].split("?")[0];
     if (!clean || clean === "./" || clean === ".") continue;
+    if (/\.html\/?$/i.test(clean)) {
+      fail(page.file, `internal public link must be extensionless: ${href}`);
+    }
     const target = clean.replace(/^\.\//, "").replace(/^\//, "");
     try {
       await access(new URL(target, root));
     } catch {
-      fail(page.file, `broken internal link: ${href}`);
+      try {
+        await access(new URL(`${target}.html`, root));
+      } catch {
+        fail(page.file, `broken internal link: ${href}`);
+      }
     }
   }
 }
@@ -359,6 +368,9 @@ const sitemap = await readFile(new URL("sitemap.xml", root), "utf8");
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 const expectedUrls = pages.map((page) => `${siteUrl}${page.path}`);
 if (JSON.stringify(sitemapUrls) !== JSON.stringify(expectedUrls)) fail("sitemap.xml", "URL list does not match the page manifest");
+for (const url of sitemapUrls) {
+  if (url.endsWith(".html")) fail("sitemap.xml", `public URL must be extensionless: ${url}`);
+}
 
 const robots = await readFile(new URL("robots.txt", root), "utf8");
 for (const agent of ["OAI-SearchBot", "ChatGPT-User", "GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"]) {
@@ -378,7 +390,7 @@ for (const requiredMarkup of ["info-header", "info-footer", '<script src="./scri
 }
 
 const redirects = await readFile(new URL("_redirects", root), "utf8");
-for (const oldPath of ["/index.php", "/about.php", "/selection.php", "/childrenshoes.php", "/product.php", "/insole.php", "/seminar.php", "/contact.php"]) {
+for (const oldPath of ["/index.php", "/about.php", "/selection.php", "/childrenshoes.php", "/product.php", "/insole.php", "/seminar.php", "/contact.php", "/entry.php", "/entry_list.php"]) {
   if (!redirects.includes(oldPath)) fail("_redirects", `missing legacy redirect for ${oldPath}`);
 }
 
