@@ -323,6 +323,7 @@ if (inquiryForm) {
       });
       const result = await response.json();
       if (response.ok && result.success) {
+        document.dispatchEvent(new CustomEvent("andantino:analytics", { detail: { eventType: "reservation_click", meta: { channel: "form" } } }));
         inquiryForm.hidden = true;
         if (successPanel) successPanel.hidden = false;
         successPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -361,6 +362,10 @@ if (tocLinks.length) {
     const payload = JSON.stringify({ event_type: eventType, page_path: window.location.pathname, meta: meta || {} });
     fetch(endpoint, { method: "POST", headers, body: payload, keepalive: true }).catch(() => {});
   }
+  document.addEventListener("andantino:analytics", (event) => {
+    const { eventType, meta } = event.detail || {};
+    if (eventType) sendEvent(eventType, meta);
+  });
   const path = window.location.pathname;
   if (/\/articles\/[^/]+\/?$/.test(path)) sendEvent("article_view");
   else if (/\/online-consultation\/?$/.test(path)) sendEvent("consultation_view");
@@ -370,6 +375,8 @@ if (tocLinks.length) {
     if (!link) return;
     const href = link.getAttribute("href");
     if (/^https:\/\/line\.me\//.test(href)) sendEvent("line_click", { href });
+    else if (/^tel:/.test(href)) sendEvent("reservation_click", { channel: "phone", href });
+    else if (/^mailto:/.test(href)) sendEvent("reservation_click", { channel: "email", href });
     else if (/(?:^|\/)contact(?:[?#]|$)/.test(href)) sendEvent("reservation_click", { href });
     else if (/^https:\/\/(www\.)?(facebook|instagram|youtube|note|x|twitter)\.com\//.test(href) || /^https:\/\/blog\.livedoor\.jp\//.test(href)) sendEvent("sns_click", { href });
   });
