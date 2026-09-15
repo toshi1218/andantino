@@ -4506,3 +4506,13 @@ body[data-page="404"] main {
     grid-template-columns: 1fr;
   }
 }
+
+/* トップページの本文中リンク（予約導線・オンライン相談・専門職向け）を、
+   周囲の文章と区別できるようにする */
+.hero__cta-note a,
+.step-grid p a,
+.shop__content > p a {
+  color: var(--blue-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
