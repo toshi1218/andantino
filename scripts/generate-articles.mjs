@@ -79,10 +79,22 @@ function renderCta(article) {
   return `<div class="article-cta"><div><h2>読んでみて気になったことがあれば、お気軽にご相談ください。</h2><p>記事の内容と似ているようで、実際は一人ずつ違います。今の靴を見ながら一緒に確認します。</p></div><a class="button" href="${cta.href}"${target}>${cta.label}</a></div>`;
 }
 
+// 記事ページの<title>を、サイト内の他ページと同じ「〜｜ANDANTINO 和歌山」の形にそろえる。
+// 一覧ページ（articles.html など）がこの形なので、記事本体もそれに合わせる。
+// seo_title で屋号を自分で書いている場合と、付けると長くなりすぎる場合はそのまま使う。
+const TITLE_SUFFIX = "｜ANDANTINO 和歌山";
+const TITLE_MAX_LENGTH = 60;
+
+function withSiteSuffix(baseTitle) {
+  if (baseTitle.includes("ANDANTINO")) return baseTitle;
+  if ([...baseTitle].length + [...TITLE_SUFFIX].length > TITLE_MAX_LENGTH) return baseTitle;
+  return `${baseTitle}${TITLE_SUFFIX}`;
+}
+
 function renderArticlePage(article, robotsMeta) {
   const category = CATEGORY_META[article.category] || CATEGORY_META.other;
   const url = `${siteUrl}/articles/${article.slug}`;
-  const title = escapeHtml(article.seo_title || article.title);
+  const title = escapeHtml(withSiteSuffix(article.seo_title || article.title));
   const description = escapeHtml(article.seo_description || article.excerpt || "");
   const dates = formatDate(article.published_at || article.updated_at || article.created_at);
   const modified = formatDate(article.updated_at || article.published_at || article.created_at);
@@ -250,6 +262,30 @@ async function injectMarker(fileName, marker, html) {
   await writeFile(fileUrl, updated, "utf8");
 }
 
+// llms.txt / llms-full.txt の記事一覧を書き換える。
+// この2つは生成AIがサイトを参照するためのファイルで、手で管理していると
+// 記事を足すたびに更新漏れが起きるため、記事ページと同じタイミングで作り直す。
+async function injectArticleLinks(fileName, articles) {
+  const fileUrl = new URL(fileName, root);
+  const content = await readFile(fileUrl, "utf8");
+  const startMarker = "<!-- ARTICLES_LINKS:START -->";
+  const endMarker = "<!-- ARTICLES_LINKS:END -->";
+  const startIndex = content.indexOf(startMarker);
+  const endIndex = content.indexOf(endMarker);
+  if (startIndex === -1 || endIndex === -1) {
+    console.warn(`generate-articles: markers not found in ${fileName} — skipping.`);
+    return;
+  }
+  const lines = articles.length
+    ? articles.map((article) => {
+        const link = `- [${article.title}](${siteUrl}/articles/${article.slug})`;
+        return article.excerpt ? `${link}: ${article.excerpt}` : link;
+      })
+    : ["現在公開している記事はありません。"];
+  const updated = `${content.slice(0, startIndex)}${startMarker}\n${lines.join("\n")}\n${content.slice(endIndex)}`;
+  await writeFile(fileUrl, updated, "utf8");
+}
+
 // content/articles/*.md を1件ずつ読み、記事オブジェクトへ変換する。
 // 問題のあるファイルは、コマンド全体を失敗させずにスキップして警告を出す
 // （1本の記事の書き損じで、サイト全体の生成が止まらないようにするため）。
@@ -348,6 +384,9 @@ async function main() {
       renderList(categoryArticles, "現在公開している記事はありません。近日、掲載を始める予定です。")
     );
   }
+
+  await injectArticleLinks("llms.txt", validArticles);
+  await injectArticleLinks("llms-full.txt", validArticles);
 
   const sitemapEntries = validArticles
     .map((article) => {

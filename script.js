@@ -31,10 +31,11 @@ const fullMenuMarkup = `
     </div>
   </div>`;
 
-const resolveMenuMarkup = () =>
-  currentPath.startsWith("/articles/")
-    ? fullMenuMarkup.replace(/="\.\//g, '="../')
-    : fullMenuMarkup;
+// 記事ページは /articles/ の下にあるため、"./" 始まりのリンクを "../" に直す。
+const resolveRelativePaths = (markup) =>
+  currentPath.startsWith("/articles/") ? markup.replace(/="\.\//g, '="../') : markup;
+
+const resolveMenuMarkup = () => resolveRelativePaths(fullMenuMarkup);
 
 const infoHeader = document.querySelector(".info-header");
 
@@ -76,10 +77,11 @@ const existingNavigation = document.querySelector(".nav#global-nav");
 if (existingNavigation) existingNavigation.innerHTML = resolveMenuMarkup();
 
 if (infoHeader && !document.querySelector(".mobile-actions")) {
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">📞 お電話</a><a href="mailto:yokoigarashi213@gmail.com">✉️ メール</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">💬 LINEでご予約・ご相談</a></nav>'
-  );
+  // メールは問い合わせフォームへ集約している（contact.html の案内と揃える）。
+  // 記事ページは /articles/ の下にあるため、メニューと同じ方法でパスを解決する。
+  const mobileActionsMarkup =
+    '<nav class="mobile-actions" aria-label="クイックアクション"><a href="tel:0734947110">📞 お電話</a><a href="./contact#inquiry-form">✉️ フォーム</a><a class="mobile-actions__primary" href="https://line.me/R/ti/p/@680mdoos" target="_blank" rel="noopener">💬 LINEでご予約・ご相談</a></nav>';
+  document.body.insertAdjacentHTML("beforeend", resolveRelativePaths(mobileActionsMarkup));
 }
 
 const enhancementStyle = document.createElement("style");

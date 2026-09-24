@@ -32,6 +32,28 @@ if (!llmsTxt.includes("医療機関ではなく、診断・治療・処方は行
   errors.push("llms.txt: medical scope disclaimer is missing");
 }
 
+// llms.txt / llms-full.txt は生成AIがサイト情報を参照するためのファイル。
+// 手で管理しているため料金の更新漏れが起きやすく、誤った金額がそのまま
+// AIの回答になってしまう（2026-07-28の子どもカウンセリング改定で実際に発生）。
+// pricing.html の料金表を正として、同じ項目名の金額が一致するか確認する。
+const pricingHtml = await readFile(new URL("pricing.html", root), "utf8");
+const llmsFullTxt = await readFile(new URL("llms-full.txt", root), "utf8");
+const pricingRows = new Map();
+for (const [, label, amount] of pricingHtml.matchAll(
+  /<th>(?:<a [^>]*>)?([^<]+?)(?:<\/a>)?<\/th><td>([\d,]+円)/g
+)) {
+  if (!pricingRows.has(label)) pricingRows.set(label, amount);
+}
+if (pricingRows.size === 0) errors.push("pricing.html: no price rows were found to audit");
+for (const [fileName, text] of [["llms.txt", llmsTxt], ["llms-full.txt", llmsFullTxt]]) {
+  for (const [, label, amount] of text.matchAll(/^\|\s*([^|]+?)\s*\|\s*([\d,]+円)[^|]*\|/gm)) {
+    const expected = pricingRows.get(label);
+    if (expected && expected !== amount) {
+      errors.push(`${fileName}: ${label} is ${amount} but pricing.html says ${expected}`);
+    }
+  }
+}
+
 function fail(file, message) {
   errors.push(`${file}: ${message}`);
 }
@@ -326,7 +348,10 @@ const sharedScript = await readFile(new URL("script.js", root), "utf8");
 for (const label of ["ご予約・ご相談・お問い合わせ", "LINEでご予約・ご相談"]) {
   if (!sharedScript.includes(label)) fail("script.js", `shared navigation is missing polite label: ${label}`);
 }
-for (const action of ["tel:0734947110", "mailto:yokoigarashi213@gmail.com", "line.me/R/ti/p/@680mdoos"]) {
+// 下部バーには電話・フォーム・LINEの3経路を必ず置く。
+// 3つ目はもともと個人メールアドレスへの直リンクだったが、contact.html が
+// 「メールでのご連絡は問い合わせフォームから」と案内しているため経路をそろえた。
+for (const action of ["tel:0734947110", "./contact#inquiry-form", "line.me/R/ti/p/@680mdoos"]) {
   if (!sharedScript.includes(action)) fail("script.js", `sticky action bar is missing contact action: ${action}`);
 }
 

@@ -50,6 +50,12 @@
 - [子ども靴と足育](https://andantino-shoes.jp/childrens-shoes)
 - [インソール作製と調整](https://andantino-shoes.jp/insoles)
 
+## 公開記事
+
+<!-- ARTICLES_LINKS:START -->
+- [新学期の前に、お子さまの靴を確認しませんか](https://andantino-shoes.jp/articles/shingakki-kodomo-kutsu-check): 夏休みのあいだに足は大きくなります。新学期が始まる前に、今の靴が合っているかを確かめる方法をまとめました。
+<!-- ARTICLES_LINKS:END -->
+
 ## 重要事項
 
 - ANDANTINOは医療機関ではなく、診断・治療・処方は行いません。
