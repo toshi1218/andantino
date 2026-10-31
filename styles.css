@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
 
 :root {
   --cream: #fff9f2;
@@ -21,7 +21,7 @@
   --shadow-md: 0 14px 38px rgba(69, 50, 36, 0.09);
   --brand-serif: Georgia, "Times New Roman", "Yu Mincho", serif;
   --serif: var(--sans);
-  --sans: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
 }
 
 * {
@@ -467,7 +467,7 @@ a {
 .shop h2 {
   margin: 0;
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.48;
   text-wrap: balance;
