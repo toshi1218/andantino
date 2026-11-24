@@ -315,13 +315,18 @@ if (inquiryForm) {
   const submitButton = inquiryForm.querySelector('button[type="submit"]');
   inquiryForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    const formData = new FormData(inquiryForm);
+    if (!formData.get("h-captcha-response")) {
+      if (statusEl) statusEl.textContent = "送信するには、hCaptchaの確認を完了してください。表示されない場合は、公式LINEまたはお電話でご連絡ください。";
+      return;
+    }
     if (submitButton) submitButton.disabled = true;
     if (statusEl) statusEl.textContent = "送信しています…";
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(inquiryForm))),
+        body: JSON.stringify(Object.fromEntries(formData)),
       });
       const result = await response.json();
       if (response.ok && result.success) {
@@ -331,7 +336,8 @@ if (inquiryForm) {
         successPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
       } else throw new Error(result.message || "submission failed");
     } catch {
-      if (statusEl) statusEl.textContent = "送信できませんでした。お手数ですが、公式LINEまたはお電話でご連絡ください。";
+      window.hcaptcha?.reset();
+      if (statusEl) statusEl.textContent = "送信できませんでした。hCaptchaをもう一度確認して送信するか、公式LINEまたはお電話でご連絡ください。";
       if (submitButton) submitButton.disabled = false;
     }
   });
